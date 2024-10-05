@@ -1,1 +1,59 @@
 // Book Allocation (Binary Search)
+
+
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int isValid(vector<int>&v,int n,int m,int mid){
+    
+    int studs=1,pages=0;
+    for(int i=0; i<n; i++){
+        
+        if(v[i]>mid)  return false;
+        
+        if(v[i]+pages<=mid){
+            pages+=v[i];
+        }
+        else{
+            studs++;
+            pages=v[i];
+        }
+    }
+    
+    if(studs<=m) return true;
+    return false;
+}
+
+int allocateBooks(vector<int>&v,int n,int m){
+    int ans=-1;
+    if(m>n){
+        return -1;
+    }
+    
+    int sum=0;
+    for(int i=0; i<n; i++){
+        sum+=v[i];
+    }
+    int s=0,e=sum;
+    while(s<=e){
+        int mid=s+(e-s)/2;
+        if(isValid(v,n,m,mid)){
+            ans=mid;
+            e=mid-1;
+        }
+        else{
+            s=mid+1;
+        }
+    }
+    return ans;
+}
+
+int main(){
+    int n=3;    // number of books 
+    int m=2;    // number of students
+    vector<int>v={15,17,20};
+    
+    cout<<allocateBooks(v,n,m)<<endl;
+    return 0;
+}
