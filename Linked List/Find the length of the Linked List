@@ -1,0 +1,52 @@
+// Find the length of the Linked List
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+    public:
+        int data;
+        Node* next;
+        
+        Node(int d,Node* n){
+            data=d;
+            next=n;
+        }
+        
+        Node(int d){
+            data=d;
+            next=nullptr;
+        }
+
+};
+
+Node* convertArray(vector<int>&v){      
+    Node* head=new Node(v[0]);
+    Node* mover=head;
+    for(int i=1; i<v.size(); i++){
+        Node* temp=new Node(v[i]);
+        mover->next=temp;
+        mover=temp;
+    }
+    return head;
+}
+
+int countLength(Node* head){            // function to count the length of the linked list
+    int count=0;
+    Node* temp=head;
+    while(temp){
+        count++;
+        temp=temp->next;
+    }
+    return count;
+}
+
+
+int main(){
+    vector<int>v={3,4,3,2,1};
+    Node* head=convertArray(v);
+    int length=countLength(head);
+    cout<<length<<endl;
+    return 0;
+}
