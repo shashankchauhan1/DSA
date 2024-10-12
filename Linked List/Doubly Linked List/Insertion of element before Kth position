@@ -1,0 +1,108 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+    public:
+        int data;
+        Node* next;
+        Node* back;
+        
+        Node(int d,Node* n,Node* b){
+            data=d;
+            next=n;
+            back=b;
+        }
+        Node(int d){
+            data=d;
+            next=nullptr;
+            back=nullptr;
+        }
+};
+
+Node* convertArray(vector<int>&v){
+    Node* head=new Node(v[0]);
+    Node* prev=head;
+    for(int i=1; i<v.size(); i++){
+        Node* temp=new Node(v[i]);
+        temp->next=nullptr;
+        temp->back=prev;
+        prev->next=temp;
+        prev=temp;
+    }
+    return head;
+}
+
+void printDLL(Node* head){
+    Node* temp=head;
+    while(temp){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+}
+
+int length(Node* head){
+    int count=0;
+    Node* temp=head;
+    while(temp){
+        count++;
+        temp=temp->next;
+    }
+    return count;
+}
+
+Node* insertElement(Node* head,int pos,int el){
+    int len=length(head);
+    
+    if(pos<0 || pos>len) return head;
+    
+    if(head==NULL) return new Node(el);
+    
+    if(pos==0){     // head.
+        Node* newNode=new Node(el);
+        head->back=newNode;
+        newNode->next=head;
+        head=newNode;
+        return head;
+    }
+    
+    Node* temp=head;
+    if(pos==len){
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+        Node* newNode=new Node(el);
+        temp->next=newNode;
+        newNode->back=temp;
+        newNode->next=NULL;
+        return head;
+    }
+    
+    int counter=0;
+    
+    while(temp){
+        counter++;
+        if(counter==pos){
+            Node* newNode=new Node(el);
+            Node* front=temp->next;
+            temp->next=newNode;
+            newNode->back=temp;
+            newNode->next=front;
+            front->back=newNode;
+        }
+        temp=temp->next;
+    }
+    
+    return head;
+}
+
+int main(){
+    vector<int>v={1,2,3,4,5};
+    Node* head=convertArray(v);
+    printDLL(head);
+    cout<<endl;
+    int pos=1;
+    head=insertElement(head,pos,7);
+    printDLL(head);
+    return 0;
+}
