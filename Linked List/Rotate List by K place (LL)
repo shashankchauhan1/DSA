@@ -1,0 +1,89 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+class Node{
+    public:
+        int val;
+        Node* next;
+        
+        Node(int d,Node* n){
+            val=d;
+            next=n;
+        }
+        
+        Node(int d){
+            val=d;
+            next=nullptr;
+        }
+};
+
+Node* convertArray(vector<int>&v) {
+    Node* head=new Node(v[0]);
+    Node* mover=head;
+    for(int i=1; i<v.size(); i++){
+        Node* temp=new Node(v[i]);
+        mover->next=temp;
+        mover=temp;
+    }
+    return head;
+}
+
+void printLL(Node* head){
+    Node* temp=head;
+    while(temp){
+        cout<<temp->val<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+int length(Node* head){
+    Node* temp=head;
+    int count=0;
+    while(temp){
+        count++;
+        temp=temp->next;
+    }
+    return count;
+}
+
+Node* rotate(Node* head){
+    Node* temp=head;
+    while(temp->next->next!=NULL){
+        temp=temp->next;
+    }
+    Node* newHead=temp->next;
+    temp->next=NULL;
+    newHead->next=head;
+    
+    return newHead;
+}
+
+Node* rotateLL(Node* head,int k){
+    if(head==NULL || k==0 ) return head;
+    
+    int n=length(head);
+    
+    if(k%n==0) return head;
+    
+    k=k%n;
+    
+    while(k){
+        head=rotate(head);
+        k--;
+    }
+    
+    return head;
+    
+}
+
+int main(){
+    vector<int>v={1,2,3,4,5};
+    Node* head=convertArray(v);
+    printLL(head);
+    int k=2;
+    head=rotateLL(head,k);
+    printLL(head);
+    return 0;
+}
