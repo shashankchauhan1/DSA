@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+    public:
+        int data;
+        Node* next;
+        Node* prev;
+        
+        Node(int d,Node* n,Node* p){
+            data=d;
+            next=n;
+            prev=p;
+        }
+        
+        Node(int d){
+            data=d;
+            next=NULL;
+            prev=NULL;
+        }
+};
+
+Node* convertArray(vector<int>&v){
+    Node* head=new Node(v[0]);
+    Node* mover=head;
+    head->prev=NULL;
+    for(int i=1; i<v.size(); i++){
+        Node* temp=new Node(v[i]);
+        temp->prev=mover;
+        mover->next=temp;
+        mover=temp;
+
+    }
+    return head;
+}
+
+void prinDLL(Node* head){
+    Node* temp=head;
+    while(temp){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+}
+
+Node* deleteOccurences(Node* head,int key){
+    if(head==NULL) return NULL;
+    while(head->data==key){
+        Node* temp=head;
+        head=head->next;
+        delete temp;
+    }
+    Node* temp=head;
+    while(temp!=NULL){
+        if(temp->data==key){
+            Node* del=temp;
+            Node* before=temp->prev;
+            Node* after=temp->next;
+            if(before!=NULL) before->next=after;
+            if(after!=NULL) after->prev=before;
+            temp=after;
+            delete del;
+        }
+        else{
+            temp=temp->next;
+        }
+    }
+    return head;
+}
+
+int main(){
+    vector<int> v={5, 2, 4, 2, 8, 10, 2};
+    Node* head=convertArray(v);
+    prinDLL(head);
+    cout<<endl;
+    head=deleteOccurences(head,2);
+    prinDLL(head);
+    return 0;
+}
