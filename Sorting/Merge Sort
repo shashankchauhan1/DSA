@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void merge(vector<int>&v,int s,int e){
+    int mid=s+(e-s)/2;
+    int leftSize=mid-s+1;
+    int rightSize=e-mid;
+    
+    int *first=new int[leftSize];
+    int *second=new int[rightSize];
+    
+    int k=s;
+    for(int i=0; i<leftSize; i++){
+        first[i]=v[k++];
+    }
+    
+    k=mid+1;
+    for(int i=0; i<rightSize; i++){
+        second[i]=v[k++];
+    }
+
+    int i=0;    // pointer at index 0 of first array.
+    int j=0;    // pointer at index 0 of second array.
+    k=s;
+    while(i<leftSize && j<rightSize){
+        if(first[i]<second[j]){
+            v[k++]=first[i++];
+        }
+        else{
+            v[k++]=second[j++];
+        }
+    }
+    
+    while(i<leftSize){
+        v[k++]=first[i++];
+    }
+    while(j<rightSize){
+        v[k++]=second[j++];
+    }
+    
+    delete[] first;
+    delete[] second;
+}
+
+void mergeSort(vector<int>&v,int s,int e){
+    // base case
+    if(s>=e) return;
+    
+    int mid=s+(e-s)/2;
+    
+    // left part
+    mergeSort(v,s,mid);
+    
+    // right part
+    mergeSort(v,mid+1,e);
+    
+    // merge 
+    merge(v,s,e);
+}
+
+int main(){
+    vector<int>v={4,3,1,2,5};
+
+    int n=v.size();
+    mergeSort(v,0,n-1);
+    
+    for(auto it: v){
+        cout<<it<<" ";
+    }
+    return 0;
+}
