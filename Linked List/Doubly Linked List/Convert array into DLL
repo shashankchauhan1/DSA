@@ -1,6 +1,5 @@
 // Convert array into Doubly Linked List
 
-#include<iostream>
 #include<bits/stdc++.h>
 using namespace std;
 
