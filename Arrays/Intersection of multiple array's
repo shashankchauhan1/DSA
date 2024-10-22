@@ -1,0 +1,22 @@
+// leetcode 2248
+
+class Solution {
+public:
+    vector<int> intersection(vector<vector<int>>& nums) {
+        map<int,int>mpp;
+        int size=nums.size();
+        for(auto row:nums){
+            for(auto el:row){
+                mpp[el]++;
+            }
+        }
+
+        vector<int>result;
+        for(auto it: mpp){
+            if(it.second==size){
+                result.push_back(it.first);
+            }
+        }
+        return result;
+    }
+};
