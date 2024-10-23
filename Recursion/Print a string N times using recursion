@@ -5,9 +5,9 @@
 using namespace std;
 
 void f(int i,int n,string str){
-    if(i>n) return;
+    if(i>n) return;                // Base Case
     cout<<str<<" ";
-    f(i+1,n,str);
+    f(i+1,n,str);                 // Increments in the value
 }
 
 int main(){
