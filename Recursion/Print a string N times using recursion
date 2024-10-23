@@ -1,0 +1,21 @@
+// Print a string N times using recursion
+
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+void f(int i,int n,string str){
+    if(i>n) return;
+    cout<<str<<" ";
+    f(i+1,n,str);
+}
+
+int main(){
+    string str;    
+    int n;        
+    cin>>n;          // integer
+    cin.ignore();      // removing Buffer
+    getline(cin,str);    // string input by user
+    f(1,n,str);        // calling function for printing data;
+    return 0;
+}
