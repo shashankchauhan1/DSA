@@ -1,0 +1,5 @@
+// recursion problems
+
+// A Function calls itself until it reach the specified condition;
+
+// That Specified Condition is called Base Case;
