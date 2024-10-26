@@ -1,0 +1,24 @@
+// 2 Pointer Approach
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void recursionReverse(vector<int>&v,int l,int r){
+    if(l>=r) return;		// base case
+    swap(v[l],v[r]);		// swapping
+    recursionReverse(v,l+1,r-1);	// two pointer approach
+}
+
+int main(){
+    vector<int>v={1,2,3,4,5};
+    int l=0;
+    int r=v.size()-1;
+    recursionReverse(v,l,r);
+    for(int i=0; i<v.size(); i++){
+        cout<<v[i]<<" ";
+    }
+    return 0;
+}
+
+
+//
