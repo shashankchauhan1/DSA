@@ -21,4 +21,24 @@ int main(){
 }
 
 
-//
+// 1 Pointer Approach
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void recursionReverse(vector<int>&v,int l){
+    int n=v.size()-1;
+    if(l>=n/2) return;
+    swap(v[l],v[n-l]);
+    recursionReverse(v,l+1);
+}
+
+int main(){
+    vector<int>v={1,2,3,4,5};
+    int l=0;
+    recursionReverse(v,l);
+    for(int i=0; i<v.size(); i++){
+        cout<<v[i]<<" ";
+    }
+    return 0;
+}
