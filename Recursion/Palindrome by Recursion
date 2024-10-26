@@ -1,0 +1,20 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool palindromeByRecursion(string str,int s,int e){
+    
+    if(s>=e) return true;
+    
+    if(str[s]!=str[e]) return false;
+
+    return palindromeByRecursion(str,s+1,e-1);
+}
+
+int main(){
+    string str="ababa";
+    int s=0;
+    int e=str.length()-1;
+    cout<<e<<endl;
+    cout<<boolalpha<<palindromeByRecursion(str,s,e)<<endl;
+    return 0;
+}
