@@ -1,4 +1,4 @@
-// Sum of digit using Recursion
+// Sum of digit using Recursion.
 
 #include<iostream>
 using namespace std;
