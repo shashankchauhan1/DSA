@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void removeOccurence(int i,string s,string&result,int n){
+    if(i==n) return;
+   
+    if(s[i]!='a') result+=s[i];
+    removeOccurence(i+1,s,result,n);
+}
+
+int main(){
+    string s;
+    string result="";
+    getline(cin,s);
+    int n=s.length();
+    removeOccurence(0,s,result,n);
+    cout<<result;
+    return 0;
+}
