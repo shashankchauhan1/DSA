@@ -1,0 +1,35 @@
+1> Creating a Resultant Array
+
+#include<iostream>
+using namespace std;
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    int n = sizeof(arr) / sizeof(int);
+    int result[n];
+    int k = 2;
+    k = k % n;
+    
+    int idx = 0;
+    for (int i = n-k; i < n; i++) {
+        result[idx++] = arr[i];
+    }
+    
+    for (int i = 0; i < n-k; i++) {
+        result[idx++] = arr[i];
+    }
+
+    cout << "Original Array: ";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Rotated Array: ";
+    for (int i = 0; i < n; i++) {
+        cout << result[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
