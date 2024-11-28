@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int mostFrequentEven(vector<int>& nums) {
+        vector<int>even;
+        for(auto it:nums){
+            if(it%2==0){
+                even.push_back(it);
+            }
+        }
+        map<int,int>mpp;
+        for(auto it:even){
+            mpp[it]++;
+        }
+
+        int freq=INT_MIN;
+        int ans=-1;
+        for(auto it:mpp){
+            if(it.second>freq){
+                freq=it.second;
+                ans=it.first;
+            }
+            if(it.second==freq){
+                ans=min(ans,it.first);
+            }
+        }
+
+        if(ans>=0) return ans;
+        return -1;
+    }
+};
