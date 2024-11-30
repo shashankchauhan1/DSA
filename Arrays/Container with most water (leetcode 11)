@@ -1,1 +1,19 @@
 
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int n=height.size();
+        int lptr=0;
+        int rptr=n-1;
+        int max_value=0;
+        while(lptr<rptr){
+            int width=rptr-lptr;
+            int h=min(height[lptr],height[rptr]);
+            int area=width*h;
+            max_value=max(max_value,area);
+
+            height[lptr]<height[rptr] ? lptr++ : rptr--;
+        }
+        return max_value;
+    }
+};
