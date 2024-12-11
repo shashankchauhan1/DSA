@@ -1,0 +1,40 @@
+
+import java.util.Scanner;
+import java.util.ArrayList;
+
+class Main{
+    
+    public static ArrayList<Integer> findIntersection(int a[],int b[]){
+        int i=0;
+        int j=0;
+        ArrayList<Integer> result=new ArrayList<>();
+        
+        while(i<a.length && j<b.length){
+            if(a[i]==b[j]){
+                if(!result.contains(a[i])){
+                    result.add(a[i]);
+                }
+                i++;
+                j++;
+            }
+            else if(a[i]<b[j]){
+                i++;
+            }
+            else{
+                j++;
+            }
+        }
+        return result;
+    }
+    
+    public static void main(String[] args){
+        int a[]={1,2,3,4};
+        int b[]={3,4,5,6};
+        ArrayList<Integer> arr=new ArrayList<>();
+        
+        arr=findIntersection(a,b);
+        for(Integer num:arr){
+            System.out.println(num);
+        }
+    }
+}
