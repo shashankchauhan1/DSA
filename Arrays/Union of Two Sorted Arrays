@@ -55,3 +55,47 @@ class Main{
         System.out.println("Union of the arrays: " + union);
     }
 }
+
+----------------------------------------------------------------------------------------------------------------------------
+
+// by using HashSet
+
+
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+
+class Main{
+    
+    public static ArrayList<Integer> findUnion(int a[], int b[]) {
+        Set<Integer> st=new HashSet<>();
+        for(int i=0; i<a.length; i++){
+            st.add(a[i]);
+        }
+        for(int j=0; j<b.length; j++){
+            st.add(b[j]);
+        }
+        ArrayList<Integer> result=new ArrayList<>();
+        for(Integer num:st){
+            result.add(num);
+        }
+        Collections.sort(result);
+        return result;
+    }
+    
+    public static void main(String[] args){
+        int[] a = {1, 2, 3, 4, 5};
+        int[] b = {3, 4, 5, 6, 7};
+
+        ArrayList<Integer> union = findUnion(a, b);
+        
+        System.out.println("Union of the arrays: " + union);
+    }
+}
+
+
+-------------------------------------------------------------------------------------------------------------
+
+// by using TreeSet
+
