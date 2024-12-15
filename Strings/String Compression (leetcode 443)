@@ -1,0 +1,80 @@
+// java
+
+class Solution {
+    public int compress(char[] chars) {
+        int count=1;
+        int idx=0;
+        int n=chars.length;
+        for(int i=1; i<n; i++){
+            if(chars[i]==chars[i-1]){
+                count++;
+            }
+            else{
+                chars[idx++]=chars[i-1];
+                if(count>1){
+                    String counter=Integer.toString(count);
+                    for(char num:counter.toCharArray()){
+                        chars[idx++]=num;
+                    }
+                }
+                count=1;
+            }
+        }
+        chars[idx++]=chars[chars.length-1];
+        if(count>1){
+            String counter=Integer.toString(count);
+            for(char num:counter.toCharArray()){
+                chars[idx++]=num;
+            }
+        }
+        return idx;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// cpp
+
+#include<iostream>
+#include<string>
+#include<cctype>
+using namespace std;
+
+string Compressed(string &s){
+    if(s.empty()) return s;
+    
+    for(auto it:s){
+        if(isdigit(it)){
+            return s;
+        }
+    }
+    
+    int count=1;
+    string compressed="";
+    
+    for(int i=1; i<s.length(); i++){
+        if(s[i]==s[i-1]){
+            count++;
+        }
+        else{
+            compressed+=s[i-1];
+            if(count>1){
+                compressed+=to_string(count);
+            }
+            count=1;
+        }
+    }
+    compressed+=s[s.length()-1];
+    if(count>1){
+        compressed+=to_string(count);
+    }
+    
+    return compressed.length() < s.length() ? compressed : s;
+}
+
+int main(){
+    string s;
+    getline(cin,s);
+    cout<<Compressed(s)<<endl;
+    return 0;
+}
