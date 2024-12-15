@@ -1,3 +1,42 @@
+// java
+
+class Solution {
+    public String reverseVowels(String s) {
+        StringBuilder str=new StringBuilder(s);
+        int i=0;
+        int j=str.length()-1;
+        while(i<j){
+            if(isVowel(str.charAt(i))){
+                while(j>i){
+                    if(isVowel(str.charAt(j))){
+                        char temp=str.charAt(i);
+                        str.setCharAt(i,str.charAt(j));
+                        str.setCharAt(j,temp);
+                        i++;
+                        j--;
+                        break;
+                    }
+                    else{
+                        j--;
+                    }
+                }
+            }
+            else{
+                i++;
+            }
+        }
+        String ss=str.toString();
+        return ss;
+    }
+    public boolean isVowel(char s){
+        return s=='a' || s=='e' || s=='i' || s=='o' || s=='u' 
+        || s=='A' || s=='E' || s=='I' || s=='O' || s=='U';
+    }
+}
+
+-----------------------------------------------------------------------------------------------
+
+// cpp
 
 class Solution {
 public:
