@@ -1,0 +1,43 @@
+// java
+
+import java.util.*;
+
+class Main {
+	public static int firstOccurence(int[] mat) {
+		int s=0;
+		int e=mat.length-1;
+		int ans=mat.length;
+		while(s<=e) {
+			int mid=s+(e-s)/2;
+			if(mat[mid]==1) {
+				ans=mid;
+				e=mid-1;
+			}
+			else {
+				s=mid+1;
+			}
+		}
+		return ans;
+	}
+
+	public static int rowMaxOnes(int[][] mat, int n, int m) {
+		int maxCount=0;
+		int index=-1;
+		for(int i=0; i<mat.length; i++) {
+			int firstOccurenceOfOne=firstOccurence(mat[i]);
+			int noOfOnes=m - firstOccurenceOfOne;
+			if(noOfOnes>maxCount) {
+				maxCount=noOfOnes;
+				index=i;
+			}
+		}
+		return index;
+	}
+
+	public static void main(String[] args) {
+		int[][] mat = {{0, 1, 1},{0, 0, 1},{1, 1, 1}};
+		int n = mat.length;
+		int m = mat[0].length;
+		System.out.println(rowMaxOnes(mat, n, m));
+	}
+}
