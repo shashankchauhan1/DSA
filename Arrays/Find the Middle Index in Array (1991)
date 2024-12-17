@@ -1,0 +1,25 @@
+// java
+
+class Solution {
+    public int findMiddleIndex(int[] nums) {
+        int n=nums.length;
+        int[] prefix=new int[n];
+        int[] suffix=new int[n];
+
+        int sum=0;
+        for(int i=0; i<n; i++){
+            sum+=nums[i];
+            prefix[i]=sum;
+        }
+
+        suffix[0]=sum;
+        for(int i=1; i<n; i++){
+            suffix[i]=sum-nums[i-1];
+            sum-=nums[i-1];
+        }
+        for(int i=0; i<n; i++){
+            if(prefix[i]==suffix[i]) return i;
+        }
+        return -1;
+    }
+}
