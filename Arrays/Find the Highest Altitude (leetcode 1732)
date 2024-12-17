@@ -1,0 +1,23 @@
+// java
+
+class Solution {
+    public int largestAltitude(int[] gain) {
+        int[] ans=new int[gain.length+1];
+        int max=Integer.MIN_VALUE;
+        int sum=0;
+        for(int i=1; i<gain.length; i++){
+            sum+=gain[i-1];
+            ans[i]=sum;
+            if(ans[i]>max){
+                max=ans[i];
+            }
+        }
+        sum+=gain[gain.length-1];
+        ans[ans.length-1]=sum;
+        if(ans[ans.length-1]>max){
+            max=ans[ans.length-1];
+        }
+        if(max<0) max=0;
+        return max;
+    }
+}
