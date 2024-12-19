@@ -1,0 +1,4 @@
+// java
+
+1> create a hashmap for both of the strings and compare one by one if they are same then continue otherwise return false;
+
