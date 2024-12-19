@@ -1,4 +1,53 @@
-// Program to convert a array into Linked List
+// program to convert a array into Linked List  ( java )
+
+import java.util.*;
+
+class Node{
+    int data;
+    Node next;
+    
+    Node(int d1,Node nxt){
+        this.data=d1;
+        this.next=nxt;
+    }
+    
+    Node(int d1){
+        this.data=d1;
+        this.next=null;
+    }
+}
+
+class Main{
+    
+    public static Node convertArray(int[] arr){
+        if(arr.length==0 || arr==null) return null;
+        Node head=new Node(arr[0]);
+        Node mover=head;
+        for(int i=1; i<arr.length; i++){
+            Node temp=new Node(arr[i]);
+            mover.next=temp;
+            mover=temp;
+        }
+        return head;
+    }
+
+    public static void printLL(Node head){
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+" -> ");
+            temp=temp.next;
+        }
+        System.out.println("null");
+    }
+
+    public static void main(String[] args){
+        int[] arr={1,2,3,4,5};
+        Node head=convertArray(arr);
+        printLL(head);
+    }
+}
+
+// Program to convert a array into Linked List  ( c++ )
 
 #include<iostream>
 #include<bits/stdc++.h>
@@ -20,6 +69,8 @@ class Node{
         }
 
 };
+
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 Node* convertArray(vector<int>&v){             // convert array into linked list
     Node* head=new Node(v[0]);
