@@ -2,3 +2,33 @@
 
 1> create a hashmap for both of the strings and compare one by one if they are same then continue otherwise return false;
 
+
+
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        if(s.length()!=t.length()) return false;              // if the length of both of the strings are not equal return false;
+        HashMap<Character,Character> map1=new HashMap<>();    // hashmap for 1st string
+        HashMap<Character,Character> map2=new HashMap<>();    // hashmap for 2nd string
+        
+        for(int i=0; i<s.length(); i++){                      
+            if(map1.containsKey(s.charAt(i))){
+                if(map1.get(s.charAt(i))==t.charAt(i)) {}    // if the mapping is correct continue;
+                else return false;                           // else return false;
+            }
+            else{
+                map1.put(s.charAt(i),t.charAt(i));          // if the character is not in the map, add it.
+            }
+        }
+
+        for(int i=0; i<t.length(); i++){
+            if(map2.containsKey(t.charAt(i))){
+                if(map2.get(t.charAt(i))==s.charAt(i)){}
+                else return false;
+            }
+            else{
+                map2.put(t.charAt(i),s.charAt(i));
+            }
+        }
+        return true;                                      // at the end if all the mapping is correct return true;
+    }
+}
