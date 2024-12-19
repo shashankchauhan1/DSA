@@ -1,3 +1,68 @@
+// java
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class SinglyLinkedList {
+    Node head;
+}
+
+
+public class Main {
+    public static Node insertAtIndex(Node head, int index, int data) {
+        int idx=0;
+        Node addon=new Node(data);
+        Node temp=head;
+        while(temp!=null){
+            if(idx==index-1){
+                addon.next=temp.next;
+                temp.next=addon;
+                break;
+            }
+            temp=temp.next;
+            idx++;
+        }
+        return head;
+    }
+    
+    public static Node convertArray(int[] arr){
+        Node head=new Node(arr[0]);
+        Node mover=head;
+        for(int i=1; i<arr.length; i++){
+            Node temp=new Node(arr[i]);
+            mover.next=temp;
+            mover=temp;
+        }
+        return head;
+    }
+    
+    public static void printList(Node head){
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+" ");
+            temp=temp.next;
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr={30,20,10};
+        Node head=convertArray(arr);
+        head = insertAtIndex(head, 1, 25);
+        printList(head); 
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+// cpp
+
 #include<iostream>
 #include<vector>
 using namespace std;
