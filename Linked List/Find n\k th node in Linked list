@@ -1,0 +1,32 @@
+// Find n/k th node in Linked list  ( java )
+
+
+
+class Solution {
+    public static int length(Node head){
+        Node temp=head;
+        int cnt=0;
+        while(temp!=null){
+            cnt++;
+            temp=temp.next;
+        }
+        return cnt;
+    }
+    
+    public static int fractional_node(Node head, int k) {
+        if(head==null) return -1;
+        
+        int n=length(head);
+        int target=(int)Math.ceil((double)n/k);
+        int idx=1;
+        Node temp=head;
+        while(temp!=null){
+            if(idx==target){
+                return temp.data;
+            }
+            temp=temp.next;
+            idx++;
+        }
+        return -1;
+    }
+}
