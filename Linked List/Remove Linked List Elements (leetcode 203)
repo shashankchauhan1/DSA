@@ -1,0 +1,69 @@
+// java
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        while(head!=null && head.val==val){
+            head=head.next;
+        }
+        ListNode temp=head;
+        while(temp!=null && temp.next!=null){
+            if(temp.next.val==val){
+                temp.next=temp.next.next;
+            }
+            else{
+                temp=temp.next;
+            }
+        }
+        return head;
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// cpp
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(head==NULL ) return NULL;
+        while(head && head->val == val){
+            ListNode* temp=head;
+            head=head->next;
+            delete temp;
+        }
+
+        ListNode* temp=head;
+        while(temp && temp->next){
+            if(temp->next->val==val){
+                temp->next=temp->next->next;
+            }
+            else{
+                temp=temp->next;
+            }
+
+        }
+        
+        return head;
+    }
+};
