@@ -1,0 +1,16 @@
+// java
+
+class Solution {
+    public int GetNth(Node head, int index) {
+        Node temp=head;
+        int idx=1;
+        while(temp!=null){
+            if(idx==index){
+                return temp.data;
+            }
+            temp=temp.next;
+            idx++;
+        }
+        return -1;
+    }
+}
