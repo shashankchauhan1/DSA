@@ -1,0 +1,30 @@
+// java
+
+1> find the cycle where the slow and fast pointers meets.
+2> on meeting them both move slow to head and the move both simultaneously.
+3> when they meet again means that is the starting point
+
+
+
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head==null) return null;
+
+        ListNode fast=head;
+        ListNode slow=head;
+
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast){
+                slow=head;
+                while(slow!=fast){
+                    slow=slow.next;
+                    fast=fast.next;
+                }
+                return slow;
+            }
+        }
+        return null;
+    }
+}
