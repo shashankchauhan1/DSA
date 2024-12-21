@@ -1,0 +1,29 @@
+// java
+
+input :   5 -> 9 -> 6 -> 3 -> 4-> 10  || n=3;
+output : 3 + 4 + 10 = 17
+
+class Solution {
+
+    // Return the sum of last k nodes
+    public int sumOfLastN_Nodes(Node head, int n) {
+        // write code here
+        Node fast=head;
+        Node slow=head;
+        while(n>0){
+            fast=fast.next;
+            n--;
+        }
+        int sum=0;
+        while(fast!=null){
+            slow=slow.next;
+            fast=fast.next;
+        }
+        
+        while(slow!=null){
+            sum+=slow.data;
+            slow=slow.next;
+        }
+        return sum;
+    }
+}
