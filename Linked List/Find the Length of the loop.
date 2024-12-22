@@ -1,0 +1,29 @@
+// java
+
+class Solution {
+    // count the length of the loop
+    public int countLength(Node fast,Node slow){
+        int count=1;
+        fast=fast.next;
+        while(fast!=slow){
+            count++;
+            fast=fast.next;
+        }
+        return count;
+    }
+    
+    public int countNodesinLoop(Node head) {
+        Node fast=head;
+        Node slow=head;
+        
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(slow==fast){
+                int cnt=countLength(fast,slow);
+                return cnt;
+            }
+        }
+        return 0;
+    }
+}
