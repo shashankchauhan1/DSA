@@ -1,0 +1,41 @@
+// Java
+
+class Solution {
+
+    public ListNode reverse(ListNode head){
+        ListNode temp=head;
+        ListNode last=null;
+        while(temp!=null){
+            ListNode front=temp.next;
+            temp.next=last;
+            last=temp;
+            temp=front;
+        }
+        return last;
+    }
+
+    public ListNode doubleIt(ListNode head) {
+        int carry=0;
+        ListNode dummyNode=new ListNode(-1);
+        ListNode dn=dummyNode;
+        ListNode temp=reverse(head);;
+        while(temp!=null){
+            int sum=0;
+            sum+=temp.val;
+            sum*=2;
+            sum+=carry;
+            ListNode newNode=new ListNode(sum%10);
+            dn.next=newNode;
+            dn=dn.next;
+            carry=sum/10;
+            temp=temp.next;
+        }
+        if(carry>0){
+            ListNode newNode=new ListNode(carry);
+            dn.next=newNode;
+        }
+        reverse(head);
+        dummyNode.next=reverse(dummyNode.next);
+        return dummyNode.next;
+    }
+}
