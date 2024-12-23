@@ -1,0 +1,43 @@
+// Maximum Twin Sum of a Linked List
+
+1> although the size of the linked list is even, so find the mid and reverse it.
+2> adding the values from the 1st half and the another 2nd reversed half.
+3> return the maxsum.
+
+
+class Solution {
+    public ListNode reverse(ListNode head){ 
+        ListNode temp=head;
+        ListNode last=null;
+        while(temp!=null){
+            ListNode front=temp.next;
+            temp.next=last;
+            last=temp;
+            temp=front;
+        }
+        return last;
+    }
+
+    public int pairSum(ListNode head) {
+        int maxSum=Integer.MIN_VALUE;
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast.next.next!=null){
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        ListNode newHead=reverse(slow.next);
+        ListNode t1=head;
+        ListNode t2=newHead;
+
+        while(t2!=null){
+            int sum=0;
+            sum+=t1.val;
+            sum+=t2.val;
+            maxSum=Math.max(maxSum,sum);
+            t1=t1.next;
+            t2=t2.next;
+        }
+        return maxSum;
+    }
+}
