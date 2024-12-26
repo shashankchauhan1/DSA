@@ -1,0 +1,22 @@
+//java
+
+class Solution {
+    public String reverse(String str){
+        char[] ch=str.toCharArray();
+        int n=ch.length;
+        for(int i=0; i<n/2; i++){
+            char temp=ch[i];
+            ch[i]=ch[n-i-1];
+            ch[n-i-1]=temp;
+        }
+        return new String(ch);
+    }
+
+    public String reverseWords(String s) {
+        String[] array=s.split("\\s+");
+        for(int i=0; i<array.length; i++){
+            array[i]=reverse(array[i]);
+        }
+        return String.join(" ",array);
+    }
+}
