@@ -1,3 +1,28 @@
+// java
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummyNode=new ListNode(-9999);
+        ListNode dn=dummyNode;
+        ListNode temp=head;
+        while(temp!=null){
+            if(temp.val!=dn.val){
+                dn.next=temp;
+                dn=temp;
+                temp=temp.next;
+                dn.next=null;
+            }
+            else{
+                temp=temp.next;
+            }
+        }
+        return dummyNode.next;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+// cpp
 
 #include<bits/stdc++.h>
 using namespace std;
