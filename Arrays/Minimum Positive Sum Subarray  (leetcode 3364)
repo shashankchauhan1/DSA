@@ -1,5 +1,7 @@
 // java
 
+// we can check for every subarray because the constraints are small.
+
 class Solution {
     public int minimumSumSubarray(List<Integer> nums, int l, int r) {
         int minSum=Integer.MAX_VALUE;
