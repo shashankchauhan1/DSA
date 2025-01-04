@@ -1,0 +1,24 @@
+// java
+
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+        int[] freqArr=new int[1001];
+        for(int num:nums1){
+            freqArr[num]++;
+        }
+        ArrayList<Integer> result=new ArrayList<>();
+        for(int num:nums2){
+            if(freqArr[num]>0){
+                result.add(num);
+                freqArr[num]--;
+            }
+        }
+        int size=result.size();
+        int[] arr=new int[size];
+        for(int i=0; i<size; i++){
+            arr[i]=result.get(i);
+        }
+        return arr;
+    }
+}
