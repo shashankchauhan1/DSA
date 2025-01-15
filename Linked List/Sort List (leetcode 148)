@@ -1,3 +1,70 @@
+// Java
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    public ListNode findMiddle(ListNode head){
+        ListNode slow=head;
+        ListNode fast=head.next;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+
+    public ListNode merge(ListNode lefthead,ListNode righthead){
+        ListNode dummyNode=new ListNode(-1);
+        ListNode dn=dummyNode;
+        ListNode t1=lefthead;
+        ListNode t2=righthead;
+        while(t1!=null && t2!=null){
+            if(t1.val<t2.val){
+                dn.next=t1;
+                dn=t1;
+                t1=t1.next;
+            }
+            else{
+                dn.next=t2;
+                dn=t2;
+                t2=t2.next;
+            }
+        }
+
+        if(t1!=null) dn.next=t1;
+        else dn.next=t2;
+
+        return dummyNode.next;
+    }
+
+    public ListNode sortList(ListNode head) {
+        if(head==null || head.next==null) return head;
+
+        ListNode middle=findMiddle(head);
+        ListNode lefthead=head;
+        ListNode righthead=middle.next;
+        middle.next=null;
+
+        lefthead=sortList(lefthead);
+        righthead=sortList(righthead);
+        return merge(lefthead,righthead);
+
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// c++
+
 // sort linked list  { merge sort }
 
 #include<bits/stdc++.h>
