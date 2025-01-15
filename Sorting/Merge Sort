@@ -1,3 +1,71 @@
+// java
+
+import java.util.ArrayList;
+
+class Main{
+    
+    public static void merge(int[] arr,int low,int mid,int high){
+        int i=low;
+        int j=mid+1;
+        ArrayList<Integer> temp=new ArrayList<>();
+        while(i<=mid && j<=high){
+            if(arr[i]<arr[j]){
+                temp.add(arr[i]);
+                i++;
+            }
+            else{
+                temp.add(arr[j]);
+                j++;
+            }
+        }
+        
+        while(i<=mid){
+            temp.add(arr[i]);
+            i++;
+        }
+        
+        while(j<=high){
+            temp.add(arr[j]);
+            j++;
+        }
+        
+        for(int k=low; k<=high; k++){
+            arr[k]=temp.get(k-low);
+        }
+        
+    }
+    
+    public static void mergeSort(int[] arr,int low,int high){
+        if(low>=high) return;       // base case.
+        
+        int mid=(low+high)/2;
+        
+        mergeSort(arr,low,mid);     // left part.
+        mergeSort(arr,mid+1,high);  // right part.
+        merge(arr,low,mid,high);    // merging the array.
+    }
+    
+    public static void main(String[] args){
+        int[] arr={4,2,5,3,1};
+        int n=arr.length;
+        
+        for(int i=0; i<arr.length; i++){
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+        mergeSort(arr,0,n-1);
+        
+        for(int i=0; i<arr.length; i++){
+            System.out.print(arr[i]+" ");
+        }
+        
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// c++
+
 #include<bits/stdc++.h>
 using namespace std;
 
