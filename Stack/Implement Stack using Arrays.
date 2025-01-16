@@ -1,0 +1,58 @@
+// java
+
+
+class Stack{
+    int top=-1;
+    int size=1000;
+    int[] arr=new int[size];
+    
+    // push
+    public void push(int x){
+        if(top>=size-1){
+            System.out.println("Stack Overflow.");
+            return;
+        }
+        top+=1;
+        arr[top]=x;
+    }
+    
+    // pop
+    public void pop(){
+        if(top==-1){
+            System.out.println("Stack is already Empty.");
+            return;
+        }
+        int a=arr[top];
+        top-=1;
+        System.out.println(a);
+    }
+    
+    //peek
+    public void peek(){
+        if(top==-1){
+            System.out.println("Stack is Empty.");
+            return;
+        }
+        System.out.println(arr[top]);
+    }
+    
+    //size
+    public void size(){
+        System.out.println(top+1);
+    }
+}
+
+class Main{
+    public static void main(String[] args){
+        Stack st=new Stack();
+        st.push(1);
+        st.push(2);
+        st.push(4);
+        st.peek();
+        st.pop();
+        st.peek();
+        st.pop();
+        st.peek();
+    }
+}
+
