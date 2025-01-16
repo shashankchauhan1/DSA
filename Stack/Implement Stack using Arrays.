@@ -56,3 +56,6 @@ class Main{
     }
 }
 
+
+// THE T.C FOR ALL THE OPERATIONS IS O(1);
+// THE S.C FOR ALL THE OPERATIONS IS O(n); // BECAUSE ARRAY IS NOT DYNAMIC IN NATURE so it occupy the extra space.
