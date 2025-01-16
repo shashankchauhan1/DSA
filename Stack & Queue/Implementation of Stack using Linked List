@@ -1,0 +1,71 @@
+// java
+
+class Stack{
+    private class StackNode{
+        StackNode next;
+        int data;
+        
+        StackNode(int d){
+            this.data=d;
+            this.next=null;
+        }
+    }
+    
+    StackNode top=null;
+    int size=0;
+    
+    // push function.
+    public void push(int x){
+        StackNode node=new StackNode(x);
+        node.next=top;
+        top=node;
+        size++;
+    }
+    
+    // pop function.
+    public void pop(){
+        if(top==null){
+            System.out.println("Stack is empty");
+            return;
+        }
+        int el=top.data;
+        top=top.next;
+        size--;
+        System.out.println(el+" popped.");
+    }
+    
+    // size function.
+    public void size(){
+        System.out.println(size);
+    }
+    
+    // top function.
+    public void top(){
+        if(top==null){
+            System.out.println("Stack is empty");
+            return;
+        }
+        System.out.println(top.data);
+    }
+    
+    // isEmpty function.
+    public void isEmpty(){
+        System.out.println(top==null);
+    }
+    
+}
+
+class Main{
+    public static void main(String[] args){
+        Stack st=new Stack();
+        st.push(4);
+        st.push(3);
+        st.push(6);
+        st.top();
+        st.pop();
+        st.top();
+        st.size();
+        st.isEmpty();
+    }
+}
+
