@@ -1,0 +1,73 @@
+// java
+
+class Queue{
+    int size=4;
+    int[] arr=new int[size];
+    int start=-1;
+    int end=-1;
+    int currSize=0;
+    
+    // push
+    public void push(int x){
+        if(currSize==size){
+            System.out.println("Queue is full");
+            return;
+        }
+        if(currSize==0){
+            start=0;
+            end=0;
+        }
+        else{
+            end=(end+1)%size;
+        }
+        
+        arr[end]=x;
+        currSize++;
+    }
+    
+    // pop
+    public void pop(){
+        if(currSize==0){
+            System.out.println("Queue is Empty");
+            return;
+        }
+        int el=arr[start];
+        if(currSize==1){
+            start=-1;
+            end=-1;
+        }
+        else start=(start+1)%size;
+        currSize--;
+        System.out.println("Popped : "+el);
+    }
+    
+    // top
+    public void top(){
+        if(currSize==0){
+            System.out.println("Queue is Empty");
+            return;
+        }
+        System.out.println(arr[start]);
+    }
+    
+    // size
+    public void size(){
+        System.out.println(currSize);
+    }
+}
+
+class Main{
+    public static void main(String[] args){
+        Queue queue = new Queue();
+        queue.push(10);
+        queue.push(20);
+        queue.push(30);
+        queue.push(40);
+        queue.push(50); 
+        queue.pop();
+        queue.size();
+        queue.push(60);
+        queue.pop();
+        queue.size();
+    }
+}
