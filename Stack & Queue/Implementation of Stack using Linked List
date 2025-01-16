@@ -53,6 +53,15 @@ class Stack{
         System.out.println(top==null);
     }
     
+    // print stack function.
+    public void printStack(){
+        StackNode temp=top;
+        while(temp!=null){
+            System.out.print(temp.data+" ");
+            temp=temp.next;
+        }
+    }
+    
 }
 
 class Main{
@@ -60,12 +69,15 @@ class Main{
         Stack st=new Stack();
         st.push(4);
         st.push(3);
-        st.push(6);
+        st.push(6);         //adding element.
         st.top();
-        st.pop();
-        st.top();
-        st.size();
-        st.isEmpty();
+        st.pop();           // deletes the top most element.
+        st.top();           // print the top most element.
+        st.size();          // size of the stack.
+        st.isEmpty();       // isEmpty ?
+        st.printStack();    // print the stack.
     }
 }
+
+
 
