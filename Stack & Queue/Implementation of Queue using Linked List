@@ -1,0 +1,85 @@
+// java
+
+
+class Queue{
+    public class QueueNode{
+        int data;
+        QueueNode next;
+        QueueNode(int d){
+            this.data=d;
+            this.next=null;
+        }
+    }
+    
+    QueueNode start=null;
+    QueueNode end=null;
+    int size=0;
+    
+    // push function.
+    public void push(int x){
+        QueueNode node=new QueueNode(x);
+        if(size==0){
+            start=node;
+            end=node;
+        }
+        else{
+            end.next=node;
+            end=node;
+        }
+        size++;
+    }
+    
+    // pop function.
+    public void pop(){
+        if(size==0){
+            System.out.println("Queue is Empty.");
+            return;
+        }
+        int el=start.data;
+        start=start.next;
+        size--;
+        if(start==null){
+            end=null;
+        }
+        System.out.println(el+" popped.");
+    }
+    
+    // top function.
+    public void top(){
+        if(size==0){
+            System.out.println("Queue is Empty.");
+            return;
+        }
+        System.out.println(start.data);
+    }
+    
+    // size function
+    public void size(){
+        System.out.println(size);
+    }
+    
+    // isEmpty function.
+    public void isEmpty(){
+        System.out.println(size==0);
+    }
+    
+}
+
+class Main{
+    public static void main(String[] args){
+        Queue queue=new Queue();
+        queue.push(5);
+        queue.push(3);
+        queue.push(2);
+        queue.push(1);
+        queue.push(4);
+        queue.pop();
+        queue.pop();
+        queue.top();
+        queue.size();
+        queue.isEmpty();
+    }
+}
+
+
+
