@@ -1,0 +1,36 @@
+// java
+
+
+class Solution {
+    public int calPoints(String[] s) {
+        Stack<String> st=new Stack<>();
+        for(int i=0; i<s.length; i++){
+            if(!s[i].equals("C") && !s[i].equals("D") && !s[i].equals("+")){
+                st.push(s[i]);
+            }
+            else if(s[i].equals("C")){
+                st.pop();
+            }
+            else if(s[i].equals("D")){
+                int el=Integer.parseInt(st.peek());
+                el=el*2;
+                String sm=Integer.toString(el);
+                st.push(sm);
+            }
+            if(s[i].equals("+")){
+                String el=st.peek();
+                st.pop();
+                int sum=Integer.parseInt(st.peek())+Integer.parseInt(el);
+                st.push(el);
+                st.push(Integer.toString(sum));
+            }
+        }
+
+        int sum=0;
+        while(!st.isEmpty()){
+            sum = sum + Integer.parseInt(st.peek());
+            st.pop();
+        }
+        return sum;
+    }
+}
