@@ -1,0 +1,57 @@
+// java
+
+import java.util.*;
+
+public class Main {
+    
+    public static int priority(char ch){
+        if(ch=='^') return 3;
+        if(ch=='*' || ch=='/') return 2;
+        if(ch=='+' || ch=='-') return 1;
+        return -1;
+    }
+    
+    public static String convertInfixToPostfix(String s) {
+        int i=0;
+        Stack<Character> st=new Stack<>();
+        StringBuilder sb=new StringBuilder();
+        
+        while(i<s.length()){
+            if(s.charAt(i)>='A' && s.charAt(i)<='Z' || s.charAt(i)>='a' && s.charAt(i)<='z' 
+            || s.charAt(i)>='0' && s.charAt(i)<='9'){
+                sb.append(s.charAt(i));
+            }
+            else if(s.charAt(i)=='('){
+                st.push(s.charAt(i));
+            }
+            else if(s.charAt(i)==')'){
+                while(!st.isEmpty() && st.peek()!='('){
+                    sb.append(st.pop());
+                }
+                if(!st.isEmpty()) st.pop();
+            }
+            else{
+                while(!st.isEmpty() && priority(s.charAt(i))<=priority(st.peek()) ){
+                    sb.append(st.pop());
+                }
+                st.push(s.charAt(i));
+            }
+            i++;
+        }
+        
+        while(!st.isEmpty()){
+            sb.append(st.pop());
+        }
+        
+        return sb.toString();
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter an infix expression:");
+        String infixExpression = scanner.nextLine();
+        String postfixExpression = convertInfixToPostfix(infixExpression);
+        System.out.println("The corresponding postfix expression is: " + postfixExpression);
+        scanner.close();
+    }
+}
