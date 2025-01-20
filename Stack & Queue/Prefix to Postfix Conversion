@@ -1,0 +1,33 @@
+// java
+
+import java.util.*;
+
+public class Main {
+
+    public static String convertPrefixToPostfix(String s) {
+        int i=s.length()-1;
+        Stack<String> st=new Stack<>();
+        while(i>=0){
+            if(Character.isLetterOrDigit(s.charAt(i))){
+                String str=Character.toString(s.charAt(i));
+                st.push(str);
+            }
+            else{
+                String top1=st.pop();
+                String top2=st.pop();
+                String result=top1+top2+s.charAt(i);
+                st.push(result);
+            }
+            i--;
+        }
+        return st.peek();
+    }
+
+    public static void main(String[] args) {
+        String prefixExpression = "/-AB*+DEF";
+        String postfixExpression = convertPrefixToPostfix(prefixExpression);
+        
+        System.out.println("Prefix Expression: " + prefixExpression);
+        System.out.println("Postfix Expression: " + postfixExpression);
+    }
+}
