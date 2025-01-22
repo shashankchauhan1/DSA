@@ -1,0 +1,29 @@
+// java
+
+
+class Solution {
+    public int trap(int[] nums) {
+        int l=0,r=nums.length-1,lmax=0,rmax=0,total=0;
+        while(l<r){
+            if(nums[l]<=nums[r]){
+                if(lmax>nums[l]){
+                    total+=lmax-nums[l];
+                }
+                else{
+                    lmax=nums[l];
+                }
+                l++;
+            }
+            else{
+                if(rmax>nums[r]){
+                    total+=rmax-nums[r];
+                }
+                else{
+                    rmax=nums[r];
+                }
+                r--;
+            }
+        }
+        return total;
+    }
+}
