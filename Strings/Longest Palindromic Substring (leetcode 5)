@@ -1,0 +1,35 @@
+// java
+
+class Solution {
+
+    public boolean isPalindromic(String pl){
+        int i=0;
+        int j=pl.length()-1;
+        while(i<j){
+            if(pl.charAt(i)!=pl.charAt(j)){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public String longestPalindrome(String s) {
+        int max=Integer.MIN_VALUE;
+        String maxStr="";
+        for(int i=0; i<s.length(); i++){
+            for(int j=i; j<s.length(); j++){
+                String pl=s.substring(i,j+1);
+                if(isPalindromic(pl)){
+                    // max=Math.max(max,pl.length());
+                    if(pl.length()>max){
+                        max=pl.length();
+                        maxStr=pl;
+                    }
+                }
+            }
+        }
+        return maxStr; 
+    }
+}
