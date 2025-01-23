@@ -1,0 +1,46 @@
+// java
+
+class Solution {
+    public int[] previousSmallestElement(int[] arr){
+        int n=arr.length;
+        Stack<Integer> st=new Stack<>();
+        int[] result=new int[n];
+        for(int i=0; i<arr.length; i++){
+            while(!st.isEmpty() && arr[st.peek()]>=arr[i]){
+                st.pop();
+            }
+            if(st.isEmpty()) result[i]=-1;
+            else result[i]=st.peek();
+            st.push(i);
+        }
+        return result;
+    }
+
+    public int[] nextSmallestElement(int[] arr){
+        int n=arr.length;
+        Stack<Integer> st=new Stack<>();
+        int[] result=new int[n];
+        for(int i=n-1; i>=0; i--){
+            while(!st.isEmpty() && arr[st.peek()]>arr[i]){
+                st.pop();
+            }
+            if(st.isEmpty()) result[i]=-1;
+            else result[i]=st.peek();
+            st.push(i);
+        }
+        return result;
+    }
+
+    public int sumSubarrayMins(int[] arr) {
+        int[] pse=previousSmallestElement(arr);
+        int[] nse=nextSmallestElement(arr);
+        long total=0;
+        int mod=(int)(1e9)+7;
+        for(int i=0; i<arr.length; i++){
+            int left=(pse[i]==-1) ? (i+1) : (i-pse[i]);
+            int right=(nse[i]==-1) ? (arr.length-i) : (nse[i]-i);
+            total=(total+(left*right*(long)arr[i])%mod)%mod;
+        }
+        return (int)total;
+    }
+}
