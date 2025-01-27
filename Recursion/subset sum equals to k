@@ -1,0 +1,36 @@
+// java
+
+
+import java.util.*;
+
+public class Main {
+    
+    public static void printSubsequencesWithSumK(int i, int[] arr, List<Integer> list, int k) {
+        if(i==arr.length){
+            int sum=0;
+            for(int num:list){
+                sum+=num;
+            }
+            if(sum==k){
+                for(int num:list){
+                    System.out.print(num+" ");
+                }
+                System.out.println();
+            }
+            return;
+        }
+        
+        list.add(arr[i]);
+        printSubsequencesWithSumK(i+1,arr,list,k);
+        list.remove(list.size()-1);
+        printSubsequencesWithSumK(i+1,arr,list,k);
+        
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        int k = 3;
+        List<Integer> output = new ArrayList<>();
+        printSubsequencesWithSumK(0, arr, output, k);
+    }
+}
