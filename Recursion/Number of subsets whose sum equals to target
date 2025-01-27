@@ -1,0 +1,32 @@
+// java
+
+import java.util.*;
+
+public class Main {
+
+    public static int countSubsequencesWithSumK(int i, int[] arr, List<Integer> list, int k,int count) {
+        if(i==arr.length){
+            int sum=0;
+            for(int num:list){
+                sum+=num;
+            }
+            if(sum==k){
+                count++;
+            }
+            return count;
+        }
+        
+        list.add(arr[i]);
+        count=countSubsequencesWithSumK(i+1,arr,list,k,count);
+        list.remove(list.size()-1);
+        count=countSubsequencesWithSumK(i+1,arr,list,k,count);
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        int k = 3;
+        int result=countSubsequencesWithSumK(0, arr, new ArrayList<>(),k,0);
+        System.out.println(result);
+    }
+}
