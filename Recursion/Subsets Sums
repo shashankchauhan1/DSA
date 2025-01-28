@@ -1,0 +1,26 @@
+// java
+
+class Solution {
+    
+    public void func(int i,int[] arr,ArrayList<Integer> result,ArrayList<Integer> list){
+        if(i==arr.length){
+            int sum=0;
+            for(int num:list){
+                sum+=num;
+            }
+            result.add(sum);
+            return;
+        }
+        
+        list.add(arr[i]);
+        func(i+1,arr,result,list);
+        list.remove(list.size()-1);
+        func(i+1,arr,result,list);
+    }
+    
+    public ArrayList<Integer> subsetSums(int[] arr) {
+        ArrayList<Integer> result=new ArrayList<>();
+        func(0,arr,result,new ArrayList<>());
+        return result;
+    }
+}
