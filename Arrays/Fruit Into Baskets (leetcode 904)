@@ -1,0 +1,20 @@
+// java
+
+class Solution {
+    public int totalFruit(int[] fruits) {
+        int l=0,r=0,n=fruits.length,maxFruit=0;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        while(r<n){
+            int currentCount=map.getOrDefault(fruits[r],0);
+            map.put(fruits[r],currentCount+1);
+            while(map.size()>2){
+                if(map.get(fruits[l])==1) map.remove(fruits[l]);
+                else map.put(fruits[l],map.get(fruits[l])-1);
+                l++;
+            }
+            maxFruit=Math.max(maxFruit,r-l+1);
+            r++;
+        }
+        return maxFruit;
+    }
+}
