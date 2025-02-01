@@ -1,0 +1,26 @@
+// java
+
+
+class Solution {
+
+    int subarray(int[] nums,int goal){
+        if(goal<0) return 0;
+        int l=0,r=0,n=nums.length,count=0,sum=0;
+        while(r<n){
+            sum+=nums[r]%2;
+            while(sum>goal){
+                sum-=nums[l]%2;
+                l++;
+            }
+            count+=r-l+1;
+            r++;
+        }
+        return count;
+    }
+
+    public int numberOfSubarrays(int[] nums, int k) {
+        int c1=subarray(nums,k);
+        int c2=subarray(nums,k-1);
+        return c1-c2;
+    }
+}
