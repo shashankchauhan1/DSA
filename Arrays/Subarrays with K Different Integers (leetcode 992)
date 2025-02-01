@@ -1,0 +1,29 @@
+// java
+
+
+class Solution {
+
+    public int subarray(int[] nums,int goal){
+        if(goal<0) return 0;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        int l=0,r=0,n=nums.length,count=0;
+        while(r<n){
+            int curCount=map.getOrDefault(nums[r],0);
+            map.put(nums[r],curCount+1);
+            while(map.size()>goal){
+                if(map.get(nums[l])==1) map.remove(nums[l]);
+                else map.put(nums[l],map.get(nums[l])-1);
+                l++;
+            }
+            count+=r-l+1;
+            r++;
+        }
+        return count;
+    }
+
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        int c1=subarray(nums,k);
+        int c2=subarray(nums,k-1);
+        return c1-c2;
+    }
+}
