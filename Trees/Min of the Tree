@@ -1,0 +1,35 @@
+// java
+
+
+// java
+
+
+import java.util.*;
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+class Main {
+    static int minOfTree(Node root) {
+        if(root==null) return 0;
+        return Math.min(root.data,Math.min(minOfTree(root.left),minOfTree(root.right)));
+    }
+
+    public static void main(String[] args) {
+        Node root = new Node(-1);
+        root.left = new Node(-4);
+        root.right = new Node(-10);
+        root.left.left = new Node(-6);
+        root.left.right = new Node(-15);
+        root.right.left = new Node(-11);
+
+        System.out.println(minOfTree(root)); // Expected Output: -15
+    }
+}
