@@ -1,0 +1,32 @@
+// java
+
+
+import java.util.*;
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+class Main {
+    static int maxOfTree(Node root) {
+        if(root==null) return 0;
+        return Math.max(root.data,Math.max(maxOfTree(root.left),maxOfTree(root.right)));
+    }
+
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(4);
+        root.right = new Node(10);
+        root.left.left = new Node(6);
+        root.left.right = new Node(15);
+        root.right.left = new Node(11);
+
+        System.out.println(maxOfTree(root)); // Expected Output: 15
+    }
+}
