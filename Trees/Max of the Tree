@@ -15,7 +15,7 @@ class Node {
 
 class Main {
     static int maxOfTree(Node root) {
-        if(root==null) return 0;
+        if(root==null) return Integer.MIN_VALUE;
         return Math.max(root.data,Math.max(maxOfTree(root.left),maxOfTree(root.right)));
     }
 
