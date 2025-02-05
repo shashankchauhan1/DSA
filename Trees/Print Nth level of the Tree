@@ -1,5 +1,46 @@
 // java
 
+1> By Recursion
+
+import java.util.*;
+
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+public class Main {
+    static void printNthLevel(Node root, int level) {
+        if(root==null) return;
+        if(level==1) System.out.print(root.data+" ");
+        
+        printNthLevel(root.left,level-1);
+        printNthLevel(root.right,level-1);
+    
+    }
+
+    public static void main(String[] args) {
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+
+        int level = 3;
+        printNthLevel(root, level); // Expected Output: 4 5 6 7
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> By BFS
 
 import java.util.*;
 
