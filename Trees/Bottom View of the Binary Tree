@@ -1,0 +1,43 @@
+// java       (Geeks For Geeks)
+
+
+
+class Pair{
+    Node node;
+    int vertical;
+    public Pair(Node n,int v){
+        this.node=n;
+        this.vertical=v;
+    }
+}
+
+
+class Solution{
+    public ArrayList <Integer> bottomView(Node root){
+        ArrayList<Integer> ans=new ArrayList<>();
+        if(root==null) return ans;
+        Map<Integer,Integer>map=new TreeMap<>();
+        Queue<Pair> q=new LinkedList<>();
+        q.offer(new Pair(root,0));
+        
+        while(!q.isEmpty()){
+            Pair pair=q.poll();
+            Node node=pair.node;
+            int line=pair.vertical;
+            
+            map.put(line,node.data);
+            
+            if(node.left!=null){
+                q.offer(new Pair(node.left,line-1));
+            }
+            
+            if(node.right!=null){
+                q.offer(new Pair(node.right,line+1));
+            }
+        }
+        for(int val:map.values()){
+            ans.add(val);
+        }
+        return ans;
+    }
+}
