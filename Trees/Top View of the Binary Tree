@@ -3,7 +3,7 @@
 
 class Pair{
     Node node;
-    int vertical;
+    int vertical; 
     public Pair(Node n,int v){
         this.node=n;
         this.vertical=v;
