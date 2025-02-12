@@ -45,7 +45,7 @@ class Solution {
 }
 
 
----------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 2> Recursive Approach
@@ -80,5 +80,58 @@ class Solution {
         ArrayList<Integer> result=new ArrayList<>();
         inOrder(result,root);
         return result;
+    }
+}
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+3> Morris Traversal : it works in O(1) space complexity if we are just printing the values, the solution below is is use a list to store the data so SC will O(n).
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans=new ArrayList<>();
+        if(root==null) return ans;
+        while(root!=null){
+            if(root.left==null){
+                ans.add(root.val);
+                root=root.right;
+            }
+            else{
+                TreeNode curr=root.left;
+                while(curr.right!=null && curr.right!=root){
+                    curr=curr.right;
+                }
+                if(curr.right==null){
+                    curr.right=root;
+                    root=root.left;
+                }
+                else{
+                    curr.right=null;
+                    ans.add(root.val);
+                    root=root.right;
+                }
+            }
+        }
+        return ans;
     }
 }
