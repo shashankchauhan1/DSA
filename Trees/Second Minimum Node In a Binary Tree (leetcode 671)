@@ -1,0 +1,40 @@
+// java
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+
+    public void find(TreeNode root,int[] arr){
+        if(root==null) return;
+
+        if (root.val > arr[0] && (arr[1] == -1 || root.val < arr[1])) {
+            arr[1] = root.val;
+        }
+
+        find(root.left,arr);
+        find(root.right,arr);
+
+    }
+
+    public int findSecondMinimumValue(TreeNode root) {
+        int[] arr=new int[2];
+        arr[0]=root.val;
+        arr[1]=-1;
+        find(root,arr);
+        return arr[1];
+    }
+}
