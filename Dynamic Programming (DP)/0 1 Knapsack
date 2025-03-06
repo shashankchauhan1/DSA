@@ -1,0 +1,30 @@
+// java
+
+
+import java.util.* ;
+import java.io.*; 
+
+public class Solution{
+
+    static int f(int i,int capacity,int[] weight,int[] value,int[][]dp){
+        if(i==0){
+            if(capacity>=weight[0]) return value[0];
+            else return 0;
+        }
+
+        if(dp[i][capacity]!=-1) return dp[i][capacity];
+
+        int notTake=0+f(i-1,capacity,weight,value,dp);
+        int take=0;
+        if(capacity>=weight[i]){
+            take=value[i]+f(i-1,capacity-weight[i],weight,value,dp);
+        }
+        return dp[i][capacity]=Math.max(take,notTake);
+    }
+
+    static int knapsack(int[] weight, int[] value, int n, int maxWeight) {
+        int[][] dp=new int[n][maxWeight+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+        return f(n-1,maxWeight,weight,value,dp);
+    }
+}
