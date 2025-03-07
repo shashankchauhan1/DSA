@@ -1,0 +1,26 @@
+// java
+
+class Solution {
+    
+    static int f(int i,int capacity,int[]val,int[]wt,int[][]dp){
+        if(i==0){
+            return (capacity/wt[0])*val[0];
+        }
+        
+        if(dp[i][capacity]!=-1) return dp[i][capacity];
+        int notTake=f(i-1,capacity,val,wt,dp);
+        int take=0;
+        if(capacity>=wt[i]){
+            take=val[i]+f(i,capacity-wt[i],val,wt,dp);
+        }
+        return dp[i][capacity]=Math.max(take,notTake);
+    }
+    
+    static int knapSack(int val[], int wt[], int capacity) {
+        int n=val.length;
+        int[][] dp=new int[n][capacity+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+        
+        return f(n-1,capacity,val,wt,dp);
+    }
+}
