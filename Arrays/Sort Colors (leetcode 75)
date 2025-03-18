@@ -1,0 +1,65 @@
+// java
+
+1> Optimal Approach (Dutch National Flag Algorithm).
+
+class Solution {
+    public void swap(int[] nums,int i,int j){
+        int temp=nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+    public void sortColors(int[] nums) {
+        int start=0,mid=0,end=nums.length-1;
+        while(mid<=end){
+            switch(nums[mid]){
+                case 0:
+                    swap(nums,mid,start);
+                    start++;
+                    mid++;
+                    break;
+                case 1:
+                    mid++;
+                    break;
+                case 2:
+                    swap(nums,mid,end);
+                    end--;
+                    break;
+            }
+        }
+
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Better Approach
+
+class Solution {
+    public void sortColors(int[] nums) {
+        int cnt0=0,cnt1=0,cnt2=0;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]==0) cnt0++;
+            else if(nums[i]==1) cnt1++;
+            else cnt2++;
+        }
+
+        if(cnt0>0){
+            for(int i=0; i<cnt0; i++){
+                nums[i]=0;
+            }
+        }
+
+        if(cnt1>0){
+            for(int i=cnt0; i<cnt0+cnt1; i++){
+                nums[i]=1;
+            }
+        }
+
+        if(cnt2>0){
+            for(int i=cnt0+cnt1; i<nums.length; i++){
+                nums[i]=2;
+            }
+        }
+
+    }
+}
