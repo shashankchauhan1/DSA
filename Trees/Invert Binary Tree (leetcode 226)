@@ -17,20 +17,21 @@
  * }
  */
 class Solution {
-    public TreeNode invert(TreeNode root){
-        if(root==null) return null;
+    public void func(TreeNode root){
+        if(root==null) return;
 
         TreeNode temp=root.left;
         root.left=root.right;
         root.right=temp;
 
-        root.left=invert(root.left);
-        root.right=invert(root.right);
-        return root;
+        func(root.left);
+        func(root.right);
+
     }
 
     public TreeNode invertTree(TreeNode root) {
-        root=invert(root);
+        if(root==null) return null;
+        func(root);
         return root;
     }
 }
