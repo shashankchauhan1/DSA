@@ -1,0 +1,33 @@
+// java
+
+class Solution {
+    public int count(int[] nums,int k){
+        if(k<0) return 0;
+        int l=0,r=0,n=nums.length;
+        HashMap<Integer,Integer> map=new HashMap<>();
+        int count=0;
+        while(r<n){
+            int res=map.getOrDefault(nums[r],0);
+            map.put(nums[r],res+1);
+            while(map.size()>k){
+                if(map.get(nums[l])==1) map.remove(nums[l]);
+                else{
+                    map.put(nums[l],map.get(nums[l])-1);
+                }
+                l++;
+            }
+            count+=r-l+1;
+            r++;
+        }
+        return count;
+    }
+
+    public int countCompleteSubarrays(int[] nums) {
+        HashSet<Integer> set=new HashSet<>();
+        for(int num:nums) set.add(num);
+        int k=set.size();
+        int c1=count(nums,k);
+        int c2=count(nums,k-1);
+        return c1-c2;
+    }
+}
