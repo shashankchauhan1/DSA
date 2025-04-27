@@ -1,0 +1,28 @@
+// java
+
+// count number of subsets equal to the target;
+
+
+class Solution {
+    public int f(int i,int target,int[] nums,int[][] dp){
+        if(i==0){
+            if(target==0 && nums[0]==0) return 2;
+            if(target==0 || nums[0]==target) return 1;
+            else return 0;
+        }
+        if(dp[i][target]!=-1) return dp[i][target];
+        int pick=0;
+        if(target>=nums[i]) pick=f(i-1,target-nums[i],nums,dp);
+        int notpick=f(i-1,target,nums,dp);
+        return dp[i][target]=pick+notpick;
+    }
+    
+    public int perfectSum(int[] nums, int target) {
+        int n=nums.length;
+        int[][] dp=new int[n][target+1];
+        
+        for(int[] d:dp) Arrays.fill(d,-1);
+        
+        return f(n-1,target,nums,dp);
+    }
+}
