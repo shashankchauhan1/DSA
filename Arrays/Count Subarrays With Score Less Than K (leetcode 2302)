@@ -1,0 +1,21 @@
+// java
+
+
+class Solution {
+    public long countSubarrays(int[] nums, long k) {
+        int l=0,r=0,n=nums.length;
+        long count=0,sum=0,len=0;
+        while(r<n){
+            sum+=nums[r];
+            len=r-l+1;
+            while(sum*len>=k){
+                sum-=nums[l];
+                l++;
+                len=r-l+1;
+            }
+            count+=r-l+1;
+            r++;
+        }
+        return count;
+    }
+}
