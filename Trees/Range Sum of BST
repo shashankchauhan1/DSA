@@ -1,6 +1,41 @@
 // java
 
-// 2> approach two :
+1> approach one
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void func(TreeNode root,int low,int high,int[] res){
+        if(root==null) return;
+        if(root.val>=low && root.val<=high) res[0]+=root.val;
+
+        if(root.val>low) func(root.left,low,high,res);
+        if(root.val<high) func(root.right,low,high,res);
+    }
+
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        int[] result=new int[1];
+        func(root,low,high,result);
+        return result[0];
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+2> approach two :
 // create a inorder array then traverse on that array and find value>=low && value<=high
 
 /**
