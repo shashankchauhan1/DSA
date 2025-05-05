@@ -1,0 +1,40 @@
+// java
+
+
+
+class Solution {
+    static int countNodes(Node root){
+        if(root==null) return 0;
+        
+        int lh=countNodes(root.left);
+        int rh=countNodes(root.right);
+        
+        return 1+lh+rh;
+    }
+    
+    static boolean isValid(Node root,int min,int max){
+        if(root==null) return true;
+
+        if(root.data<=min || root.data>=max) return false;
+        
+        return isValid(root.left,min,root.data) && isValid(root.right,root.data,max);
+    }
+    
+    static void f(Node root,int[] ans){
+        if(root==null) return;
+        
+        if(isValid(root,Integer.MIN_VALUE,Integer.MAX_VALUE)){
+            ans[0]=Math.max(ans[0],countNodes(root));
+        }
+        
+        f(root.left,ans);
+        f(root.right,ans);
+    }
+    
+    static int largestBst(Node root) {
+        if(root==null) return 0;
+        int[] ans=new int[1];
+        f(root,ans);
+        return ans[0];
+    }
+}
