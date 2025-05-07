@@ -1,0 +1,40 @@
+// java
+
+class Meeting{
+    int start;
+    int end;
+    int pos;
+    Meeting(int s,int e,int p){
+        this.start=s;
+        this.end=e;
+        this.pos=p;
+    }
+}
+
+class Solution {
+    public int maxMeetings(int start[], int end[]) {
+        List<Meeting> list=new ArrayList<>();
+        for(int i=0; i<start.length; i++){
+            list.add(new Meeting(start[i],end[i],i+1));
+        }
+        
+        Collections.sort(list,(a,b)->{
+            if(a.end==b.end){
+                return a.pos-b.pos;
+            }
+            else return a.end-b.end;
+        });
+        
+        int count=1;
+        int lastEnd=list.get(0).end;
+        
+        for(int i=1; i<list.size(); i++){
+            if(lastEnd<list.get(i).start){
+                count++;
+                lastEnd=list.get(i).end;
+            }
+        }
+        return count;
+    }
+}
+
