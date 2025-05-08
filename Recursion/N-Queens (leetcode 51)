@@ -1,0 +1,51 @@
+// java
+
+
+class Solution {
+    public boolean isSafe(int row,int col,int n,char[][] board){
+        // vertical check;
+        for(int i=0; i<n; i++){
+            if(board[i][col]=='Q') return false;
+        }
+
+        // diagonal up left;
+        for(int i=row,j=col; i>=0 && j>=0; i--,j--){
+            if(board[i][j]=='Q') return false;
+        }
+
+        // diagonal up right;
+        for(int i=row,j=col; i>=0 && j<n; i--,j++){
+            if(board[i][j]=='Q') return false;
+        }
+
+        return true;
+    }
+
+    public void nQueens(int row,int n,char[][] board,List<List<String>> result){
+        if(row==n){
+            List<String> list=new ArrayList<>();
+            for(char[] ch:board){
+                list.add(new String(ch));
+            }
+            result.add(list);
+            return;
+        }
+
+        for(int j=0; j<n; j++){
+            if(isSafe(row,j,n,board)){
+                board[row][j]='Q';
+                nQueens(row+1,n,board,result);
+                board[row][j]='.';
+            }
+        }
+
+    }
+
+    public List<List<String>> solveNQueens(int n) {
+        char[][] board=new char[n][n];
+        for(char[] ch:board) Arrays.fill(ch,'.');
+        List<List<String>> result=new ArrayList<>();
+        nQueens(0,n,board,result);
+        return result;
+    }
+}
