@@ -7,7 +7,7 @@ class Solution {
         Queue<Integer> q=new LinkedList<>();
         boolean[] vis=new boolean[V];
         q.add(0);
-        vis[0]  =true;
+        vis[0]=true;
         while(!q.isEmpty()){
             Integer node=q.poll();
             list.add(node);
