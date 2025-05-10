@@ -1,0 +1,40 @@
+// java
+
+
+class Solution {
+    private int nodes;
+    private int edgeCount;
+
+    public void dfs(int node,boolean[] vis,ArrayList<ArrayList<Integer>> adj){
+        vis[node]=true;
+        nodes++;
+        for(int it:adj.get(node)){
+            edgeCount++;
+            if(!vis[it]) dfs(it,vis,adj);
+        }
+    }
+
+    public int countCompleteComponents(int n, int[][] edges) {
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
+
+        for(int[] edge:edges){
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+
+        int count=0;
+        boolean[] vis=new boolean[n];
+
+        for(int i=0; i<n; i++){
+            if(!vis[i]){
+                nodes=0;
+                edgeCount=0;
+                dfs(i,vis,adj);
+                
+                if((edgeCount/2)==(nodes*(nodes-1)/2)) count++;
+            }
+        }
+        return count;
+    }
+}
