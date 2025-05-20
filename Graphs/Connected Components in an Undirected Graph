@@ -1,5 +1,6 @@
 // java
 
+// DFS
 
 class Solution {
     
@@ -36,3 +37,52 @@ class Solution {
         return result;
     }
 }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// BFS
+
+class Solution {
+    public void bfs(int n,int V,boolean[] vis,
+    ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> list){
+        Queue<Integer> q=new LinkedList<>();
+        q.offer(n);
+        while(!q.isEmpty()){
+            int node=q.poll();
+            list.add(node);
+            vis[node]=true;
+            for(int it:adj.get(node)){
+                if(!vis[it]){
+                    q.offer(it);
+                    vis[it]=true;
+                }
+            }
+        }
+        
+    }
+    
+    public ArrayList<ArrayList<Integer>> getComponents(int V, int[][] edges) {
+        ArrayList<ArrayList<Integer>> result=new ArrayList<>();
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        
+        for(int i=0; i<V; i++) adj.add(new ArrayList<>());
+        
+        for(int[] edge:edges){
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+        
+        boolean[] vis=new boolean[V];
+        
+        for(int i=0; i<V; i++){
+            if(!vis[i]){
+                ArrayList<Integer> list=new ArrayList<>();
+                bfs(i,V,vis,adj,list);
+                Collections.sort(list);
+                result.add(list);
+            }
+        }
+        return result;
+    }
+}
+
