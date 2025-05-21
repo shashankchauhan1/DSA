@@ -1,5 +1,6 @@
 // java
 
+// BFS
 
 class Pair{
     int row;
@@ -53,6 +54,41 @@ class Solution {
     }
 }
 
+// DFS
+
+class Solution {
+    public void dfs(int r,int c,char[][] grid,int[][] vis){
+        vis[r][c]=1;
+        int n=grid.length;
+        int m=grid[0].length;
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+        for(int i=0; i<4; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]=='1' && vis[nrow][ncol]!=1){
+                dfs(nrow,ncol,grid,vis);
+            }
+        }
+
+    }
+
+    public int numIslands(char[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        int[][] vis=new int[n][m];
+        int count=0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]=='1' && vis[i][j]!=1){
+                    dfs(i,j,grid,vis);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
