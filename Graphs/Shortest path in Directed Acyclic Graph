@@ -1,2 +1,66 @@
 // java
 
+class Pair{
+    int first;
+    int second;
+    Pair(int f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Solution {
+    public void dfs(int node,boolean[] vis,ArrayList<ArrayList<Pair>> adj,Stack<Integer> st){
+        vis[node]=true;
+        for(Pair neighbour:adj.get(node)){
+            if(!vis[neighbour.first]){
+                dfs(neighbour.first,vis,adj,st);
+            }
+        }
+        st.push(node);
+    }
+    
+    public int[] shortestPath(int V, int E, int[][] edges) {
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        for(int i=0; i<V; i++){
+            adj.add(new ArrayList<>());
+        }
+        
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int w=edge[2];
+            adj.get(u).add(new Pair(v,w));
+        }
+        
+        boolean[] vis=new boolean[V];
+        Stack<Integer> st=new Stack<>();
+        for(int i=0; i<V; i++){
+            if(!vis[i]){
+                dfs(i,vis,adj,st);
+            }
+        }
+        
+        int[] dist=new int[V];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[0]=0;
+        while(!st.isEmpty()){
+            int node=st.pop();
+            if(dist[node]!=Integer.MAX_VALUE){
+                for(Pair neighbour:adj.get(node)){
+                    int v=neighbour.first;
+                    int w=neighbour.second;
+                    if(dist[node]+w < dist[v]){
+                        dist[v]=dist[node]+w;
+                    }
+                }
+            }
+        }
+        
+        for(int i=0; i<V; i++){
+            if(dist[i]==Integer.MAX_VALUE) dist[i]=-1;
+        }
+        return dist;
+    }
+}
+
