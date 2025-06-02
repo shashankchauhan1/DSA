@@ -1,0 +1,57 @@
+// java
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class Pair{
+    TreeNode node;
+    int parent;
+    int depth;
+    Pair(TreeNode n,int p,int d){
+        this.node=n;
+        this.parent=p;
+        this.depth=d;
+    }
+}
+
+class Solution {
+    public boolean isCousins(TreeNode root, int x, int y) {
+        Queue<Pair> q=new LinkedList<>();
+        int parentX=0,parentY=0;
+        int depth=0,depthX=0,depthY=0;
+        q.offer(new Pair(root,-1,0));
+        while(!q.isEmpty()){
+            int size=q.size();
+            depth++;
+            for(int i=0; i<size; i++){
+                if(q.peek().node.left!=null) q.offer(new Pair(q.peek().node.left,q.peek().node.val,depth));
+                if(q.peek().node.right!=null) q.offer(new Pair(q.peek().node.right,q.peek().node.val,depth));
+                Pair p=q.poll();
+                TreeNode node=p.node;
+                int parent=p.parent;
+                if(node.val==x){
+                    parentX=parent;
+                    depthX=depth;
+                } else if(node.val==y){
+                    parentY=parent;
+                    depthY=depth;
+                }
+            }
+
+        }
+        return parentX!=parentY && depthX==depthY;
+    }
+}
