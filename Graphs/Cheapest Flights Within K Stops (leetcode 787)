@@ -1,2 +1,61 @@
 // java
 
+class Pair{
+    int first;
+    int second;
+    Pair(int f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Tuple{
+    int stop;
+    int node;
+    int dist;
+    Tuple(int s,int n,int d){
+        this.stop=s;
+        this.node=n;
+        this.dist=d;
+    }
+}
+
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        for(int i=0; i<n; i++) adj.add(new ArrayList<Pair>());
+
+        for(int[] flight:flights){
+            int u=flight[0];
+            int v=flight[1];
+            int w=flight[2];
+            adj.get(u).add(new Pair(v,w));
+        }
+
+        int[] dist=new int[n];
+        Arrays.fill(dist,Integer.MAX_VALUE);
+        dist[src]=0;
+
+        Queue<Tuple> q=new LinkedList<>();
+
+        q.offer(new Tuple(0,src,0));
+        while(!q.isEmpty()){
+            Tuple t=q.poll();
+            int node=t.node;
+            int stop=t.stop;
+            int d=t.dist;
+
+            if(stop>k) continue;
+            for(Pair neighbour:adj.get(node)){
+                int adjNode=neighbour.first;
+                int w=neighbour.second;
+                if(d+w<dist[adjNode] && stop<=k){
+                    dist[adjNode]=d+w;
+                    q.offer(new Tuple(stop+1,adjNode,d+w));
+                }
+            }
+
+        }
+        return dist[dst]==Integer.MAX_VALUE ? -1 : dist[dst];
+    }
+}
