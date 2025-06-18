@@ -18,3 +18,36 @@ class Solution {
         return ans;
     }
 }
+
+
+---------------- Solution 2
+
+class Solution {
+    public int[][] divideArray(int[] nums, int k) {
+        Arrays.sort(nums);
+        ArrayList<ArrayList<Integer>> result=new ArrayList<>();
+        for(int i=0; i<=nums.length-3; i+=3){
+            ArrayList<Integer> list=new ArrayList<>();
+            int u=nums[i];
+            int v=nums[i+1];
+            int w=nums[i+2];
+            list.add(u);
+            list.add(v);
+            list.add(w);
+            if(v-u>k || w-v>k || w-u>k) return new int[0][0];
+            result.add(new ArrayList<>(list));
+        }
+
+        int n=result.size();
+        int m=3;
+        int[][] ans=new int[n][m];
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                ans[i][j]=result.get(i).get(j);
+            }
+        }
+
+        return ans;
+    }
+}
