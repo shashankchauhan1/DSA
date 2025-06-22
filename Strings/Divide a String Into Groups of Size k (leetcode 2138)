@@ -1,0 +1,29 @@
+// java
+
+class Solution {
+    public String[] divideString(String s, int k, char fill) {
+        ArrayList<String> list=new ArrayList<>();
+        StringBuilder sb=new StringBuilder();
+        int i=0;
+        for(; i+k<=s.length(); i+=k){
+            list.add(s.substring(i,i+k));
+        }
+        
+        if(i<s.length()){
+            int len=s.length()-i;
+            sb=new StringBuilder();
+            while(i<s.length()){
+                sb.append(s.charAt(i));
+                i++;
+            }
+            int n=k-len;
+            for(int j=0; j<n; j++) sb.append(fill);
+            list.add(sb.toString());
+        }
+
+        String[] result=new String[list.size()];
+        for(int j=0; j<list.size(); j++) result[j]=list.get(j);
+
+        return result;
+    }
+}
