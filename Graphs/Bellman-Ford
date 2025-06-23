@@ -1,0 +1,5 @@
+// java
+
+// 1> Do N-1 iterations to get the shortest path after covering all the possible paths.
+// 2> Do the Nth iteration to check if there's another shortest path found then there's a negative cycle return -1.
+
