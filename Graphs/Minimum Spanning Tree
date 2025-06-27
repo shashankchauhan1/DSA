@@ -1,2 +1,38 @@
 // java
 
+class Pair{
+    int first;
+    int second;
+    Pair(int f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Solution {
+    static int spanningTree(int V, int E, List<List<int[]>> adj) {
+        int[] vis=new int[V];
+        int sum=0;
+        
+        PriorityQueue<Pair> q=new PriorityQueue<>((a,b) -> a.second-b.second);
+        q.offer(new Pair(0,0));
+        
+        while(!q.isEmpty()){
+            Pair p=q.poll();
+            int node=p.first;
+            int weight=p.second;
+            if(vis[node]==1) continue;
+            sum+=weight;
+            vis[node]=1;
+            for(int[] neighbour:adj.get(node)){
+                int adjNode=neighbour[0];
+                int edgeW=neighbour[1];
+                if(vis[adjNode]==0){
+                    q.offer(new Pair(adjNode,edgeW));
+                }
+            }
+        }
+        return sum;
+    }
+}
+
