@@ -1,5 +1,7 @@
 // java
 
+// Prims Algorithm
+
 class Pair{
     int first;
     int second;
