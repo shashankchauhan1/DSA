@@ -1,0 +1,64 @@
+// java
+
+1> DisjointSet : unionByRank
+
+class DisjointSet{
+    List<Integer> parent=new ArrayList<>();
+    List<Integer> rank=new ArrayList<>();
+    
+    public DisjointSet(int v){
+        for(int i=0; i<v; i++){
+            parent.add(i);
+            rank.add(0);
+        }
+    }
+    
+    public int findUPar(int node){
+        if(node==parent.get(node)) return node;
+        int ulp=findUPar(parent.get(node));
+        parent.set(node,ulp);
+        return parent.get(node);
+    }
+    
+    public boolean unionByRank(int u,int v){
+        int ulp_u=findUPar(u);
+        int ulp_v=findUPar(v);
+        if(ulp_u==ulp_v) return true;
+        if(rank.get(ulp_u) < rank.get(ulp_v)){
+            parent.set(ulp_u,ulp_v);
+        }
+        else if(rank.get(ulp_v) < rank.get(ulp_u)){
+            parent.set(ulp_v,ulp_u);
+        }
+        else{
+            parent.set(ulp_v,ulp_u);
+            int r=rank.get(ulp_u);
+            rank.set(ulp_u,r+1);
+        }
+        return false;
+    }
+    
+}
+
+class Solution {
+    static int kruskalsMST(int V, int[][] edges) {
+        Arrays.sort(edges, (a,b) -> Integer.compare(a[2],b[2]));
+        DisjointSet ds=new DisjointSet(V);
+        int sum=0;
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int w=edge[2];
+            if(!ds.unionByRank(u,v)) sum+=w;
+        }
+        return sum;
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> DisjointSet : unionBySize
+
+
+
