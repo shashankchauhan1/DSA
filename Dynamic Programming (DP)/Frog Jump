@@ -1,6 +1,8 @@
 // java (GFG)
 
 1> Recursive Way    ( Gives TLE )
+// Time Complexity: O(2^n) — due to overlapping subproblems
+// Space Complexity: O(n) — due to recursion stack
 
 class Solution {
     int f(int idx,int[] height){
@@ -24,6 +26,9 @@ class Solution {
 -----------------------------------------------------------------------------------------
 
 2> Memoization Way  ( Top-Down Approach : reduce the time by using the precomputed overlapping Subproblems, Acceptable on Coding Platforms )
+// Time Complexity: O(n)
+// Space Complexity: O(n) — dp array + recursion stack
+
 
 class Solution {
     int f(int idx,int[] height,int[] dp){
@@ -51,6 +56,8 @@ class Solution {
 -------------------------------------------------------------------------------------
 
 3> Tabulation Way  ( Bottom-UP Approach : the optimal and scalable , no recursion required)
+// Time Complexity: O(n)
+// Space Complexity: O(n) 
 
 class Solution {
     int minCost(int[] height) {
