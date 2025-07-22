@@ -1,0 +1,50 @@
+// java
+
+1> Recursive
+
+class Solution {
+    static Boolean f(int i,int[] arr,int target){
+        if(target==0) return true;
+        
+        if(i==0) return arr[0]==target;
+        
+        boolean pick=false;
+        if(arr[i]<=target) pick=f(i-1,arr,target-arr[i]);
+        
+        boolean notPick=f(i-1,arr,target);
+        
+        return pick || notPick;
+    }
+
+    static Boolean isSubsetSum(int arr[], int sum) {
+        int n=arr.length;
+        return f(n-1,arr,sum);
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
+
+class Solution {
+    static Boolean f(int i,int[] arr,int target,Boolean[][] dp){
+        if(target==0) return true;
+        
+        if(i==0) return arr[0]==target;
+        if(dp[i][target]!=null) return dp[i][target];
+        boolean pick=false;
+        if(arr[i]<=target) pick=f(i-1,arr,target-arr[i],dp);
+        
+        boolean notPick=f(i-1,arr,target,dp);
+        
+        return dp[i][target]=pick || notPick;
+    }
+
+    static Boolean isSubsetSum(int arr[], int sum) {
+        int n=arr.length;
+        Boolean[][] dp=new Boolean[n][sum+1];
+        if(f(n-1,arr,sum,dp)) return true;
+        
+        return false;
+    }
+}
