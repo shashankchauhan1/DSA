@@ -1,6 +1,25 @@
 // java
 
-1> Memoization
+1> Recursive
+
+class Solution {
+    public int f(int i,int j,List<List<Integer>> triangle){
+        if(i==triangle.size()-1) return triangle.get(i).get(j);
+
+        int d=triangle.get(i).get(j)+f(i+1,j,triangle);
+        int dg=triangle.get(i).get(j)+f(i+1,j+1,triangle);
+
+        return Math.min(d,dg);
+    }
+
+    public int minimumTotal(List<List<Integer>> triangle) {
+        return f(0,0,triangle);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
 
 class Solution {
     public int f(int i,int j,List<List<Integer>> triangle,int[][] dp){
@@ -25,7 +44,7 @@ class Solution {
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
-2> Tabulation
+3> Tabulation
 
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
