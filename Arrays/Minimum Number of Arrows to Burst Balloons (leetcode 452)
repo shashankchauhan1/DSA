@@ -1,0 +1,21 @@
+// java
+
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        Arrays.sort(points,(a,b) -> Integer.compare(a[1],b[1]));
+
+        int arrow=1;
+        int[] firstBallon=points[0];
+        int end=firstBallon[1];
+        for(int i=1; i<points.length; i++){
+            int[] ballon=points[i];
+            int start=ballon[0];
+            if(start<=end) continue;
+            else{
+                arrow++;
+                end=ballon[1];
+            }
+        }
+        return arrow; 
+    }
+}
