@@ -1,0 +1,12 @@
+// java
+
+class Solution {
+    public int getLastMoment(int n, int[] left, int[] right) {
+        int lmax=Integer.MIN_VALUE;
+        for(int num:left) lmax=Math.max(num,lmax);
+        int rmin=Integer.MAX_VALUE;
+        for(int num:right) rmin=Math.min(num,rmin);
+        
+        return Math.max(lmax,n-rmin);
+    }
+}
