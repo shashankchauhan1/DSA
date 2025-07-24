@@ -1,5 +1,32 @@
 // java
 
+1> Recursive
+
+class Solution {
+    public int f(int i,int[] coins,int amount){
+        if(i==0){
+            if(amount%coins[0]==0) return amount/coins[0];
+            return (int)(1e8);
+        }
+
+        int notpick=f(i-1,coins,amount);
+        int pick=(int)(1e8);
+        if(coins[i]<=amount){
+            pick=1+f(i,coins,amount-coins[i]);
+        }
+        return Math.min(pick,notpick);
+    }
+
+    public int coinChange(int[] coins, int amount) {
+        int n=coins.length;
+        int a=f(n-1,coins,amount);
+        return a==(int)(1e8) ? -1 : a;
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
 
 class Solution {
     public int f(int i,int amount,int[] coins,int[][] dp){
@@ -26,3 +53,32 @@ class Solution {
         return ans;
     }
 }
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Tabulation
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n=coins.length;
+        int[][] dp=new int[n][amount+1];
+        
+        for(int i=0; i<=amount; i++){
+            if(i%coins[0]==0) dp[0][i]=i/coins[0];
+            else dp[0][i]=(int)(1e8);
+        }
+
+        for(int i=1; i<n; i++){
+            for(int amt=0; amt<=amount; amt++){
+                int notpick=dp[i-1][amt];
+                int pick=(int)(1e8);
+                if(coins[i]<=amt) pick=1+dp[i][amt-coins[i]];
+
+                dp[i][amt]=Math.min(pick,notpick);
+            }
+        }
+        int ans= dp[n-1][amount];
+        return ans==(int)(1e8) ? -1 : ans;
+    }
+}
+
