@@ -1,26 +1,80 @@
 // java
 
+1> Recursion
+
 class Solution {
-    
-    static int f(int i,int capacity,int[]val,int[]wt,int[][]dp){
+    static int f(int i,int[] val,int[] wt,int capacity){
         if(i==0){
-            return (capacity/wt[0])*val[0];
+            if(wt[0]<=capacity) return (capacity/wt[0])*val[0];
+            return 0;
         }
         
-        if(dp[i][capacity]!=-1) return dp[i][capacity];
-        int notTake=f(i-1,capacity,val,wt,dp);
-        int take=0;
-        if(capacity>=wt[i]){
-            take=val[i]+f(i,capacity-wt[i],val,wt,dp);
+        int notpick=f(i-1,val,wt,capacity);
+        int pick=0;
+        if(wt[i]<=capacity){
+            pick=val[i]+f(i,val,wt,capacity-wt[i]);
         }
-        return dp[i][capacity]=Math.max(take,notTake);
+        return Math.max(pick,notpick);
     }
     
     static int knapSack(int val[], int wt[], int capacity) {
-        int n=val.length;
-        int[][] dp=new int[n][capacity+1];
-        for(int[] d:dp) Arrays.fill(d,-1);
-        
-        return f(n-1,capacity,val,wt,dp);
+        int n=wt.length;
+        return f(n-1,val,wt,capacity);
     }
 }
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
+
+class Solution {
+    static int f(int i,int[] val,int[] wt,int capacity,int[][] dp){
+        if(i==0){
+            if(wt[0]<=capacity) return (capacity/wt[0])*val[0];
+            return 0;
+        }
+
+        if(dp[i][capacity]!=-1) return dp[i][capacity];
+        int notpick=f(i-1,val,wt,capacity,dp);
+        int pick=0;
+        if(wt[i]<=capacity){
+            pick=val[i]+f(i,val,wt,capacity-wt[i],dp);
+        }
+        return dp[i][capacity]=Math.max(pick,notpick);
+    }
+    
+    static int knapSack(int val[], int wt[], int capacity) {
+        int n=wt.length;
+        int[][] dp=new int[n][capacity+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+        return f(n-1,val,wt,capacity,dp);
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Tabulation
+
+class Solution {
+    static int knapSack(int val[], int wt[], int capacity) {
+        int n=wt.length;
+        int[][] dp=new int[n][capacity+1];
+        
+        for(int i=0; i<=capacity; i++){
+            dp[0][i]=(i/wt[0])*val[0];
+        }
+        
+        for(int i=1; i<n; i++){
+            for(int cap=0; cap<=capacity; cap++){
+                int notpick=dp[i-1][cap];
+                int pick=0;
+                if(wt[i]<=cap) pick=val[i]+dp[i][cap-wt[i]];
+                
+                dp[i][cap]=Math.max(pick,notpick);
+            }
+        }
+        return dp[n-1][capacity];
+    }
+}
+
+
