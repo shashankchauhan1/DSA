@@ -1,30 +1,56 @@
 // java
 
+1> Recursive
 
-import java.util.* ;
-import java.io.*; 
-
-public class Solution{
-
-    static int f(int i,int capacity,int[] weight,int[] value,int[][]dp){
+class Solution {
+    static int f(int i,int[] val,int[] wt,int capacity){
         if(i==0){
-            if(capacity>=weight[0]) return value[0];
-            else return 0;
+            if(capacity>=wt[0]) return val[0];
+            return 0;
         }
 
-        if(dp[i][capacity]!=-1) return dp[i][capacity];
-
-        int notTake=0+f(i-1,capacity,weight,value,dp);
-        int take=0;
-        if(capacity>=weight[i]){
-            take=value[i]+f(i-1,capacity-weight[i],weight,value,dp);
+        int notpick=f(i-1,val,wt,capacity);
+        int pick=0;
+        if(wt[i]<=capacity){
+            pick=val[i]+f(i-1,val,wt,capacity-wt[i]);
         }
-        return dp[i][capacity]=Math.max(take,notTake);
+        return Math.max(pick,notpick);
     }
-
-    static int knapsack(int[] weight, int[] value, int n, int maxWeight) {
-        int[][] dp=new int[n][maxWeight+1];
-        for(int[] d:dp) Arrays.fill(d,-1);
-        return f(n-1,maxWeight,weight,value,dp);
+    
+    static int knapsack(int W, int val[], int wt[]) {
+        int n=wt.length;
+        return f(n-1,val,wt,W);
     }
 }
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
+
+class Solution {
+    static int f(int i,int[] val,int[] wt,int capacity,int[][] dp){
+        if(i==0){
+            if(capacity>=wt[0]) return val[0];
+            return 0;
+        }
+        if(dp[i][capacity]!=-1) return dp[i][capacity];
+        
+        int notpick=f(i-1,val,wt,capacity,dp);
+        int pick=0;
+        if(wt[i]<=capacity){
+            pick=val[i]+f(i-1,val,wt,capacity-wt[i],dp);
+        }
+        return dp[i][capacity]=Math.max(pick,notpick);
+    }
+    
+    static int knapsack(int W, int val[], int wt[]) {
+        int n=wt.length;
+        int[][] dp=new int[n][W+1];
+        for(int[] d:dp){
+            Arrays.fill(d,-1);
+        }
+        return f(n-1,val,wt,W,dp);
+    }
+}
+
