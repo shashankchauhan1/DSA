@@ -1,0 +1,79 @@
+// java
+
+1> Recursive
+
+class Solution {
+    public int f(int i,int[] price,int capacity){
+        if(i==0){
+            if(capacity>=i+1) return (capacity/(i+1))*price[0];
+            return 0;
+        }
+        
+        int notpick=f(i-1,price,capacity);
+        int pick=0;
+        if(capacity>=i+1) pick=price[i]+f(i,price,capacity-(i+1));
+        
+        return Math.max(pick,notpick);
+    }
+    
+    public int cutRod(int[] price) {
+        int n=price.length;
+        return f(n-1,price,n);
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
+
+class Solution {
+    public int f(int i,int[] price,int capacity,int[][] dp){
+        if(i==0){
+            if(capacity>=i+1) return (capacity/(i+1))*price[0];
+            return 0;
+        }
+        if(dp[i][capacity]!=-1) return dp[i][capacity];
+        
+        int notpick=f(i-1,price,capacity,dp);
+        int pick=0;
+        if(capacity>=i+1) pick=price[i]+f(i,price,capacity-(i+1),dp);
+        
+        return dp[i][capacity]=Math.max(pick,notpick);
+    }
+    
+    public int cutRod(int[] price) {
+        int n=price.length;
+        int[][] dp=new int[n][n+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+        return f(n-1,price,n,dp);
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Tabulation
+
+class Solution {
+    public int cutRod(int[] price) {
+        int n=price.length;
+        int length=n;
+        int[][] dp=new int[n][length+1];
+        
+        for(int i=0; i<=length; i++){
+            if(i>=1) dp[0][i]=(i/1)*price[0];
+        }
+        
+        for(int i=1; i<n; i++){
+            for(int cap=0; cap<=length; cap++){
+                int notpick=dp[i-1][cap];
+                int pick=0;
+                if(cap>=i+1) pick=price[i]+dp[i][cap-(i+1)];
+                
+                dp[i][cap]=Math.max(pick,notpick);
+            }
+        }
+        return dp[n-1][length];
+    }
+}
+
+
