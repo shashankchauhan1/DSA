@@ -1,5 +1,6 @@
 // java
 
+1> Tabulation
 
 class Solution {
     public String shortestCommonSupersequence(String s1, String s2) {
