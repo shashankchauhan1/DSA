@@ -1,0 +1,61 @@
+// java
+
+1> Build Adjacency list and count the sum for all nodes
+
+class Solution {
+    public int edgeScore(int[] edges) {
+        int n=edges.length;
+
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
+
+        for(int i=0; i<n; i++){
+            adj.get(i).add(edges[i]);
+        }
+
+        long[] sumOfIncomingEdges=new long[n];
+        
+        for(int i=0; i<n; i++){
+            for(int it:adj.get(i)){
+                sumOfIncomingEdges[it]+=i;
+            }
+        }
+
+        int el=-1;
+        long max=-1;
+        for(int i=0; i<n; i++){
+            if(sumOfIncomingEdges[i]>max){
+                max=sumOfIncomingEdges[i];
+                el=i;
+            }
+        }
+        return el;
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> if we see carefully that there's no need to build adjacency list as we just use modified hashing technique
+
+class Solution {
+    public int edgeScore(int[] edges) {
+        int n=edges.length;
+        long[] sumOfIncomingEdges=new long[n];
+
+        for(int i=0; i<n; i++){
+            sumOfIncomingEdges[edges[i]]+=i;
+        }
+
+        long max=-1;
+        int el=-1;
+        for(int i=0; i<n; i++){
+            if(sumOfIncomingEdges[i]>max){
+                max=sumOfIncomingEdges[i];
+                el=i;
+            }
+        }
+        return el;
+    }
+}
+
+
