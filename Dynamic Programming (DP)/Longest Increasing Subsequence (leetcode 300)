@@ -1,6 +1,29 @@
 // java
 
-// Memoization Approach
+1> Recursive
+
+class Solution {
+    public int f(int i,int prev,int n,int[] nums){
+        if(i==n) return 0;
+
+        int pick=0;
+        if(prev==-1 || nums[i]>nums[prev]){
+            pick=1+f(i+1,i,n,nums);
+        }
+        int notpick=f(i+1,prev,n,nums);
+
+        return Math.max(pick,notpick);
+    }
+
+    public int lengthOfLIS(int[] nums) {
+        int n=nums.length;
+        return f(0,-1,n,nums);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization Approach
 
 class Solution {
     public int f(int i,int prev,int n,int[] nums,int[][] dp){
@@ -22,6 +45,30 @@ class Solution {
         int[][] dp=new int[n][n+1];
         for(int[] d:dp) Arrays.fill(d,-1);
         return f(0,-1,n,nums,dp);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Tabulation
+
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n=nums.length;
+        int[][] dp=new int[n+1][n+1];
+
+        for(int i=n-1; i>=0; i--){
+            for(int prev=-1; prev<i; prev++){
+                int notpick=dp[i+1][prev+1];
+                int pick=0;
+                if(prev==-1 || nums[i]>nums[prev]){
+                    pick=1+dp[i+1][i+1];
+                }
+
+                dp[i][prev+1]=Math.max(pick,notpick);
+            }
+        }
+        return dp[0][0];
     }
 }
 
