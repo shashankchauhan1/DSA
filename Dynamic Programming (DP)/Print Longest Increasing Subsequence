@@ -1,0 +1,48 @@
+// java
+
+1> need two arrays, dp and hash, 
+
+class Solution {
+    public ArrayList<Integer> getLIS(int arr[]) {
+        int n=arr.length;
+        
+        int[] dp=new int[n];
+        Arrays.fill(dp,1);
+        
+        int[] hash=new int[n];
+        Arrays.fill(hash,1);
+        
+        for(int i=0; i<n; i++){
+            hash[i]=i;
+            for(int prev=0; prev<i; prev++){
+                if(arr[prev] < arr[i] && 1+dp[prev] > dp[i]){
+                    dp[i]=1+dp[prev];
+                    hash[i]=prev;
+                }
+            }
+        }
+        
+        int el=-1;
+        int lastIndex=-1;
+        
+        for(int i=0; i<n; i++){
+            if(dp[i] > el){
+                el=dp[i];
+                lastIndex=i;
+            }
+        }
+        
+        ArrayList<Integer> list=new ArrayList<>();
+        list.add(arr[lastIndex]);
+                                                                  // Backtracking to adding the elements.
+        while(hash[lastIndex] != lastIndex){
+            lastIndex=hash[lastIndex];
+            list.add(arr[lastIndex]);
+        }
+        
+        Collections.reverse(list);
+        
+        return list;
+    }
+}
+
