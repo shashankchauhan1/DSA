@@ -1,0 +1,45 @@
+// java
+
+// Sort the array and find out the longest which satisfies the condition and just store it in the list while backtracking
+
+class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        int n=nums.length;
+        Arrays.sort(nums);
+
+        int[] hash=new int[n];
+        int[] dp=new int[n];
+        Arrays.fill(dp,1);
+
+        for(int i=0; i<n; i++){
+            hash[i]=i;
+            for(int prev=0; prev<i; prev++){
+                if((nums[i] % nums[prev]==0) && 1+dp[prev] > dp[i]){
+                    dp[i]=1+dp[prev];
+                    hash[i]=prev;
+                }
+            }
+        }
+
+        int el=-1,lastIndex=-1;
+        for(int i=0; i<n; i++){
+            if(dp[i]>el){
+                el=dp[i];
+                lastIndex=i;
+            }
+        }
+
+        ArrayList<Integer> list=new ArrayList<>();
+        list.add(nums[lastIndex]);
+
+        while(hash[lastIndex]!=lastIndex){
+            lastIndex=hash[lastIndex];
+            list.add(nums[lastIndex]);
+        }
+
+        Collections.reverse(list);
+
+        return list;
+    }
+}
+
