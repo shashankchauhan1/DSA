@@ -1,0 +1,49 @@
+// java
+
+1> Recursive
+
+class Solution {
+    static long f(int i,int j,int[] arr){
+        if(i==j) return 0;
+        long mini=Long.MAX_VALUE;
+        for(int k=i; k<j; k++){
+            long steps=arr[i-1]*arr[k]*arr[j] + f(i,k,arr) + f(k+1,j,arr);
+            mini=Math.min(steps,mini);
+        }
+        return (long)mini;
+    }
+    
+    static int matrixMultiplication(int arr[]) {
+        int n=arr.length;
+        return (int)f(1,n-1,arr);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Memoization
+
+class Solution {
+    static long f(int i,int j,int[] arr,long[][] dp){
+        if(i==j) return 0;
+        
+        if(dp[i][j]!=-1) return dp[i][j];
+        
+        long mini=Long.MAX_VALUE;
+        for(int k=i; k<j; k++){
+            long steps=arr[i-1]*arr[k]*arr[j] + f(i,k,arr,dp) + f(k+1,j,arr,dp);
+            mini=Math.min(steps,mini);
+        }
+        return dp[i][j]=mini;
+    }
+    
+    static int matrixMultiplication(int arr[]) {
+        int n=arr.length;
+        long[][] dp=new long[n][n];
+        for(long[] d:dp) Arrays.fill(d,-1);
+        
+        return (int)f(1,n-1,arr,dp);
+    }
+}
+
+
