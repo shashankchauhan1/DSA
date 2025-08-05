@@ -1,0 +1,49 @@
+// java
+
+
+class Solution {
+public boolean isSafe(int r,int c,int n,char[][] board){
+        // vertically
+        for(int i=r; i>=0; i--){
+            if(board[i][c]=='Q') return false;
+        }
+
+        // diagonal left
+        for(int i=r,j=c; i>=0 && j>=0; i--,j--){
+            if(board[i][j]=='Q') return false;
+        }
+
+        // diagonal right
+        for(int i=r,j=c; i>=0 && j<n; i--,j++){
+            if(board[i][j]=='Q') return false;
+        }
+        return true;
+    }
+
+    public void f(int row,int n,char[][] board,int[] count){
+        if(row==n){
+            count[0]++;
+            return;
+        }
+
+        for(int col=0; col<n; col++){
+            if(isSafe(row,col,n,board)){
+                board[row][col]='Q';
+                f(row+1,n,board,count);
+                board[row][col]='.';
+            }
+        }
+
+    }
+
+
+    public int totalNQueens(int n) {
+        char[][] board=new char[n][n];
+        for(char[] ch:board) Arrays.fill(ch,'.');
+        int[] count=new int[1];
+        f(0,n,board,count);
+
+        return count[0];
+
+    }
+}
