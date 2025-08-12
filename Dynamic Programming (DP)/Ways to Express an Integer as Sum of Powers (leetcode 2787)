@@ -1,0 +1,28 @@
+// java
+
+
+class Solution {
+    public long f(int i,int target,int sum,int x,long[][] dp,int mod){
+        if(sum==target) return 1;
+        if(sum>target || (int)Math.pow(i,x)>target) return 0;
+
+        if(dp[i][sum]!=-1) return dp[i][sum];
+
+        long pick=0;
+        int temp=(int)Math.pow(i,x);
+        if(sum+temp<=target){
+            pick=f(i+1,target,sum+temp,x,dp,mod);
+        }
+
+        long notpick=f(i+1,target,sum,x,dp,mod);
+        return dp[i][sum]=(pick+notpick)%mod;
+    }
+
+    public int numberOfWays(int n, int x) {
+        int mod=1000000007;
+        long[][] dp=new long[n+1][n+1];
+        for(long[] d:dp) Arrays.fill(d,-1);
+
+        return (int)f(1,n,0,x,dp,mod);
+    }
+}
