@@ -1,0 +1,35 @@
+// java
+
+class Solution {
+    public void dfs(int r,int c,boolean[][] vis,int[][] grid,int idx){
+        vis[r][c]=true;
+        idx+=1;
+
+        int[] delrow={-2,-2,-1,-1,1,1,2,2};
+        int[] delcol={-1,1,-2,2,-2,2,-1,1};
+
+        for(int i=0; i<8; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<grid.length && ncol>=0 && ncol<grid[0].length && grid[nrow][ncol]==idx){
+                dfs(nrow,ncol,vis,grid,idx);
+            }
+        }
+
+    }
+
+    public boolean checkValidGrid(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        boolean[][] vis=new boolean[n][m];
+
+        dfs(0,0,vis,grid,0);
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(vis[i][j]==false) return false;
+            }
+        }
+        return true;
+    }
+}
