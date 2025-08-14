@@ -1,0 +1,46 @@
+// java
+
+class Solution {
+    public boolean dfs(int r,int c,char[][] board,StringBuilder str,int[][] vis,String word){
+        if(str.length()==word.length()) return str.toString().equals(word);
+        if(!word.startsWith(str.toString())) return false;
+
+        int n=board.length;
+        int m=board[0].length;
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+        boolean ans=false;
+        for(int i=0; i<4; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && vis[nrow][ncol]==0){
+                vis[nrow][ncol]=1;
+                str.append(board[nrow][ncol]);
+                if(dfs(nrow,ncol,board,str,vis,word)) return true;
+                // if(ans) return true;
+                str.deleteCharAt(str.length()-1);
+                vis[nrow][ncol]=0;
+            }
+        }
+        return false;
+    }
+
+    public boolean exist(char[][] board, String word) {
+        int n=board.length;
+        int m=board[0].length;
+        int[][] vis=new int[n][m];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(vis[i][j]==0 && board[i][j]==word.charAt(0)){
+                    vis[i][j]=1;
+                    StringBuilder sb=new StringBuilder();
+                    if(dfs(i,j,board,sb.append(board[i][j]),vis,word)) return true;;
+                    // if(ans) return true;
+                    vis[i][j]=0;
+                }
+            }
+        }
+
+        return false;
+    }
+}
