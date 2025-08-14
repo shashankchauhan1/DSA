@@ -1,0 +1,48 @@
+// java
+
+class Solution {
+    public void dfs(int r,int c,int[][] vis,int[][] grid,int[] max){
+        vis[r][c]=1;
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+
+        int count=0;
+        for(int i=0; i<4; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<grid.length && ncol>=0 && ncol<grid[0].length 
+            && grid[nrow][ncol]==0){
+                count++;
+            }
+            if(nrow<0 || nrow>=grid.length || ncol<0 || ncol>=grid[0].length){
+                count++;
+            }
+        }
+        max[0]+=count;
+
+        for(int i=0; i<4; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<grid.length && ncol>=0 && ncol<grid[0].length && vis[nrow][ncol]==0 && grid[nrow][ncol]==1){
+                dfs(nrow,ncol,vis,grid,max);
+            }
+        }
+    }
+
+    public int islandPerimeter(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        int[][] vis=new int[n][m];
+
+        int[] max=new int[1];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(vis[i][j]==0 && grid[i][j]==1){
+                    dfs(i,j,vis,grid,max);
+                }
+            }
+        }
+
+        return max[0];
+    }
+}
