@@ -1,0 +1,22 @@
+// java
+
+class Solution {
+    public String largestGoodInteger(String num) {
+        int i=0,j=1,k=2;
+        String ans="";
+        int max=-1;
+        while(k<num.length()){
+            if(num.charAt(i)==num.charAt(j) && num.charAt(j)==num.charAt(k)){
+                int n=Integer.parseInt(num.substring(i,k+1));
+                if(max<n){
+                    max=n;
+                    ans=num.substring(i,k+1);
+                }
+            }
+            i++;
+            j++;
+            k++;
+        }
+        return ans;
+    }
+}
