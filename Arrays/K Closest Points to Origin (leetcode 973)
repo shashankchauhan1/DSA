@@ -1,0 +1,33 @@
+// java
+
+class Pair{
+    int first;
+    int second;
+    Pair(int f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+        PriorityQueue<Pair> pq=new PriorityQueue<>((a,b) -> a.first-b.first);
+        for(int i=0; i<points.length; i++){
+            int a=points[i][0];
+            int b=points[i][1];
+            pq.offer(new Pair((int)(Math.pow(a,2)+Math.pow(b,2)),i));
+        }
+
+        int[][] result=new int[k][2];
+        int i=0;
+        while(k>0){
+            Pair p=pq.poll();
+            int idx=p.second;
+            result[i][0]=points[idx][0];
+            result[i][1]=points[idx][1];
+            i++;
+            k--;
+        }
+        return result;
+    }
+}
