@@ -1,0 +1,29 @@
+// java
+
+class Solution {
+    public int minOperations(int[] nums, int x) {
+        int sum=0;
+        for(int num:nums) sum+=num;
+        int n=nums.length;
+        int target=sum-x;
+        if(sum==x) return n;
+
+        int l=0,r=0;
+        int maxlen=Integer.MAX_VALUE;
+        sum=0;
+        while(r<n){
+            sum+=nums[r];
+            while(sum>target && l<r){
+                sum-=nums[l];
+                l++;
+            }
+            
+            if(sum==target){
+                maxlen=Math.min(maxlen,n-(r-l+1));
+            }
+            r++;
+        }
+        
+        return maxlen==Integer.MAX_VALUE ? -1 : maxlen;
+    }
+}
