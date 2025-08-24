@@ -1,0 +1,41 @@
+// java
+
+class Solution {
+    public boolean dfs(int r,int c,int pr,int pc,char[][] grid,boolean[][] vis,char startChar){
+        vis[r][c]=true;
+        int[] delrow={0,1,0,-1};
+        int[] delcol={-1,0,1,0};
+        int n=grid.length;
+        int m=grid[0].length;
+
+        for(int i=0; i<4; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && grid[nrow][ncol]==startChar){
+                if(!vis[nrow][ncol]){
+                    if(dfs(nrow,ncol,r,c,grid,vis,startChar)) return true;
+                }
+                else if(nrow!=pr || ncol!=pc){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean containsCycle(char[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+
+        boolean[][] vis=new boolean[n][m];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(!vis[i][j]){
+                    char startChar=grid[i][j];
+                    if(dfs(i,j,-1,-1,grid,vis,startChar)) return true;
+                }
+            }
+        }
+        return false;
+    }
+}
