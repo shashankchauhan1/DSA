@@ -1,0 +1,38 @@
+// java
+
+
+class Solution {
+    public void dfs(int node,TreeSet<Integer> set,boolean[] vis,List<List<Integer>> revAdj){
+        vis[node]=true;
+        for(int it:revAdj.get(node)){
+            if(!vis[it]){
+                set.add(it);
+                dfs(it,set,vis,revAdj);
+            }
+        }
+
+    }
+
+    public List<List<Integer>> getAncestors(int n, int[][] edges) {
+        List<List<Integer>> revAdj=new ArrayList<>();
+
+        for(int i=0; i<n; i++) revAdj.add(new ArrayList<>());
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            revAdj.get(v).add(u);
+        }
+
+        List<List<Integer>> result=new ArrayList<>();
+        for(int i=0; i<n; i++){
+            TreeSet<Integer> set=new TreeSet<>();
+            boolean[] vis=new boolean[n];
+            dfs(i,set,vis,revAdj);
+            result.add(new ArrayList<>(set));
+        }
+
+        return result;
+    }
+}
+
+
