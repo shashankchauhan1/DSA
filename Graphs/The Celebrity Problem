@@ -1,0 +1,24 @@
+// java
+
+
+class Solution {
+    public int celebrity(int mat[][]) {
+        int n=mat.length;
+        int[] inDegree=new int[n];
+        int[] outDegree=new int[n];
+        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(mat[i][j]==1){
+                    inDegree[j]++;
+                    outDegree[i]++;
+                }
+            }
+        }
+        
+        for(int i=0; i<n; i++){
+            if(inDegree[i]==n && outDegree[i]==1) return i;
+        }
+        return -1;
+    }
+}
