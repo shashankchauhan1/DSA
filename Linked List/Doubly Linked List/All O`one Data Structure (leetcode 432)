@@ -1,0 +1,109 @@
+// java
+
+class Node{
+    int freq;
+    Node next;
+    Node prev;
+    Set<String> keys;
+    Node(int f){
+        this.freq=f;
+        this.next=null;
+        this.prev=null;
+        keys=new HashSet<>();
+    }
+}
+
+class AllOne {
+    Node head=new Node(-1);
+    Node tail=new Node(-1);
+    Map<String,Node> map;
+
+    public AllOne() {
+        head.next=tail;
+        tail.prev=head;
+        map=new HashMap<>();
+    }
+    
+    public void inc(String key) {
+        Node curr=head;
+        int newFreq=1;
+        if(map.containsKey(key)){
+            curr=map.get(key);
+            newFreq=curr.freq+1;
+            curr.keys.remove(key);
+        }
+        if(curr.next.freq==newFreq){
+            curr.next.keys.add(key);
+        }
+        else{
+            Node newNode=new Node(newFreq);
+            newNode.keys.add(key);
+            
+            Node nextNode=curr.next;
+            newNode.next=nextNode;
+            nextNode.prev=newNode;
+            curr.next=newNode;
+            newNode.prev=curr;
+        }
+        map.put(key,curr.next);
+
+        if(curr.keys.size()==0 && curr!=head){
+            removeNode(curr);
+        }
+    }
+    
+    public void dec(String key) {
+        Node curr=map.get(key);
+        int newFreq=curr.freq-1;
+        curr.keys.remove(key);
+
+        if(newFreq==0){
+            map.remove(key);
+            if(curr.keys.size()==0) removeNode(curr);
+            return;
+        }
+        
+        if(curr.prev.freq==newFreq){
+            curr.prev.keys.add(key);
+        }
+        else{
+            Node newNode=new Node(newFreq);
+            newNode.keys.add(key);
+            Node prevNode=curr.prev;
+            newNode.next=curr;
+            curr.prev=newNode;
+            newNode.prev=prevNode;
+            prevNode.next=newNode;
+        }
+    
+        map.put(key,curr.prev);
+
+        if(curr.keys.size()==0 && curr!=head){
+            removeNode(curr);
+        }
+    }
+
+    public void removeNode(Node node){
+        node.next.prev=node.prev;
+        node.prev.next=node.next;
+    }
+    
+    public String getMaxKey() {
+        if(tail.prev==head) return "";
+        return tail.prev.keys.iterator().next();
+    }
+    
+    public String getMinKey() {
+        if(head.next==tail) return "";
+        return head.next.keys.iterator().next();
+    }
+}
+
+/**
+ * Your AllOne object will be instantiated and called as such:
+ * AllOne obj = new AllOne();
+ * obj.inc(key);
+ * obj.dec(key);
+ * String param_3 = obj.getMaxKey();
+ * String param_4 = obj.getMinKey();
+ */
