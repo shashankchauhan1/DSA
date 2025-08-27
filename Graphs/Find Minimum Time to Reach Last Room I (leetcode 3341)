@@ -1,0 +1,56 @@
+// java
+
+
+class Tuple implements Comparable<Tuple>{
+    int row;
+    int col;
+    int dist;
+    Tuple(int r,int c,int d){
+        this.row=r;
+        this.col=c;
+        this.dist=d;
+    }
+
+    @Override
+    public int compareTo(Tuple o){
+        return this.dist-o.dist;
+    }
+}
+
+class Solution {
+    public int minTimeToReach(int[][] moveTime) {
+        int n=moveTime.length;
+        int m=moveTime[0].length;
+        int[][] dist=new int[n][m];
+        for(int[] d:dist) Arrays.fill(d,Integer.MAX_VALUE);
+
+        dist[0][0]=0;
+        int[] delrow={0,1,0,-1};
+        int[] delcol={-1,0,1,0};
+
+        PriorityQueue<Tuple> q=new PriorityQueue<>();
+        q.offer(new Tuple(0,0,0));
+
+        while(!q.isEmpty()){
+            Tuple t=q.poll();
+            int r=t.row;
+            int c=t.col;
+            int d=t.dist;
+
+            if(r==n-1 && c==m-1) return d;
+            for(int i=0; i<4; i++){
+                int nrow=r+delrow[i];
+                int ncol=c+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m){
+                    int newD=Math.max(d+1,moveTime[nrow][ncol]+1 );
+                    if(newD < dist[nrow][ncol]){
+                        dist[nrow][ncol]=newD;
+                        q.offer(new Tuple(nrow,ncol,newD));
+                    }
+                }
+            }
+        }
+        
+        return -1;
+    }
+}
