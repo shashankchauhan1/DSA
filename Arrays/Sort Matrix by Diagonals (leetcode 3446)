@@ -1,0 +1,61 @@
+// java
+
+class Solution {
+    public int[][] sortMatrix(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        if(n==1 || m==1) return grid;
+
+        int[][] result=new int[n][m];
+
+        // for moving in downword direction
+        int mainI=0,mainJ=0;
+        while(mainI<n){
+            int i=mainI;
+            int j=mainJ;
+
+            ArrayList<Integer> list=new ArrayList<>();
+            while(i<n && j<m){
+                list.add(grid[i][j]);
+                i++;
+                j++;
+            }
+            list.sort((a,b) -> b-a);
+            i=mainI;
+            j=mainJ;
+            int k=0;
+            while(i<n && j<m){
+                result[i][j]=list.get(k++);
+                i++;
+                j++;
+            }
+            mainI++;
+        }
+
+        mainI=0;
+        mainJ=1;
+        while(mainJ<m){
+            int i=mainI;
+            int j=mainJ;
+
+            ArrayList<Integer> list=new ArrayList<>();
+            while(i<n && j<m){
+                list.add(grid[i][j]);
+                i++;
+                j++;
+            }
+            Collections.sort(list); 
+            i=mainI;
+            j=mainJ;
+            int k=0;
+            while(i<n && j<m){
+                result[i][j]=list.get(k++);
+                i++;
+                j++;
+            }
+            mainJ++;
+        }
+
+        return result;
+    }
+}
