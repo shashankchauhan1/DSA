@@ -1,0 +1,55 @@
+// java
+
+class Tuple implements Comparable<Tuple>{
+    int row;
+    int col;
+    int cost;
+    Tuple(int r,int c,int cst){
+        this.row=r;
+        this.col=c;
+        this.cost=cst;
+    }
+
+    @Override
+    public int compareTo(Tuple obj){
+        return this.cost-obj.cost;
+    }
+}
+
+class Solution {
+    public int minCost(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+        int[][] dist=new int[n][m];
+        for(int[] d:dist) Arrays.fill(d,Integer.MAX_VALUE);
+
+        int[] delrow={0,0,1,-1};
+        int[] delcol={1,-1,0,0};
+        PriorityQueue<Tuple> q=new PriorityQueue<>();
+        q.offer(new Tuple(0,0,0));
+        dist[0][0]=0;
+
+        while(!q.isEmpty()){
+            Tuple p=q.poll();
+            int r=p.row;
+            int c=p.col;
+            int cost=p.cost;
+
+            if(r==n-1 && c==m-1) return cost;
+
+            for(int i=0; i<4; i++){
+                int nrow=r+delrow[i];
+                int ncol=c+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m){
+                    int newD= (grid[r][c]==i+1 ? cost : cost+1);
+                    if(newD < dist[nrow][ncol]){
+                        dist[nrow][ncol]=newD;
+                        q.offer(new Tuple(nrow,ncol,newD));
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+}
