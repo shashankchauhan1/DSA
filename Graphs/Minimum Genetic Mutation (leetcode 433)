@@ -1,0 +1,46 @@
+// java
+
+
+class Pair{
+    String first;
+    int second;
+    Pair(String f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Solution {
+    public int minMutation(String startGene, String endGene, String[] bank) {
+        Set<String> set=new HashSet<>();
+
+        for(String word:bank){
+            set.add(word);
+        }
+
+        char[] chars={'A','C','G','T'};
+        Queue<Pair> q=new LinkedList<>();
+        q.offer(new Pair(startGene,0));
+
+        while(!q.isEmpty()){
+            Pair p=q.poll();
+            String str=p.first;
+            int dist=p.second;
+
+            if(str.equals(endGene)) return dist;
+
+            for(int i=0; i<str.length(); i++){
+                char[] words=str.toCharArray();
+                for(char ch:chars){
+                    words[i]=ch;
+                    String newstr=new String(words);
+                    if(set.contains(newstr)){
+                        set.remove(newstr);
+                        q.offer(new Pair(newstr,dist+1));
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+}
