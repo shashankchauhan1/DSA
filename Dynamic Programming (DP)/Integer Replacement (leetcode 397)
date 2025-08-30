@@ -1,0 +1,25 @@
+// java
+
+class Solution {
+    public int f(long n,Map<Integer,Integer> map){
+        if(n==1) return 0;
+
+        if(map.containsKey((int)n)) return map.get((int)n);
+
+        int ans=0;
+        if((n&1)==0) ans=1+f(n/2,map);
+        else{
+            ans=1+Math.min(f(n-1,map),f(n+1,map));
+        }
+        map.put((int)n,ans);
+        return ans;
+    }
+
+    public int integerReplacement(int n) {
+        if(n==1) return 0;
+        int[] ans=new int[1];
+        Map<Integer,Integer> map=new HashMap<>();
+        ans[0]=f(n,map);
+        return ans[0];
+    }
+}
