@@ -12,29 +12,38 @@ class Pair{
 }
 
 class Solution {
-    static int spanningTree(int V, int E, List<List<int[]>> adj) {
-        int[] vis=new int[V];
-        int sum=0;
+    public int spanningTree(int V, int[][] edges) {
         
+        boolean[] vis=new boolean[V];
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        for(int i=0; i<V; i++) adj.add(new ArrayList<>());
+        
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int w=edge[2];
+            adj.get(u).add(new Pair(v,w));
+            adj.get(v).add(new Pair(u,w));
+        }
+        
+        int sum=0;
         PriorityQueue<Pair> q=new PriorityQueue<>((a,b) -> a.second-b.second);
         q.offer(new Pair(0,0));
-        
         while(!q.isEmpty()){
             Pair p=q.poll();
             int node=p.first;
-            int weight=p.second;
-            if(vis[node]==1) continue;
-            sum+=weight;
-            vis[node]=1;
-            for(int[] neighbour:adj.get(node)){
-                int adjNode=neighbour[0];
-                int edgeW=neighbour[1];
-                if(vis[adjNode]==0){
-                    q.offer(new Pair(adjNode,edgeW));
+            int w=p.second;
+            if(vis[node]==true) continue;
+            vis[node]=true;
+            sum+=w;
+            for(Pair neighbour:adj.get(node)){
+                int v=neighbour.first;
+                int wofv=neighbour.second;
+                if(!vis[v]){
+                    q.offer(new Pair(v,wofv));
                 }
             }
         }
         return sum;
     }
 }
-
