@@ -1,0 +1,38 @@
+// java
+
+class Solution {
+    public boolean isSafe(int r,int c,char[][] board,char ch){
+        // check horizontally
+        for(int j=0; j<9; j++){
+            if(board[r][j]==ch && c!=j) return false;
+        }
+
+        // check vertically
+        for(int i=0; i<9; i++){
+            if(board[i][c]==ch && i!=r) return false;
+        }
+        
+        int sr=(r/3)*3;
+        int sc=(c/3)*3;
+        for(int i=sr; i<sr+3; i++){
+            for(int j=sc; j<sc+3; j++){
+                if(board[i][j]==ch && (i!=r || j!=c)) return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isValidSudoku(char[][] board) {
+        int n=board.length;
+        int m=board[0].length;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(board[i][j]!='.'){
+                    if(isSafe(i,j,board,board[i][j])==false) return false;
+                }
+            }
+        }
+        return true;
+    }
+}
