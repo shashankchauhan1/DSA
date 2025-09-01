@@ -1,0 +1,49 @@
+// java
+
+class Tuple{
+    int node;
+    int row;
+    int col;
+    Tuple(int n,int r,int c){
+        this.node=n;
+        this.row=r;
+        this.col=c;
+    }
+}
+
+class Solution {
+    public int swimInWater(int[][] grid) {
+        int n=grid.length;
+        int m=grid[0].length;
+
+        boolean[][] vis=new boolean[n][m];
+        int[] delrow={0,1,0,-1};
+        int[] delcol={-1,0,1,0};
+        
+        int el=-1;
+        PriorityQueue<Tuple> q=new PriorityQueue<>((a,b) -> a.node-b.node);
+        q.offer(new Tuple(grid[0][0],0,0));
+        vis[0][0]=true;
+
+        while(!q.isEmpty()){
+            Tuple t=q.poll();
+            int r=t.row;
+            int c=t.col;
+            int node=t.node;
+            el=Math.max(el,node);
+
+            if(r==n-1 && c==m-1) return el;
+
+            for(int i=0; i<4; i++){
+                int nrow=r+delrow[i];
+                int ncol=c+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol]){
+                    vis[nrow][ncol]=true;
+                    q.offer(new Tuple(grid[nrow][ncol],nrow,ncol));
+                }
+            }
+        }
+
+        return -1;
+    }
+}
