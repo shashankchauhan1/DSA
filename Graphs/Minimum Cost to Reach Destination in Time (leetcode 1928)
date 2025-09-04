@@ -1,0 +1,67 @@
+// java
+
+class Tuple implements Comparable<Tuple>{
+    int node;
+    int time;
+    int price;
+    Tuple(int n,int t,int p){
+        this.node=n;
+        this.time=t;
+        this.price=p;
+    }
+
+    @Override
+    public int compareTo(Tuple obj){
+        return this.price-obj.price;
+    }
+}
+
+class Pair{
+    int first;
+    int second;
+    Pair(int f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Solution {
+    public int minCost(int maxTime, int[][] edges, int[] passingFees) {
+        ArrayList<ArrayList<Pair>> adj=new ArrayList<>();
+        int n=passingFees.length;
+        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
+
+        for(int[] edge:edges){
+            int u=edge[0];
+            int v=edge[1];
+            int w=edge[2];
+            adj.get(u).add(new Pair(v,w));
+            adj.get(v).add(new Pair(u,w));
+        }
+        int[] time=new int[n];
+        Arrays.fill(time,Integer.MAX_VALUE);
+        time[0]=0;
+        
+        PriorityQueue<Tuple> q=new PriorityQueue<>();
+        q.offer(new Tuple(0,0,passingFees[0]));
+
+        while(!q.isEmpty()){
+            Tuple tuple=q.poll();
+            int node=tuple.node;
+            int t=tuple.time;
+            int p=tuple.price;
+
+            if(node==n-1) return p;
+
+            for(Pair neighbour:adj.get(node)){
+                int v=neighbour.first;
+                int tofv=neighbour.second;
+                if(t+tofv < time[v] && t+tofv <=maxTime){
+                    time[v]=t+tofv;
+                    q.offer(new Tuple(v,time[v],p+passingFees[v]));
+                }
+            }
+        }
+        return -1;
+    }
+}
