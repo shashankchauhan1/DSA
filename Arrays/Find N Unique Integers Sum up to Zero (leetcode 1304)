@@ -1,0 +1,24 @@
+// java
+
+class Solution {
+    public int[] sumZero(int n) {
+        int start=n/2;
+
+        int[] arr=new int[n];
+        start=-start;
+        if(n%2==0){
+            for(int i=0; i<n; i++){
+                if(start==0) start++;
+                arr[i]=start;
+                start++;
+            }
+        }
+        else{
+            for(int i=0; i<n; i++){
+                arr[i]=start;
+                start++;
+            }
+        }
+        return arr;
+    }
+}
