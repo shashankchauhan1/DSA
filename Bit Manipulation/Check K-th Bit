@@ -1,7 +1,7 @@
 // java
 
 // A bit is set means it is 1
-// Right Shift 1 by k places and do a 'and' operation, if the answer is != 0 means its set otherwise not
+// left Shift 1 by k places and do a 'and' operation, if the answer is != 0 means its set otherwise not
 
 class CheckBit {
     static boolean checkKthBit(int n, int k) {
