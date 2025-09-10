@@ -1,13 +1,14 @@
 // java
+// count set bits -> just do a 'and' of n with n-1 , everytime until n becomes zero we just remove the last set bit
 
 class Solution {
     public int count(int n){
-        int c1=0;
-        while(n>0){
-            if(n%2==1) c1++;
-            n/=2;
+        int cnt=0;
+        while(n!=0){
+            n=n&(n-1);        // count set bits
+            cnt++;
         }
-        return c1;
+        return cnt;
     }
 
     public int[] countBits(int n) {
