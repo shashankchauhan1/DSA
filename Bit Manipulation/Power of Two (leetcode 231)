@@ -1,0 +1,9 @@
+// java
+
+// every number which is power of two has only 1 set bit and if we do a 'and' of n and (n-1) and the output is zero then it is power of two
+
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        return n>0 && (n&(n-1))==0;
+    }
+}
