@@ -1,0 +1,24 @@
+// java
+
+// we need to make the ith bit 0, so what we can do is simply do a left shift on 1 by k places and then inverse(~) 
+// after finding n and inverse do an 'and'
+
+class Solution {
+    static void clearBit(int num, int i) {
+        
+        int clear = num & ~(1 << i);  // Clear ith bit
+
+        System.out.println("Original number: " + num + " (binary: " + Integer.toBinaryString(num) + ")");
+        System.out.println("i = " + i);
+        System.out.println("After clearing bit: " + clear + " (binary: " + Integer.toBinaryString(clear) + ")");
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        int num = 13;   // binary: 1101
+        int i = 2;      // clear the 2nd bit (0-based index)
+        clearBit(num, i);
+        clearBit(29, 3);   // 11101 -> clear 3rd bit
+        clearBit(42, 1);   // 101010 -> clear 1st bit
+    }
+}
