@@ -1,0 +1,14 @@
+// java
+
+// set kth bit if it is 0 convert it to 1 and if it is 1 then dont do anything
+// doing a 'or' operation after left shifting by k places is the approach
+
+class Solution {
+    static int setKthBit(int n, int k) {
+        int i=1;
+        
+        n=n|(i<<k);
+        
+        return n;
+    }
+}
