@@ -1,5 +1,7 @@
 // java
 
+// Approach : count the number of 1 in each bit for each number and then check if it is %k then so 'or' with the answer you were storing
+
 // Tc -> O(n) and Sc -> O(1)
 
 class Solution {
