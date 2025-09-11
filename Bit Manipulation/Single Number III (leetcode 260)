@@ -1,5 +1,10 @@
 // java
 
+// Approach : remove all the duplicate pairs
+// after removing we only left with the Xor of both the 2 unique numbers after that we need to find the bit where they differs
+// then do xor with that differing bit and if the bit and num is 0 put it in another section, otherwies if 1 or more put in another so we get two different sections 
+// both the sections contains duplicates and 1 unique -> eliminate duplicate and we left with both unique , just return them
+
 class Solution {
     public int[] singleNumber(int[] nums) {
         int ans=0;
