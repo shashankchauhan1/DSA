@@ -1,5 +1,6 @@
 // java
 
+
 class Solution {
     public int countSetBits(int n){
         int cnt=0;
