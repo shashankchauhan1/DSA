@@ -4,6 +4,9 @@
 // if the count of vowels are even in the string then alice can pick odd means even-1 vowels and bob left with 1 vowel since 1 is odd so he is not able to pick that 
 // because he is allowed to pick only even : but if string doesn't contains any vowel then alice can't pick because she is the first who start picking elements.
 
+// instead of counting if we get vowels they are either even or either odd so if they are odd alice can pick all and won but if they are even alice can pick odd and bob left 
+// with 1 so again alice won.. (Approach)
+
 class Solution {
     public boolean doesAliceWin(String s) {
 
