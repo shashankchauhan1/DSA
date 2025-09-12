@@ -1,0 +1,27 @@
+// java
+
+class Solution {
+    public void f(int i,String str,int n,List<String> list){
+        if(str.length()==n){
+            if(!list.contains(str)) list.add(new String(str));
+            return;
+        }
+
+        if(str.charAt(i)=='0'){
+            f(i+1,str+"1",n,list);
+        }
+        else{
+            f(i+1,str+"1",n,list);
+            f(i+1,str+"0",n,list);
+        }
+        
+    }
+
+    public List<String> validStrings(int n) {
+        List<String> list=new ArrayList<>();
+        f(0,"0",n,list);
+        f(0,"1",n,list);
+
+        return list;
+    }
+}
