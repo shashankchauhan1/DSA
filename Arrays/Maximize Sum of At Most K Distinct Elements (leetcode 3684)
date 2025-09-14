@@ -1,0 +1,24 @@
+// java
+
+class Solution {
+    public int[] maxKDistinct(int[] nums, int k) {
+        Arrays.sort(nums);
+        ArrayList<Integer> list=new ArrayList<>();
+        list.add(nums[nums.length-1]);
+        
+        for(int i=nums.length-2; i>=0; i--){
+            if(nums[i]!=nums[i+1] && k>1){
+                list.add(nums[i]);
+                k--;
+            }
+        }
+        
+        int size=list.size();
+        int[] arr=new int[size];
+        for(int i=0; i<size; i++){
+            arr[i]=list.get(i);
+        }
+        return arr;
+        
+    }
+}
