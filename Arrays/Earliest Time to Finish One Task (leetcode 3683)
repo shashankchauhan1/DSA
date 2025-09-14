@@ -1,0 +1,12 @@
+// java
+
+class Solution {
+    public int earliestTime(int[][] tasks) {
+        int sum=Integer.MAX_VALUE;
+
+        for(int[] task:tasks){
+            sum=Math.min(sum,task[0]+task[1]);
+        }
+        return sum;
+    }
+}
