@@ -1,0 +1,30 @@
+// java
+
+class Solution {
+    public void f(int i,int n,int k,int target,List<List<Integer>> result,List<Integer> list){
+        // if we got the target as 0 and the size of list == k add it in result and return.
+        if(target==0){
+            if(list.size()==k) result.add(new ArrayList<>(list));
+            return;
+        }
+            
+        if(i>n) return;     // out of bound basecase
+
+        if(target>=i){      // pick
+            list.add(i);
+            f(i+1,n,k,target-i,result,list);
+            list.remove(list.size()-1);
+        }
+
+        f(i+1,n,k,target,result,list);  // not pick
+    }
+
+    public List<List<Integer>> combinationSum3(int k, int n) {
+        List<List<Integer>> result=new ArrayList<>();
+        if(k>n) return result;
+
+        f(1,9,k,n,result,new ArrayList<>());
+        
+        return result;
+    }
+}
