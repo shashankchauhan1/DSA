@@ -1,0 +1,55 @@
+// java
+
+// Recursion
+
+class Solution {
+    public int f(int i,int n,int[] nums,int sum,int target){
+        if(i>=n){
+            if(sum==target) return 1;
+            return 0;
+        }
+
+        int add=f(i+1,n,nums,sum+nums[i],target);
+        int sub=f(i+1,n,nums,sum-nums[i],target);
+
+        return add+sub;
+    }
+
+    public int findTargetSumWays(int[] nums, int target) {
+        int n=nums.length;
+
+        return f(0,n,nums,0,target);
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Memoization
+
+class Solution {
+    public int f(int i,int n,int[] nums,int sum,int target,int[][] dp,int total){
+        if(i>=n){
+            if(sum==target) return 1;
+            return 0;
+        }
+
+        if(dp[i][sum+total]!=-1) return dp[i][sum+total];
+
+        int add=f(i+1,n,nums,sum+nums[i],target,dp,total);
+        int sub=f(i+1,n,nums,sum-nums[i],target,dp,total);
+
+        return dp[i][sum+total] = add+sub;
+    }
+
+    public int findTargetSumWays(int[] nums, int target) {
+        int n=nums.length;
+        int total=0;
+        for(int num:nums) total+=num;
+
+        // due to -ve elements
+        int[][] dp=new int[n+1][2*total+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+
+        return f(0,n,nums,0,target,dp,total);
+    }
+}
