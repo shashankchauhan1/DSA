@@ -1,0 +1,40 @@
+// java
+
+class Solution {
+    public String reorganizeString(String s) {
+        int[] freq=new int[26];
+        PriorityQueue<Character> pq=new PriorityQueue<>((a,b) -> freq[b-'a'] - freq[a-'a']);
+
+        for(int i=0; i<s.length(); i++){
+            freq[s.charAt(i)-'a']++;
+        }
+
+        for(int i=0; i<s.length(); i++){
+            if(!pq.contains(s.charAt(i))){
+                pq.offer(s.charAt(i));
+            }
+        }
+
+        StringBuilder sb=new StringBuilder();
+        while(pq.size()>=2){
+            char c1=pq.poll();
+            char c2=pq.poll();
+            sb.append(c1);
+            sb.append(c2);
+
+            freq[c1-'a']--;
+            freq[c2-'a']--;
+            
+            if(freq[c1-'a']>0) pq.add(c1);
+            if(freq[c2-'a']>0) pq.add(c2);
+        }
+
+        if(!pq.isEmpty()){
+            char ch=pq.poll();
+            if(freq[ch-'a']>1) return "";
+            sb.append(ch);
+        }
+
+        return sb.toString();
+    }
+}
