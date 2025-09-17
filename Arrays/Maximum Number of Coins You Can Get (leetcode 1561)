@@ -1,0 +1,19 @@
+// java
+
+class Solution {
+    public int maxCoins(int[] piles) {
+        Arrays.sort(piles);
+        int n=piles.length;
+        int alice=n-1;
+        int me=n-2;
+        int bob=0;
+        
+        int sum=0;
+        while(me>bob){
+            sum+=piles[me];
+            me-=2;
+            bob++;
+        }
+        return sum;
+    }
+}
