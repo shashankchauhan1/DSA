@@ -1,3 +1,31 @@
+// Inplace Check
+
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n=nums.length;   
+        // all the negative numbers marked as n+1 (last number)
+        for(int i=0; i<n; i++){
+            if(nums[i]<=0) nums[i]=n+1;
+        }
+
+        // seat check
+        for(int i=0; i<n; i++){
+            int num = Math.abs(nums[i]);
+            if(num<=n){
+                nums[num-1]= -Math.abs(nums[num-1]);
+            }
+        }
+
+        // find answer
+        for(int i=0; i<n; i++){
+            if(nums[i]>0) return i+1;
+        }
+        return n+1;
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------
+
 // using a hashset
 
 class Solution {
