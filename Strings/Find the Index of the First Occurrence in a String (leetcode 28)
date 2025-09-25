@@ -1,0 +1,19 @@
+// java
+
+// nothing just create a window of needle size and check substrings
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        int i=0;
+        int j=needle.length();
+        int n=haystack.length();
+        while(j<=n){
+            String sub=haystack.substring(i,j);
+            if(sub.equals(needle)) return i;
+
+            i++;
+            j++;
+        }
+        return -1;
+    }
+}
