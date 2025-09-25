@@ -1,0 +1,130 @@
+
+// java
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode findKthNode(ListNode node,int k){
+        while(node!=null && k>1){
+            node=node.next;
+            k--;
+        }
+        return node;
+    }
+
+    public ListNode reverse(ListNode node){
+        if(node==null || node.next==null) return node;
+        ListNode prev=null;
+        ListNode curr=node;
+        while(curr!=null){
+            ListNode front=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=front;
+        }
+        return prev;
+    }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode curr=head;
+        ListNode prev=null;
+        while(curr!=null){
+            ListNode kthNode=findKthNode(curr,k);
+
+            if(kthNode==null){
+                prev.next=curr;
+                break;    // no K nodes next
+            }
+
+            ListNode nextNode=kthNode.next;
+            kthNode.next=null;
+            kthNode=reverse(curr);
+            if(prev==null) head=kthNode;
+            else prev.next=kthNode;
+
+            prev=curr;
+            curr=nextNode;
+        }
+
+        return head;
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// c++
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+    ListNode* findKthNode(ListNode* temp,int k){
+        int counter=1;
+        while(temp!=NULL && counter<k){
+            counter++;
+            temp=temp->next;
+        }
+        return temp;
+    }
+
+    ListNode* reverse(ListNode* temp){
+        ListNode* current=temp;
+        ListNode* prev=NULL;
+        while(current!=NULL){
+            ListNode* front=current->next;
+            current->next=prev;
+            prev=current;
+            current=front;
+        }
+        return prev;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(head==NULL || head->next==NULL) return head;
+
+        ListNode* temp=head;
+        ListNode* prev=NULL;
+
+        while(temp!=NULL){
+            ListNode* KthNode=findKthNode(temp,k);
+
+            if(KthNode==NULL){
+                if(prev) prev->next=temp;
+                break;
+            }
+
+            ListNode* nextNode=KthNode->next;
+            KthNode->next=NULL;
+
+            reverse(temp);
+
+            if(temp==head){
+                head=KthNode;
+            }
+            else{
+                prev->next=KthNode;
+            }
+            prev=temp;
+            temp=nextNode;
+
+        }
+        return head;
+    }
+};
