@@ -1,0 +1,41 @@
+// java
+
+class Solution {
+    public void dfs(int r,int c,int[][] grid1,int[][] grid2,boolean[] check){
+        if(r<0 || c<0 || r>=grid1.length || c>=grid1[0].length) return;
+
+        grid2[r][c]=0;
+
+        if(grid1[r][c]==0) check[0]=false;
+
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+        for(int i=0; i<4; i++){
+            int nrow=r+delrow[i];
+            int ncol=c+delcol[i];
+            if(nrow>=0 && nrow<grid2.length && ncol>=0 && ncol<grid2[0].length && grid2[nrow][ncol]==1){
+                dfs(nrow,ncol,grid1,grid2,check);
+            }
+        }
+
+    }
+
+    public int countSubIslands(int[][] grid1, int[][] grid2) {
+        int n=grid2.length;
+        int m=grid2[0].length;
+
+        int count=0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid2[i][j]==1){
+                    boolean[] check=new boolean[1];
+                    check[0]=true;
+                    dfs(i,j,grid1,grid2,check);
+                    if(check[0]) count++;
+                }
+            }
+        }
+
+        return count;
+    }
+}
