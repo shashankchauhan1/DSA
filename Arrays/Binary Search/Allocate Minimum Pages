@@ -1,0 +1,48 @@
+// java
+
+class Solution {
+    public int findMax(int[] arr){
+        int ans=0;
+        for(int num:arr) ans=Math.max(ans,num);
+        return ans;
+    }
+    
+    public int findSum(int[] arr){
+        int sum=0;
+        for(int num:arr) sum+=num;
+        return sum;
+    }
+    public boolean canTake(int[] arr,int allocate, int students){
+        int currStuds=1;
+        int pages=0;
+        for(int i=0; i<arr.length; i++){
+            if(pages+arr[i] <= allocate){
+                pages+=arr[i];
+            }
+            else{
+                currStuds++;
+                pages=arr[i];
+            }
+        }
+        
+        return currStuds <=students;
+    }
+    
+    public int findPages(int[] arr, int k) {
+        int n=arr.length;
+        if(n<k) return -1;
+        
+        int s=findMax(arr);
+        int e=findSum(arr);
+        int ans=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(canTake(arr,mid,k)){
+                ans=mid;
+                e=mid-1;
+            }
+            else s=mid+1;
+        }
+        return ans;
+    }
+}
