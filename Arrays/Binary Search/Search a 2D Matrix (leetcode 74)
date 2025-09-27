@@ -1,19 +1,61 @@
 // java
 
+--------------------------- Brute Force Solution --------------------------- (O^2 running nested loops)
+
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int r=matrix.length;
-        int c=matrix[0].length;
-        int s=0;
-        int e=r*c-1;
-        while(s<=e){
-            int mid=s+(e-s)/2;
-            int row=mid/c;
-            int col=mid%c;
-            if(matrix[row][col] == target) return true;
-            else if(matrix[row][col] < target) s=mid+1;
-            else e=mid-1;
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(matrix[i][j]==target) return true;
+            }
         }
         return false;
     }
 }
+
+----------------------------- Better Solution --------------- (applying  binary search on each row to find element)
+
+class Solution {
+
+    public static boolean find(int[] mat,int target){
+        int s=0;
+        int e=mat.length-1;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(mat[mid]==target) return true;
+            else if(mat[mid]>target) e=mid-1;
+            else s=mid+1;
+        }
+        return false;
+    }
+
+    public boolean searchMatrix(int[][] matrix, int target) {
+        boolean check=false;
+        for(int i=0; i<matrix.length; i++){
+            check=find(matrix[i],target);
+            if(check == true) return true;
+        }
+        return false;
+    }
+}
+
+--------------------------------------- Optimal Solution ---------------------- (Flattening the matrix into 1D Array)
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int s=0;
+        int e=matrix.length*matrix[0].length-1;            
+        int c=matrix[0].length;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            int row=mid/c;
+            int cols=mid%c;
+            if(matrix[row][cols]==target) return true;
+            else if(matrix[row][cols]>target) e=mid-1;
+            else s=mid+1;
+        }
+        return false;
+    }
+}
+
+
