@@ -1,0 +1,41 @@
+// java
+
+class Solution {
+    public int findMax(int[] stalls){
+        int ans=0;
+        for(int num:stalls) ans=Math.max(ans,num);
+        return ans;
+    }
+    
+    public boolean isPossible(int[] stalls,int dist,int cows){
+        int cow=1;
+        int last=stalls[0];
+        
+        for(int i=1; i<stalls.length; i++){
+            if(stalls[i]-last >= dist){
+                cow++;
+                last=stalls[i];
+            }
+        }
+        return cow>=cows;
+    }
+    
+    public int aggressiveCows(int[] stalls, int k) {
+        
+        Arrays.sort(stalls);
+        int s=0;
+        int e=stalls[stalls.length-1];
+        int ans=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(isPossible(stalls,mid,k)){
+                ans=mid;
+                s=mid+1;
+            }
+            else{
+                e=mid-1;
+            }
+        }
+        return ans;
+    }
+}
