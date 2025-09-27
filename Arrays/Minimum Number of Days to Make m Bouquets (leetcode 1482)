@@ -1,56 +1,54 @@
 // java
 
 class Solution {
-    public static int minimum(int[] arr){
+    public int findMin(int[] nums){
         int min=Integer.MAX_VALUE;
-        for(int i=0; i<arr.length; i++){
-            if(arr[i]<min){
-                min=arr[i];
-            }
+        int n=nums.length;
+        for(int num:nums){
+            min=Math.min(min,num);
         }
         return min;
     }
-    
-    public static int maximum(int[] arr){
+
+    public int findMax(int[] nums){
         int max=Integer.MIN_VALUE;
-        for(int i=0; i<arr.length; i++){
-            if(arr[i]>max){
-                max=arr[i];
-            }
+        int n=nums.length;
+        for(int num:nums){
+            max=Math.max(max,num);
         }
         return max;
     }
 
-    public static int isPossible(int[] arr,int day,int target){
-        int count=0;
-        int nob=0;
-        for(int i=0; i<arr.length; i++){
-            if(arr[i]<=day){
-                count++;
-            }
+    public boolean canPick(int[] bloomDay,int current,int noOfBouquets,int flowerNeeded){
+        int total=0;
+        int cnt=0;
+        for(int i=0; i<bloomDay.length; i++){
+            if(bloomDay[i]<=current) cnt++;
             else{
-                nob+=(count/target);
-                count=0;
+                total+=cnt/flowerNeeded;
+                cnt=0;
             }
         }
-        nob+=(count/target);
-        return nob;
+        total+=cnt/flowerNeeded;
+
+        return total>=noOfBouquets;
     }
 
     public int minDays(int[] bloomDay, int m, int k) {
-        int s=minimum(bloomDay);
-        int e=maximum(bloomDay);
-        int ans=-1;
+        int n=bloomDay.length;
+        if(n < (long)m*k) return -1;
+
+        int s=findMin(bloomDay);
+        int e=findMax(bloomDay);
+        int ans=0;
+
         while(s<=e){
             int mid=s+(e-s)/2;
-            int numberOfBouquets=isPossible(bloomDay,mid,k);
-            if(numberOfBouquets>=m){
+            if(canPick(bloomDay,mid,m,k)){
                 ans=mid;
                 e=mid-1;
             }
-            else{
-                s=mid+1;
-            }
+            else s=mid+1;
         }
         return ans;
     }
