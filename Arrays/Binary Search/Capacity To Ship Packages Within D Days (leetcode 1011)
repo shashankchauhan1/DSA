@@ -1,0 +1,48 @@
+// java
+
+class Solution {
+    public int findMax(int[] weights){
+        int ans=0;
+        for(int num:weights) ans=Math.max(ans,num);
+        return ans;
+    }
+
+    public int findSum(int[] weights){
+        int sum=0;
+        for(int num:weights) sum+=num;
+        return sum;
+    }
+
+    public boolean ableToShip(int[] weights,int capacity,int days){
+        int currCap=0;
+        int day=1;
+        for(int i=0; i<weights.length; i++){
+            if(currCap+weights[i]<=capacity){
+                currCap+=weights[i];
+            }
+            else{
+                day++;
+                currCap=weights[i];
+            }
+        }
+        
+        return day<=days;
+    }
+    
+    public int shipWithinDays(int[] weights, int days) {
+        int n=weights.length;
+        int s=findMax(weights);
+        int e=findSum(weights);
+        int ans=0;
+        
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(ableToShip(weights,mid,days)){
+                ans=mid;
+                e=mid-1;
+            }
+            else s=mid+1;
+        }
+        return ans;
+    }
+}
