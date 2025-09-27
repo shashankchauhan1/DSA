@@ -1,12 +1,6 @@
 // java
 
 class Solution {
-    public int findMax(int[] stalls){
-        int ans=0;
-        for(int num:stalls) ans=Math.max(ans,num);
-        return ans;
-    }
-    
     public boolean isPossible(int[] stalls,int dist,int cows){
         int cow=1;
         int last=stalls[0];
