@@ -1,5 +1,8 @@
 // java
 
+// traverse and store, pop in stack according to precedence.
+// append in string 
+
 class Solution {
     public static int priority(char ch){
         if(ch=='^') return 3;
