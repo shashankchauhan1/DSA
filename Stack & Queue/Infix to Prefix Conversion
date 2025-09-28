@@ -1,5 +1,9 @@
 // java
 
+// Reverse the String
+// Toggle the brackets
+// do a IN to POST conversion -> must check for ^ operator 
+
 class Solution {
     public String reverse(String s){
         StringBuilder sb = new StringBuilder(s);
