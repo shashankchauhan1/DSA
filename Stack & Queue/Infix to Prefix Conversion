@@ -46,11 +46,13 @@ class Solution {
                 if(!st.isEmpty()) st.pop();
             }
             else{
-                while(!st.isEmpty() && 
-                ( priority(s.charAt(i))<priority(st.peek()) || (priority(s.charAt(i))==priority(st.peek()) && s.charAt(i)=='^') )) {
+                while (!st.isEmpty() &&
+                      (priority(s.charAt(i)) < priority(st.peek()) ||
+                      (priority(s.charAt(i)) == priority(st.peek()) && s.charAt(i) != '^'))) {
+
                     sb.append(st.pop());
-                }
-                
+                }           
+
                 st.push(s.charAt(i));
             }
             
