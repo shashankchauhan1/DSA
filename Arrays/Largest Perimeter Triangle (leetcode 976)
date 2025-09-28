@@ -1,0 +1,17 @@
+// java
+
+// we just need to check if a+b>c then return the max
+
+class Solution {
+    public int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        int max=0;
+        for(int i=n-2; i>0; i--){
+            if(nums[i]+nums[i-1] > nums[i+1]){
+                return nums[i]+nums[i-1]+nums[i+1];
+            }
+        }
+        return max;
+    }
+}
