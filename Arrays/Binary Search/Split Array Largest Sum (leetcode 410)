@@ -1,0 +1,46 @@
+// java
+
+class Solution {
+    public int findSum(int[] nums){
+        int sum=0;
+        for(int num:nums) sum+=num;
+        return sum;
+    }
+
+    public int findMax(int[] nums){
+        int max=0;
+        for(int num:nums) max=Math.max(max,num);
+        return max;
+    }
+
+    public boolean ableToPaint(int[] nums,int size,int people){
+        int painter=1;
+        int board=0;
+        for(int i=0; i<nums.length; i++){
+            if(board+nums[i] <= size){
+                board+=nums[i];
+            }
+            else{
+                painter++;
+                board=nums[i];
+            }
+        }
+        return painter<=people;
+    }
+
+    public int splitArray(int[] nums, int k) {
+        int n=nums.length;
+        int s=findMax(nums);
+        int e=findSum(nums);
+        int ans=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            if(ableToPaint(nums,mid,k)){
+                ans=mid;
+                e=mid-1;
+            }
+            else s=mid+1;
+        }
+        return ans;
+    }
+}
