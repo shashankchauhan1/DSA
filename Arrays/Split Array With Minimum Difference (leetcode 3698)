@@ -1,0 +1,68 @@
+// java
+
+class Solution {
+    public long[] findPrefix(int[] nums){
+        int n=nums.length;
+        long[] prefix=new long[n];
+        prefix[0]=nums[0];
+        for(int i=1; i<n; i++){
+            prefix[i] = nums[i] + prefix[i-1];
+        }
+        return prefix;
+    }
+
+    public long[] findSuffix(int[] nums){
+        int n=nums.length;
+        long[] suffix=new long[n];
+        suffix[n-1]=nums[n-1];
+        for(int i=n-2; i>=0; i--){
+            suffix[i] = nums[i] + suffix[i+1];
+        }
+        return suffix;
+    }
+
+    public boolean[] findBooleanPrefix(int[] nums){
+        int n=nums.length;
+        boolean[] prefix=new boolean[n];
+        prefix[0]=true;
+        for(int i=1; i<n; i++){
+            if(nums[i] > nums[i-1]) prefix[i]=true;
+            else break;
+        }
+        return prefix;
+    }
+
+    public boolean[] findBooleanSuffix(int[] nums){
+        int n=nums.length;
+
+        boolean[] suffix=new boolean[n];
+        suffix[n-1]=true;
+        for(int i=n-2; i>=0; i--){
+            if(nums[i] > nums[i+1]) suffix[i]=true;
+            else break;
+        }
+        return suffix;
+    }
+
+    public long splitArray(int[] nums) {
+        int n=nums.length;
+        
+        if(n==2) return Math.abs(nums[0]-nums[1]);
+
+        long[] prefix=findPrefix(nums);
+        long[] suffix=findSuffix(nums);
+        boolean[] prefixBoolean=findBooleanPrefix(nums);
+        boolean[] suffixBoolean=findBooleanSuffix(nums);
+
+        long min=Long.MAX_VALUE;
+        int i=0,j=1;
+        while(j<n){
+            if(prefixBoolean[i] && suffixBoolean[j]){
+                min=(long)Math.min(min,(long)Math.abs((long)prefix[i] - suffix[j]));
+            }
+            i++;
+            j++;
+        }
+        return min==Long.MAX_VALUE ? -1 : min;
+    }
+}
