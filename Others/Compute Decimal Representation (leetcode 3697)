@@ -1,0 +1,33 @@
+// java
+
+class Solution {
+    public int countDigit(int n){
+        int cnt=0;
+        while(n>0){
+            cnt++;
+            n/=10;
+        }
+        return cnt;
+    }
+
+    public int[] decimalRepresentation(int n) {
+        List<Integer> list=new ArrayList<>();
+        int i=0;
+        int digit=countDigit(n);
+        while(n>0){
+            int d=(int)Math.pow(10,digit-1);
+            int num=(n/d)*d;
+
+            if(num!=0){
+                list.add(num);
+                n=Math.abs(n-list.get(list.size()-1));
+            }
+            digit--;
+            i++;
+        }
+        int[] result=new int[list.size()];
+        for(int j=0; j<list.size(); j++) result[j]=list.get(j);
+
+        return result;
+    }
+}
