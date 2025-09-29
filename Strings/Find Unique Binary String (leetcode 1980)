@@ -1,0 +1,45 @@
+// java
+
+1> Approach 1
+
+class Solution {
+    public String findDifferentBinaryString(String[] nums) {
+        StringBuilder sb=new StringBuilder();
+        for(int i=0; i<nums.length; i++){
+            sb.append(nums[i].charAt(i) == '0' ? "1" : "0");
+        }
+        return sb.toString();
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+
+2> Approach 2
+
+class Solution {
+    public String convertToString(int n,int lenNeeded){
+        String s = Integer.toBinaryString(n);
+        if(s.length()==lenNeeded) return s;
+
+        int need=lenNeeded-s.length();
+        StringBuilder sb=new StringBuilder();
+        for(int i=0; i<need; i++) sb.append("0");
+        sb.append(s);
+        return sb.toString();
+    }
+
+    public String findDifferentBinaryString(String[] nums) {
+        boolean[] vis=new boolean[nums.length+1];
+        int wordlen=nums[0].length();
+
+        for(int i=0; i<nums.length; i++){
+            int n=Integer.valueOf(nums[i],2);
+            if(n>=0 && n<nums.length) vis[n]=true;
+        }
+
+        for(int i=0; i<=vis.length; i++){
+            if(!vis[i]) return convertToString(i,wordlen);
+        }
+        return convertToString(vis.length,wordlen);
+    }
+}
