@@ -1,7 +1,5 @@
 // java
 
-
-
 class Solution {
 
     public int[] previousSmallestElement(int[] arr){
