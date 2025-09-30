@@ -1,5 +1,6 @@
 // java
 
+// Greedy
 
 class Solution {
     public boolean canJump(int[] nums) {
@@ -9,5 +10,33 @@ class Solution {
             maxIndex=Math.max(maxIndex,i+nums[i]);
         }
         return true;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------
+
+// DP Approach
+
+class Solution {
+    public boolean f(int idx,int[] nums,int n,Boolean[] dp){
+        if(idx==n-1) return true;
+
+        if(dp[idx]!=null) return dp[idx];
+
+        boolean step=false;
+        for(int i=1; i<=nums[idx]; i++){
+            int nextStep=i+idx;
+            
+            if(nextStep < n) step = step || f(idx+i,nums,n,dp);
+
+            if(step) return true;
+        }
+        return dp[idx] = step;
+    }
+
+    public boolean canJump(int[] nums) {
+        int n=nums.length;
+        Boolean[] dp=new Boolean[n];
+        return f(0,nums,n,dp);
     }
 }
