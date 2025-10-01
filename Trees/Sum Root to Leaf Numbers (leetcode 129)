@@ -1,6 +1,5 @@
 // java
 
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -17,24 +16,23 @@
  * }
  */
 class Solution {
-
-    public void sum(TreeNode root,String str,int[] ans){
+    public void f(TreeNode root,int sum,int[] mainSum){
         if(root==null) return;
 
-        str+=root.val;
+        sum=sum*10+root.val;
         if(root.left==null && root.right==null){
-            int s=Integer.parseInt(str);
-            ans[0]+=s;
+            mainSum[0]+=sum;
         }
 
-        sum(root.left,str,ans);
-        sum(root.right,str,ans);
+        f(root.left,sum,mainSum);
+        f(root.right,sum,mainSum);
+
     }
 
     public int sumNumbers(TreeNode root) {
-        int ans[]=new int[1];
-        ans[0]=0;
-        sum(root,"",ans);
-        return ans[0];
+        int[] mainSum=new int[1];
+        mainSum[0]=0;
+        f(root,0,mainSum);
+        return mainSum[0];
     }
 }
