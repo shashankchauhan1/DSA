@@ -1,0 +1,60 @@
+// java
+
+class Tuple{
+    int level;
+    int row;
+    int col;
+    Tuple(int l,int r,int c){
+        this.level=l;
+        this.row=r;
+        this.col=c;
+    }
+}
+
+class Solution {
+    public int trapRainWater(int[][] heightMap) {
+        int n=heightMap.length;
+        int m=heightMap[0].length;
+
+        PriorityQueue<Tuple> pq=new PriorityQueue<>((a,b) -> a.level - b.level);
+        boolean[][] vis=new boolean[n][m];
+
+        for(int i=0; i<m; i++){
+            pq.offer(new Tuple(heightMap[0][i],0,i));
+            vis[0][i]=true;
+
+            pq.offer(new Tuple(heightMap[n-1][i],n-1,i));
+            vis[n-1][i]=true;
+        }
+
+        for(int j=1; j<n-1; j++){
+            pq.offer(new Tuple(heightMap[j][0],j,0));
+            vis[j][0]=true;
+
+            pq.offer(new Tuple(heightMap[j][m-1],j,m-1));
+            vis[j][m-1]=true;
+        }
+
+        int[] delrow={0,1,0,-1};
+        int[] delcol={-1,0,1,0};
+        int total=0;
+        while(!pq.isEmpty()){
+            Tuple t=pq.poll();
+            int level=t.level;
+            int r=t.row;
+            int c=t.col;
+
+            vis[r][c]=true;
+            for(int i=0; i<4; i++){
+                int nrow=r+delrow[i];
+                int ncol=c+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol]){
+                    vis[nrow][ncol]=true;
+                    if(level > heightMap[nrow][ncol]) total += level - heightMap[nrow][ncol];
+                    pq.offer(new Tuple(Math.max(level,heightMap[nrow][ncol]),nrow,ncol));
+                }
+            }
+        }
+        return total;
+    }
+}
