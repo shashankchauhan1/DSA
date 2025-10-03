@@ -1,0 +1,55 @@
+// java
+
+class Tuple{
+    int row;
+    int col;
+    int dist;
+    Tuple(int r,int c,int d){
+        this.row=r;
+        this.col=c;
+        this.dist=d;
+    }
+}
+
+class Solution {
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Tuple> q=new LinkedList<>();
+        int n=mat.length;
+        int m=mat[0].length;
+
+        int[][] dist=new int[n][m];
+        boolean[][] vis=new boolean[n][m];
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(mat[i][j]==0){
+                    vis[i][j]=true;
+                    q.offer(new Tuple(i,j,0));
+                }
+            }
+        }
+
+        int[] delrow={0,1,0,-1};
+        int[] delcol={-1,0,1,0};
+
+        while(!q.isEmpty()){
+            Tuple t=q.poll();
+            int r=t.row;
+            int c=t.col;
+            int d=t.dist;
+
+            dist[r][c]=d;
+
+            for(int i=0; i<4; i++){
+                int nrow=r+delrow[i];
+                int ncol=c+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && mat[nrow][ncol]==1){
+                    vis[nrow][ncol]=true;
+                    q.offer(new Tuple(nrow,ncol,d+1));
+                }
+            }
+        }
+
+        return dist;
+    }
+}
