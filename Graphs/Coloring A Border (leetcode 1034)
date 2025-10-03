@@ -1,0 +1,53 @@
+// java
+
+class Solution {
+    public boolean isValid(int row,int col,int[][] grid,int ic){
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+        int n=grid.length;
+        int m=grid[0].length;
+        int count=0;
+        for(int i=0; i<4; i++){
+            int nr=row+delrow[i];
+            int nc=col+delcol[i];
+            if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==ic){
+                count++;
+            }
+        }
+        return count<4;
+    }
+
+    public void dfs(int row,int col,int[][] grid,int[][] result,int ic,int nc,boolean[][] vis){
+        vis[row][col]=true;
+        if(isValid(row,col,grid,ic)){
+            result[row][col]=nc;
+        }
+        int n=grid.length;
+        int m=grid[0].length;
+        int[] delrow={-1,0,1,0};
+        int[] delcol={0,1,0,-1};
+        for(int i=0; i<4; i++){
+            int nrow=row+delrow[i];
+            int ncol=col+delcol[i];
+            if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && grid[nrow][ncol]==ic && result[nrow][ncol]!=nc){
+                dfs(nrow,ncol,grid,result,ic,nc,vis);
+            }
+        }
+
+    }
+
+    public int[][] colorBorder(int[][] grid, int row, int col, int color) {
+        int ic=grid[row][col];
+        int n=grid.length;
+        int m=grid[0].length;
+        int[][] result=new int[n][m];
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                result[i][j]=grid[i][j];
+            }
+        }
+        boolean[][] vis=new boolean[n][m];
+        dfs(row,col,grid,result,ic,color,vis);
+        return result;
+    }
+}
