@@ -1,0 +1,42 @@
+// java
+
+class Pair{
+    int first;
+    int second;
+    Pair(int f,int s){
+        this.first=f;
+        this.second=s;
+    }
+}
+
+class Solution {
+    public boolean canReach(int[] arr, int start) {
+        int n=arr.length;
+
+        boolean[] vis=new boolean[n];
+
+        Queue<Pair> q=new LinkedList<>();
+
+        q.offer(new Pair(start,arr[start]));
+        vis[start]=true;
+        while(!q.isEmpty()){
+            Pair p=q.poll();
+            int st=p.first;
+            int value=p.second;
+
+            if(value==0) return true;
+
+            int next = st+value;
+            if(next<n && !vis[next]){
+                vis[next]=true;
+                q.offer(new Pair(next,arr[next]));
+            }
+            int prev = st-value;
+            if(prev>=0 && !vis[prev]){
+                vis[prev]=true;
+                q.offer(new Pair(prev,arr[prev]));
+            }
+        }
+        return false;
+    }
+}
