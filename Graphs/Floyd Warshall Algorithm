@@ -1,15 +1,17 @@
 // java
 
+// Multisource algo : It finds the shortest path from every node to every other node,
+considering all nodes as possible intermediates.
+
+// Time: O(V³)
+// Space: O(V²)
 
 class Solution {
     public void floydWarshall(int[][] dist) {
         int n=dist.length;
         int inm=(int)(1e8);
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                if(i==j) dist[i][j]=0;
-            }
-        }
+        
+        for(int i=0; i<n; i++) dist[i][i] = 0;
         
         for(int k=0; k<n; k++){
             for(int i=0; i<n; i++){
