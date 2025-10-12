@@ -1,0 +1,105 @@
+// java
+
+// Recursion (TLE)
+
+class Solution {
+    public int f(int i,int n,int[] cost){
+        if(i==n) return 0;
+
+        int step1=cost[i];
+        if(i+1<n) step1+=f(i+1,n,cost);
+
+        int step2=cost[i];
+        if(i+2<n) step2+=f(i+2,n,cost);
+
+        return Math.min(step1,step2);
+    }
+
+    public int minCostClimbingStairs(int[] cost) {
+        int n=cost.length;
+
+        int startFromZero = f(0,n,cost);
+        int startFromOne = f(1,n,cost);
+
+        return Math.min(startFromZero,startFromOne);
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Memoization
+
+                        ------------------------------------------Goes from Start To End------------------------------------------------------------
+
+class Solution {
+    public int f(int i,int n,int[] cost,int[] dp){
+        if(i>=n) return 0;
+
+        if(dp[i]!=-1) return dp[i];
+
+        int step1=cost[i];
+        if(i+1<n) step1+=f(i+1,n,cost,dp);
+
+        int step2=cost[i];
+        if(i+2<n) step2+=f(i+2,n,cost,dp);
+
+        return dp[i] = Math.min(step1,step2);
+    }
+
+    public int minCostClimbingStairs(int[] cost) {
+        int n=cost.length;
+
+        int[] dp = new int[n];
+        Arrays.fill(dp,-1);
+
+        int startFromZero = f(0,n,cost,dp);
+
+        int startFromOne = f(1,n,cost,dp);
+
+        return Math.min(startFromZero,startFromOne);
+    }
+}
+                        ------------------------------------------Goes from End To Start------------------------------------------------------------
+
+class Solution {
+    public int f(int idx,int[] cost,int[] dp){
+        if(idx==0 || idx==1) return cost[idx];
+
+        if(dp[idx]!=-1) return dp[idx];
+
+        int one = f(idx-1,cost,dp);
+        int two = f(idx-2,cost,dp);
+
+        if(idx==cost.length) return dp[idx] = Math.min(one,two);
+
+        return dp[idx] = cost[idx] + Math.min(one,two);
+    }
+
+    public int minCostClimbingStairs(int[] cost) {
+        int n = cost.length;
+        int[] dp = new int[n+1];
+        Arrays.fill(dp,-1);
+        return f(n,cost,dp);
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Tabulation
+
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        int n=cost.length;
+        int[] dp=new int[n];
+        dp[0]=cost[0];
+        dp[1]=cost[1];
+
+        for(int i=2; i<n; i++){
+            dp[i] = cost[i] + Math.min(dp[i-1],dp[i-2]);
+        }
+        return Math.min(dp[n-1],dp[n-2]);
+    }
+}
+
+
