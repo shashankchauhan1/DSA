@@ -1,0 +1,47 @@
+// java
+
+class DSU{
+    int[] parent;
+    
+    DSU(){
+        parent=new int[26];
+        for(int i=0; i<26; i++){
+            parent[i]=i;
+        }
+    }
+
+    public int findUPar(int node){
+        if(parent[node]==node) return node;
+        int ulp = findUPar(parent[node]);
+        parent[node]=ulp;
+        return ulp;
+    }
+
+    public void unionByOrder(int u,int v){
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        
+        if(ulp_u == ulp_v) return;
+        if(ulp_u < ulp_v) parent[ulp_v]=ulp_u;
+        else parent[ulp_u]=ulp_v;
+    }
+
+}
+
+class Solution {
+    public String smallestEquivalentString(String s1, String s2, String baseStr) {
+        DSU ds = new DSU();
+
+        int n=s1.length();
+        for(int i=0; i<n; i++){
+            ds.unionByOrder(s1.charAt(i)-'a',s2.charAt(i)-'a');
+        }
+
+        StringBuilder sb=new StringBuilder();
+        for(int i=0; i<baseStr.length(); i++){
+            int ch = (ds.findUPar(baseStr.charAt(i)-'a'))+97;
+            sb.append((char)ch);
+        }
+        return sb.toString();
+    }
+} 
