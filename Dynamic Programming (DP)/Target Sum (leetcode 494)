@@ -24,7 +24,7 @@ class Solution {
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-// Memoization
+// Memoization    (offset, int[][] dp)
 
 class Solution {
     public int f(int i,int n,int[] nums,int sum,int target,int[][] dp,int total){
@@ -53,3 +53,34 @@ class Solution {
         return f(0,n,nums,0,target,dp,total);
     }
 }
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Memoization (Map) key = i+","+sum;
+
+class Solution {
+    public int f(int i,int n,int[] nums,int target,int sum,Map<String,Integer> map){
+        if(i==n){
+            if(target==sum) return 1;
+            else return 0;
+        }
+
+        String key = i+","+sum;
+        if(map.containsKey(key)) return map.get(key);
+
+        int add = f(i+1,n,nums,target,sum+nums[i],map);
+        int sub = f(i+1,n,nums,target,sum-nums[i],map);
+        
+        map.put(key,add+sub);
+        return map.get(key);
+    }
+
+    public int findTargetSumWays(int[] nums, int target) {
+        int n=nums.length;
+        int total = 0;
+        Map<String,Integer> map = new HashMap<>();
+
+        return f(0,n,nums,target,0,map);
+    }
+}
+
