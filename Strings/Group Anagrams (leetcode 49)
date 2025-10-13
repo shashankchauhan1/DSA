@@ -1,12 +1,12 @@
 // java
 
-
 class Solution {
     public String sort(String s){
         char[] arr = s.toCharArray();
         Arrays.sort(arr);
         return new String(arr);
     }
+
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String,List<String>> map = new HashMap<>();
 
