@@ -1,0 +1,30 @@
+// java
+
+
+class Solution {
+    public String sort(String s){
+        char[] arr = s.toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String,List<String>> map = new HashMap<>();
+
+        int n=strs.length;
+        for(int i=0; i<n; i++){
+            String sorted = sort(strs[i]);
+            if(map.containsKey(sorted)) map.get(sorted).add(strs[i]);
+            else{
+                map.put(sorted,new ArrayList<>());
+                map.get(sorted).add(strs[i]);
+            }
+        }
+
+        List<List<String>> result = new ArrayList<>();
+        for(Map.Entry<String,List<String>> mpp : map.entrySet()){
+            result.add(mpp.getValue());
+        }
+
+        return result;
+    }
+}
