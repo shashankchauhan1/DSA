@@ -65,7 +65,9 @@ class Solution {
             }
         }
 
-        return (n-dp[n][m]) + (m-dp[n][m]);
+        int lcs = dp[n][m];
+
+        return (n-lcs) + (m-lcs);
     }
 }
 
