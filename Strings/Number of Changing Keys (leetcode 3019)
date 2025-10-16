@@ -1,3 +1,7 @@
+// java
+
+
+
 class Solution {
     public int countKeyChanges(String s) {
         String str = s.toLowerCase();
