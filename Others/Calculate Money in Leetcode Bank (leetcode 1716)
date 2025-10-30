@@ -1,0 +1,27 @@
+// java
+
+class Solution {
+    public int totalMoney(int n) {
+        if(n<=7) return n*(n+1)/2;
+
+        int monday=1;
+        int amt = monday; 
+        int day = 1;  // when day reaches n need to break
+        int sum=0;    // to store total amount
+        int check=1;
+
+        while(day<=n){
+            sum+=amt;
+            amt++;
+            day++;
+            check++;
+
+            if(check > 7){      // after every 7 days
+                monday+=1;      // old monday increments by 1
+                amt = monday;   // amt starts adding money from current monday
+                check = 1;      // again goes for next 7 days
+            }
+        }
+        return sum;
+    }
+}
