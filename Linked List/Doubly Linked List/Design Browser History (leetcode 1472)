@@ -1,0 +1,64 @@
+// java
+
+class Node{
+    String val;
+    Node next;
+    Node prev;
+    Node(String v){
+        this.val = v;
+        this.next = null;
+        this.prev = null;
+    }
+}
+
+class BrowserHistory {
+    Node head;
+    Node tail;
+    Node curr;
+
+    public BrowserHistory(String homepage) {
+        head = new Node("null");
+        tail = new Node("null");
+        Node firstNode=new Node(homepage);
+        head.next=firstNode;
+        firstNode.prev=head;
+        firstNode.next=tail;
+        tail.prev=firstNode;
+        curr=firstNode;
+        head.next = tail;
+        tail.prev = head;
+    }
+    
+    public void visit(String url) {
+        Node newNode = new Node(url);
+        curr.next=newNode;
+        newNode.prev=curr;
+        curr=curr.next;
+        curr.next=tail;
+        tail.prev=curr;
+    }
+    
+    public String back(int steps) {
+        while(curr.prev!=head && steps>0){
+            curr=curr.prev;
+            steps--;
+        }
+        return curr.val;
+    }
+    
+    public String forward(int steps) {
+        while(curr.next!=tail && steps>0){
+            curr=curr.next;
+            steps--;
+        }
+        return curr.val;
+    }
+}
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory obj = new BrowserHistory(homepage);
+ * obj.visit(url);
+ * String param_2 = obj.back(steps);
+ * String param_3 = obj.forward(steps);
+ */
