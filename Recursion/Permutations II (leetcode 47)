@@ -1,29 +1,31 @@
 // java
 
 class Solution {
-    public void f(int[] nums,boolean[] vis,List<List<Integer>> result,ArrayList<Integer> list){
-        if(list.size()==nums.length){
-            if(!result.contains(list)) result.add(new ArrayList<>(list));
-            return;
+    public void permute(int idx,int[] nums,List<List<Integer>> result,HashSet<List<Integer>> set){
+        if(idx==nums.length){
+            ArrayList<Integer> list = new ArrayList<>();
+            for(int num:nums) list.add(num);
+            if(!set.contains(list)) result.add(list);
+            set.add(list);
         }
 
-        for(int i=0; i<nums.length; i++){
-            if(!vis[i]){
-                list.add(nums[i]);
-                vis[i]=true;
-                f(nums,vis,result,list);
-                list.remove(list.size()-1);
-                vis[i]=false;
-            }
+        for(int i=idx; i<nums.length; i++){
+            swap(i,idx,nums);
+            permute(idx+1,nums,result,set);
+            swap(i,idx,nums);
         }
-        
+    }
+
+    public void swap(int i,int j,int[] nums){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 
     public List<List<Integer>> permuteUnique(int[] nums) {
-        int n=nums.length;
-        List<List<Integer>> result=new ArrayList<>();
-        boolean[] vis=new boolean[n];
-        f(nums,vis,result,new ArrayList<>());
+        List<List<Integer>> result = new ArrayList<>();
+        HashSet<List<Integer>> set = new HashSet<>();
+        permute(0,nums,result,set);
         return result;
     }
 }
