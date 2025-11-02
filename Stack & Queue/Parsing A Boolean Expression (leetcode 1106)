@@ -1,0 +1,53 @@
+// java
+
+class Solution {
+    public char find(StringBuilder sb,char op){
+        if(op=='|'){
+            // do |
+            boolean ans = false;
+            for(int i=0; i<sb.length(); i++){
+                if(sb.charAt(i)=='t') ans |= true;
+                else ans |= false;
+            }
+            return ans==true ? 't' : 'f';
+        }
+        else if(op=='&'){
+            // do &
+            boolean ans = true;
+            for(int i=0; i<sb.length(); i++){
+                if(sb.charAt(i)=='t') ans &= true;
+                else ans &= false;
+            }
+            return ans==true ? 't' : 'f';
+        }
+        else{
+            // do !
+            if(sb.length()>0 && sb.charAt(0)=='t') return 'f';
+            else return 't';
+        }
+
+    }
+
+    public boolean parseBoolExpr(String s) {
+        Stack<Character> st = new Stack<>();
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i)==',') continue;
+            if(s.charAt(i)!=')'){
+                st.push(s.charAt(i));
+            }
+            else{
+                StringBuilder sb = new StringBuilder();
+                
+                while(!st.isEmpty() && st.peek()!='('){
+                    sb.append(st.pop());
+                }
+                st.pop();
+                char op = st.pop();
+                char ans = find(sb,op);
+                st.push(ans);
+            }
+        }
+
+        return st.peek()=='t' ? true : false;
+    }
+}
