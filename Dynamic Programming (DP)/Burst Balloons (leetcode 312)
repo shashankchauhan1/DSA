@@ -1,0 +1,87 @@
+// java
+
+// Recursion (TLE)
+
+class Solution {
+    public int f(int i,int j,List<Integer> list){
+        if(i>j) return 0;
+
+        int max = Integer.MIN_VALUE;
+        for(int idx=i; idx<=j; idx++){
+            int ans = list.get(i-1) * list.get(idx) * list.get(j+1) + f(i,idx-1,list) + f(idx+1,j,list);
+            max = Math.max(ans,max);
+        }
+        return max;
+    }
+
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        for(int num:nums) list.add(num);
+        list.add(1);
+
+        return f(1,list.size()-2,list);
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------
+
+// Memoization
+
+class Solution {
+    public int f(int i,int j,List<Integer> list,int[][] dp){
+        if(i>j) return 0;
+
+        if(dp[i][j]!=-1) return dp[i][j];
+
+        int max = Integer.MIN_VALUE;
+        for(int idx=i; idx<=j; idx++){
+            int ans = list.get(i-1) * list.get(idx) * list.get(j+1) + f(i,idx-1,list,dp) + f(idx+1,j,list,dp);
+            max = Math.max(ans,max);
+        }
+        return dp[i][j] = max;
+    }
+
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        for(int num:nums) list.add(num);
+        list.add(1);
+
+        int[][] dp = new int[list.size()+1][list.size()+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+        return f(1,list.size()-2,list,dp);
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+// Tabulation
+
+class Solution {
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        for(int num:nums) list.add(num);
+        list.add(1);
+
+        int[][] dp = new int[list.size()+1][list.size()+1];
+        
+        for(int i=n; i>=1; i--){
+            for(int j=1; j<=n; j++){
+                if(i>j) continue;
+                int max = Integer.MIN_VALUE;
+                for(int idx=i; idx<=j; idx++){
+                    int ans = list.get(i-1) * list.get(idx) * list.get(j+1) + dp[i][idx-1] + dp[idx+1][j];
+                    max = Math.max(ans,max);
+                }
+                dp[i][j] = max;
+            }
+        }
+
+        return dp[1][list.size()-2];
+    }
+}
