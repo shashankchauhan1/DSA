@@ -1,0 +1,56 @@
+// java
+
+class Solution {
+    public void merge(int s,int mid,int e,int[] nums,int[] count){
+        // count the numbers which satisfies the condition
+        int j = mid+1;
+        for(int i=s; i<=mid; i++){
+            while(j<=e && (long)nums[i] > 2L*nums[j]) j++;
+            count[0] += j-(mid+1);
+        }
+
+        int i = s;
+        j = mid+1;
+        List<Integer> list = new ArrayList<>();
+        while(i<=mid && j<=e){
+            if(nums[i]<nums[j]){
+                list.add(nums[i]);
+                i++;
+            }
+            else{
+                list.add(nums[j]);
+                j++;
+            }
+        }
+
+        while(i<=mid){
+            list.add(nums[i]);
+            i++;
+        }
+
+        while(j<=e){
+            list.add(nums[j]);
+            j++;
+        }
+
+        for(int k=s; k<=e; k++){
+            nums[k] = list.get(k-s);
+        }
+    }
+
+    public void f(int s,int e,int[] nums,int[] count){
+        if(s>=e) return; 
+
+        int mid = s+(e-s)/2;
+        f(s,mid,nums,count);
+        f(mid+1,e,nums,count);
+        merge(s,mid,e,nums,count);
+    }
+
+    public int reversePairs(int[] nums) {
+        int n = nums.length;
+        int[] count = new int[1];
+        f(0,n-1,nums,count);
+        return count[0];
+    }
+}
