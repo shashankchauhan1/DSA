@@ -1,0 +1,33 @@
+// java
+
+class Solution {
+    public boolean valid(String a,String b){
+        Set<Character> set = new HashSet<>();
+
+        for(char ch:b.toCharArray()) set.add(ch);
+        for(char ch:a.toCharArray()) set.remove(ch);
+
+        return set.isEmpty();
+    }
+
+    public int repeatedStringMatch(String a, String b) {
+        if(a.contains(b)) return 1;
+
+        if(!valid(a,b)) return -1;
+        int count=1;
+        StringBuilder sb = new StringBuilder(a);
+        while(true){
+            sb.append(a);
+            count++;
+            if(sb.toString().contains(b)) return count;
+
+            if(sb.length() > b.length()){
+                sb.append(a);
+                count++;
+                if(sb.toString().contains(b)) return count;
+                else break;
+            }
+        }
+        return -1;
+    }
+}
