@@ -1,0 +1,24 @@
+// java
+
+class Solution {
+    public void f(int i,int n,int k,List<List<Integer>> result, ArrayList<Integer> list){
+        if(list.size()==k){
+            result.add(new ArrayList<>(list));
+            return;
+        }
+
+        for(int idx = i; idx<=n; idx++){
+            list.add(idx);
+            f(idx+1,n,k,result,list);
+            list.remove(list.size()-1);
+        }
+
+    }
+
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        f(1,n,k,result,new ArrayList<>());
+        return result;
+    }
+}
