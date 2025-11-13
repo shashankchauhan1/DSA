@@ -1,0 +1,22 @@
+// java
+
+class Solution {
+    public int minSteps(String s, String t) {
+        int[] smap = new int[26];
+        for(int i=0; i<s.length(); i++){
+            smap[s.charAt(i)-'a']++;
+        }
+        
+        int[] tmap = new int[26];
+        for(int i=0; i<t.length(); i++){
+            tmap[t.charAt(i)-'a']++;
+        }
+
+        int cnt=0;
+        for(int i=0; i<26; i++){
+            cnt+=Math.abs(tmap[i] - smap[i]);
+        }
+        
+        return cnt;
+    }
+}
