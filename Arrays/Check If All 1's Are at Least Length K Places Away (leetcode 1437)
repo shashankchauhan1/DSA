@@ -1,0 +1,19 @@
+// java
+
+
+class Solution {
+    public boolean kLengthApart(int[] nums, int k) {
+        int n = nums.length;
+        int old=-1;
+        for(int i=0; i<n; i++){
+            if(nums[i]==1){
+                if(old==-1) old = i;
+                else{
+                    if(i-old<=k) return false;
+                    old = i;
+                }
+            }
+        }
+        return true;
+    }
+}
