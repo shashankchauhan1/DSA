@@ -1,0 +1,38 @@
+// java
+
+class Solution {
+    public int countCollisions(String s) {
+        int n = s.length();
+        Stack<Character> st = new Stack<>();
+        int cnt = 0;
+        for(int i=0; i<s.length(); i++){
+            if(!st.isEmpty()){
+                if(st.peek()=='R' && s.charAt(i)=='L'){
+                    cnt+=2;
+                    st.pop();
+                    char ch = 'S';
+                    while(!st.isEmpty() && st.peek()=='R'){
+                        cnt++;
+                        st.pop();
+                    }
+                    st.push(ch);
+                }
+                else if(st.peek()=='S' && s.charAt(i)=='L'){
+                    cnt++;
+                }
+                else if(st.peek()=='R' && s.charAt(i)=='S'){
+                    while(!st.isEmpty() && st.peek()=='R'){
+                        cnt++;
+                        st.pop();
+                    }
+                    st.push('S');
+                }
+                else st.push(s.charAt(i));
+            }
+            else{
+                st.push(s.charAt(i));
+            }
+        }
+        return cnt;
+    }
+}
