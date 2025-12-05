@@ -1,0 +1,24 @@
+// java
+
+class Solution {
+    public void find(int i,int[] nums,int[] count,int oorr,int or){
+        if(i==nums.length){
+            if(oorr==or){
+                count[0]++;
+            }
+            return;
+        }
+
+        find(i+1,nums,count,oorr|nums[i],or);
+        find(i+1,nums,count,oorr,or);
+
+    }
+
+    public int countMaxOrSubsets(int[] nums) {
+        int[] count = new int[1];
+        int or = 0;
+        for(int num:nums) or |= num;
+        find(0,nums,count,0,or);
+        return count[0];
+    }
+}
