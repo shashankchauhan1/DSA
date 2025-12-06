@@ -1,0 +1,23 @@
+// java
+
+class Solution {
+    public boolean f(int idx,String s,Set<String> set,Boolean[] dp){
+        if(idx==s.length()) return true;
+        if(dp[idx]!=null) return dp[idx];
+
+        for(int i=idx; i<s.length(); i++){
+            if(set.contains(s.substring(idx,i+1))){
+                if(f(i+1,s,set,dp)) return dp[idx] = true;
+            }
+        }
+        return dp[idx] = false;
+    }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>();
+        for(String ss : wordDict) set.add(ss);
+        Boolean[] dp = new Boolean[s.length()];
+        return f(0,s,set,dp);
+    }
+}
+
