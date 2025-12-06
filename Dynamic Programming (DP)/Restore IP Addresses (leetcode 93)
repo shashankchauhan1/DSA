@@ -1,0 +1,39 @@
+// java
+
+class Solution {
+    public boolean isValid(String s){
+        if(s.length()==0 && s.charAt(0)=='0') return true;
+        if(s.length()>3) return false;
+        if(s.length()>1 && s.charAt(0)=='0') return false;
+        int num = Integer.parseInt(s);
+        if(num<0 || num>255) return false;
+        return true;
+    }
+
+    public void f(int idx,String s,List<String> list,List<String> result){
+        if(idx==s.length()){
+            if(list.size()!=4) return;
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i<list.size(); i++){
+                sb.append(list.get(i));
+                if(i<list.size()-1) sb.append(".");
+            }
+            result.add(sb.toString());
+        }
+
+        for(int i=idx; i<s.length(); i++){
+            if(isValid(s.substring(idx,i+1))){
+                list.add(s.substring(idx,i+1));
+                f(i+1,s,list,result);
+                list.remove(list.size()-1);
+            }
+        }
+
+    }
+
+    public List<String> restoreIpAddresses(String s) {
+        List<String> result = new ArrayList<>();
+        f(0,s,new ArrayList<>(),result);
+        return result;
+    }
+}
