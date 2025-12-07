@@ -1,0 +1,37 @@
+// java
+
+import java.math.BigInteger;
+
+class Solution {
+    public boolean isValid(String s,List<BigInteger> list){
+        BigInteger n = new BigInteger(s);
+        if(list.size()>=2){
+            BigInteger sum = list.get(list.size()-1).add(list.get(list.size()-2));
+            return sum.equals(n);
+        }
+        return true;
+    }
+
+    public boolean f(int idx,String num,List<BigInteger> list){
+        if(idx==num.length()){
+            return list.size()>=3;
+        }
+
+        for(int i=idx; i<num.length(); i++){
+            if(num.charAt(idx)=='0' && i>idx) break;
+
+            String s = num.substring(idx,i+1);
+            if(isValid(s,list)){
+                list.add(new BigInteger(s));
+                if(f(i+1,num,list)) return true;
+                list.remove(list.size()-1);
+            }
+        }
+        return false;
+    }
+
+    public boolean isAdditiveNumber(String num) {
+        List<BigInteger> list = new ArrayList<>();
+        return f(0,num,list);
+    }
+}
