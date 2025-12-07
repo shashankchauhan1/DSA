@@ -1,0 +1,35 @@
+// java
+
+import java.math.BigInteger;
+
+class Solution {
+    public boolean isValid(String s,List<BigInteger> prev){
+        BigInteger num = new BigInteger(s);
+        if(prev.size()>0){
+            BigInteger last = prev.get(prev.size()-1);
+            if (!last.subtract(BigInteger.ONE).equals(num)) return false;
+        }
+        return true;
+    }
+
+    public boolean f(int idx,String s,List<BigInteger> prev){
+        if(idx==s.length()){
+            return prev.size()>=2;
+        }
+
+        for(int i=idx; i<s.length(); i++){
+            String val = s.substring(idx,i+1);
+            if(isValid(val,prev)){
+                prev.add(new BigInteger(val));
+                if(f(i+1,s,prev)) return true;
+                prev.remove(prev.size()-1);
+            }
+        }
+        return false;
+    }
+
+    public boolean splitString(String s) {
+        List<BigInteger> prev = new ArrayList<>();
+        return f(0,s,prev);
+    }
+}
