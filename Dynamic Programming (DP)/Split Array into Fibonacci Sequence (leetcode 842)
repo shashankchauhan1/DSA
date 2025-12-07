@@ -1,0 +1,38 @@
+// java
+
+class Solution {
+    public boolean isValid(String s,List<Integer> list){
+        long val = Long.parseLong(s);
+        if(list.size()>=2) if(val!=list.get(list.size()-1) + list.get(list.size()-2)) return false;
+
+        return true;
+    }
+
+    public boolean f(int idx,String num,List<Integer> list){
+        if(idx==num.length()){
+            if(list.size()>=3) return true;
+            return false;
+        }
+
+        for(int i=idx; i<num.length(); i++){
+            if(num.charAt(idx)=='0' && i>idx) break;
+
+            String s = num.substring(idx,i+1);
+            long val = Long.parseLong(s);
+            if(val>Integer.MAX_VALUE) break;
+
+            if(isValid(s,list)){
+                list.add((int)val);
+                if(f(i+1,num,list)) return true;
+                list.remove(list.size()-1);
+            }
+        }
+        return false;
+    }
+
+    public List<Integer> splitIntoFibonacci(String num) {
+        List<Integer> list = new ArrayList<>();
+        f(0,num,list);
+        return list;
+    }
+}
