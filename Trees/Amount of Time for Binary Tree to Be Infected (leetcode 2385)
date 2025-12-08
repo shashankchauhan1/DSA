@@ -1,0 +1,65 @@
+// java
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    // here we creates the undirected graph from tree
+    public void fillAdj(TreeNode root,Map<Integer,ArrayList<Integer>> adj,int[] size){
+        if(root==null) return;
+        size[0] = Math.max(size[0],root.val);
+
+        if(!adj.containsKey(root.val)) adj.put(root.val,new ArrayList<>());
+        
+        if(root.left!=null){
+            adj.get(root.val).add(root.left.val);
+            if(!adj.containsKey(root.left.val)) adj.put(root.left.val,new ArrayList<>());
+            adj.get(root.left.val).add(root.val);
+        }
+        if(root.right!=null){ 
+            adj.get(root.val).add(root.right.val);
+            if(!adj.containsKey(root.right.val)) adj.put(root.right.val,new ArrayList<>());
+            adj.get(root.right.val).add(root.val);
+        }
+
+        fillAdj(root.left,adj,size);
+        fillAdj(root.right,adj,size);
+    }
+
+    // this dfs checks how fartheset we can do from the starting point it takes that much time
+    public void dfs(int node,boolean[] vis,Map<Integer,ArrayList<Integer>> adj,int[] ans,int max){
+        vis[node] = true;
+        ans[0] = Math.max(ans[0],max);
+
+        for(int it:adj.get(node)){
+            if(!vis[it]){
+                dfs(it,vis,adj,ans,max+1);
+            }
+        }
+        vis[node] = false;
+    }
+
+    public int amountOfTime(TreeNode root, int start) {
+        Map<Integer,ArrayList<Integer>> adj = new HashMap<>();
+        int[] size = new int[1];
+        fillAdj(root,adj,size);
+        int ans[] = new int[1];
+
+        boolean[] vis = new boolean[size[0]+1];
+        dfs(start,vis,adj,ans,0);
+
+        return ans[0];
+    }
+}
