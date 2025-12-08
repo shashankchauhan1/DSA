@@ -1,0 +1,61 @@
+// java
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void fillAdj(Map<Integer,ArrayList<Integer>> adj,TreeNode root,int[] size){
+        if(root==null) return;
+
+        size[0] = Math.max(size[0],root.val);
+        
+        if(!adj.containsKey(root.val)) adj.put(root.val,new ArrayList<>());
+
+        if(root.left!=null){
+            adj.get(root.val).add(root.left.val);
+            if(!adj.containsKey(root.left.val)) adj.put(root.left.val,new ArrayList<>());
+            adj.get(root.left.val).add(root.val);
+        }
+
+        if(root.right!=null){
+            adj.get(root.val).add(root.right.val);
+            if(!adj.containsKey(root.right.val)) adj.put(root.right.val,new ArrayList<>());
+            adj.get(root.right.val).add(root.val);
+        }
+
+        fillAdj(adj,root.left,size);
+        fillAdj(adj,root.right,size);
+    }
+
+    public void dfs(int node,int k,List<Integer> list,Map<Integer,ArrayList<Integer>> adj,boolean[] vis){
+        if(k==0){
+            list.add(node);
+        }
+        vis[node] = true;
+        for(int it:adj.get(node)){
+            if(!vis[it]){
+                dfs(it,k-1,list,adj,vis);
+            }
+        }
+        vis[node] = false;
+    }
+
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        List<Integer> list = new ArrayList<>();
+        Map<Integer,ArrayList<Integer>> adj = new HashMap<>();
+        int size[] = new int[1];
+        // create graph of the tree
+        fillAdj(adj,root,size);
+
+        boolean[] vis = new boolean[size[0]+1];
+        dfs(target.val,k,list,adj,vis);
+
+        return list;
+    }
+}
