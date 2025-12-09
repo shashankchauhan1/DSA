@@ -1,0 +1,38 @@
+// java
+
+class Solution {
+    public int specialTriplets(int[] nums) {
+        int n = nums.length;
+        int mod = (int)(1e9+7);
+        Map<Integer,Integer> total = new HashMap<>();
+        Map<Integer,Integer> leftmap = new HashMap<>();
+
+        for(int i=0; i<n; i++){
+            total.put(nums[i],total.getOrDefault(nums[i],0)+1);
+        }
+
+        long sum = 0;
+        for(int i=0; i<n; i++){
+            int num = nums[i];
+            if(num!=0){
+                long leftcnt = 0;
+                if(leftmap.containsKey(num*2)){
+                    leftcnt = leftmap.get(num*2);
+                    long rightcnt = total.get(num*2) - leftcnt;
+                    sum = (sum+(leftcnt*rightcnt)%mod)%mod;
+                }
+            }
+            else{
+                long lc = leftmap.getOrDefault(0,0);
+                if(lc>=2){
+                    lc-=1;
+                    long add = ((lc*(lc+1)/2))%mod;
+                    sum = (sum+add)%mod;
+                }
+            }
+            leftmap.put(num,leftmap.getOrDefault(num,0)+1);
+        }
+
+        return (int)sum%mod;
+    }
+}
