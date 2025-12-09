@@ -21,7 +21,36 @@ class Node {
 */
 
 class Solution {
+    public void dfs(Node node,Map<Integer,ArrayList<Integer>> map){
+        map.put(node.val,new ArrayList<>());
+        for(Node it:node.neighbors){
+            map.get(node.val).add(it.val);
+            if(!map.containsKey(it.val)){
+                dfs(it,map);
+            }
+        }
+    }
+    
+    public Node newDfs(int node,Map<Integer,ArrayList<Integer>> map,Map<Integer,Node> clonemap){
+        if(clonemap.containsKey(node)) return clonemap.get(node);
+
+        Node newNode = new Node(node);
+        clonemap.put(node,newNode);
+
+        for(int it:map.get(node)){
+            Node neigh = newDfs(it,map,clonemap);
+            newNode.neighbors.add(neigh);
+        }
+        return newNode;
+    }
+
     public Node cloneGraph(Node node) {
-        
+        if(node==null) return null;
+        Map<Integer,ArrayList<Integer>> map = new HashMap<>();
+        dfs(node,map);
+        Map<Integer,Node> clonemap = new HashMap<>();
+        Node newNode = newDfs(node.val,map,clonemap);
+
+        return newNode;
     }
 }
