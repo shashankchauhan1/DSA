@@ -1,0 +1,29 @@
+// java
+
+class Solution {
+    public long maximumImportance(int n, int[][] roads) {
+        int[] degree = new int[n];
+        for(int[] road:roads){
+            degree[road[0]]++;
+            degree[road[1]]++;
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> b[0] - a[0]);
+
+        for(int i=0; i<n; i++) pq.offer(new int[]{degree[i],i});
+        int[] assign = new int[n];
+        
+        int value = n;
+        while(!pq.isEmpty()){
+            int[] arr = pq.poll();
+            assign[arr[1]] = value;
+            value--;
+        }
+
+        long sum = 0;
+        for(int[] road:roads){
+            sum += (long)(assign[road[0]] + assign[road[1]]);
+        }
+        return sum;
+    }
+}
