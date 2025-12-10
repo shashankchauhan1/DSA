@@ -1,0 +1,33 @@
+// java
+
+class Solution {
+    public String customSortString(String order, String s) {
+        HashMap<Character,Integer> map = new HashMap<>();
+        for(int i=0; i<s.length(); i++){
+            map.put(s.charAt(i),map.getOrDefault(s.charAt(i),0)+1);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<order.length(); i++){
+            char ch = order.charAt(i);
+            if(map.containsKey(ch)){
+                int times = map.get(ch);
+                while(times>0){
+                    sb.append(ch);
+                    times--;
+                }
+                map.remove(ch);
+            }
+        }
+
+        for(var it:map.entrySet()){
+            int times = it.getValue();
+            while(times>0){
+                sb.append(it.getKey());
+                times--;
+            }
+        }
+        
+        return sb.toString();
+    }
+}
