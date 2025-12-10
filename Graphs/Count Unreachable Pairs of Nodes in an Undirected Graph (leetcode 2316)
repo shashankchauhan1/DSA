@@ -1,0 +1,38 @@
+// java
+
+class Solution {
+    public void dfs(int node,boolean[] vis,ArrayList<ArrayList<Integer>> adj,int[] cnt){
+        vis[node] = true;
+        cnt[0]++;
+        for(int it:adj.get(node)){
+            if(!vis[it]) dfs(it,vis,adj,cnt);
+        }
+    }
+
+    public long countPairs(int n, int[][] edges) {
+        long total = n;
+
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
+
+        for(int[] edge:edges){
+            int u = edge[0];
+            int v = edge[1];
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+        boolean[] vis = new boolean[n];
+        
+        long sum = 0;
+        int[] cnt = new int[1];
+        for(int i=0; i<n; i++){
+            if(!vis[i]){
+                cnt[0] = 0;
+                dfs(i,vis,adj,cnt);
+                sum += (long)cnt[0]*(total-cnt[0]);
+                total-=cnt[0];
+            }
+        }
+        return sum;
+    }
+}
