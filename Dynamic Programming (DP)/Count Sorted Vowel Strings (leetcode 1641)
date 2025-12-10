@@ -1,0 +1,45 @@
+// java
+
+// Recursion
+
+class Solution {
+    public int f(int index,String s,int size){
+        if(size==0) return 1;
+        if(index==s.length()) return 0;
+
+        int pick = f(index,s,size-1);
+        int notpick = f(index+1,s,size);
+
+        return pick + notpick;
+    }
+
+    public int countVowelStrings(int n) {
+        String s = "aeiou";
+        return f(0,s,n);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Memoization
+
+class Solution {
+    public int f(int index,String s,int size,int[][] dp){
+        if(size==0) return 1;
+        if(index==s.length()) return 0;
+
+        if(dp[index][size]!=-1) return dp[index][size];
+
+        int pick = f(index,s,size-1,dp);
+        int notpick = f(index+1,s,size,dp);
+
+        return dp[index][size] = pick + notpick;
+    }
+
+    public int countVowelStrings(int n) {
+        String s = "aeiou";
+        int[][] dp = new int[s.length()][n+1];
+        for(int[] d:dp) Arrays.fill(d,-1);
+        return f(0,s,n,dp);
+    }
+}
