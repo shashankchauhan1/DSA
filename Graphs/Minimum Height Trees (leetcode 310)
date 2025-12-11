@@ -1,0 +1,49 @@
+// java
+
+class Solution {
+    public void dfs(int node,Set<Integer> set,ArrayList<ArrayList<Integer>> adj,int[] cnt,int cntt){
+        if(set.contains(node)){
+            cnt[0] = Math.max(cnt[0],cntt);
+            return;
+        }
+        set.add(node);
+        for(int it:adj.get(node)){
+            dfs(it,set,adj,cnt,cntt+1);
+        }
+    }
+
+    public List<Integer> findMinHeightTrees(int n, int[][] edges) {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        if(n==1) return new ArrayList<>(Arrays.asList(0));
+
+        for(int i=0; i<n; i++){
+            adj.add(new ArrayList<>());
+        }
+        
+        int[] indegree = new int[n];
+        for(int[] edge:edges){
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+            indegree[edge[0]]++;
+            indegree[edge[1]]++;
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<n; i++) if(indegree[i]==1) q.offer(i);
+        List<Integer> result = new ArrayList<>();
+        while(!q.isEmpty()){
+            int size = q.size();
+            List<Integer> list = new ArrayList<>();
+            for(int i=0; i<size; i++){
+                int node = q.poll();
+                list.add(node);
+                for(int it:adj.get(node)){
+                    indegree[it]--;
+                    if(indegree[it]==1) q.offer(it);
+                }
+            }
+            result = list;
+        }
+        return result;
+    }
+}
