@@ -1,0 +1,61 @@
+// java
+
+class Solution {
+    public void topoSort(int[] indegree,List<Integer> list,ArrayList<ArrayList<Integer>> adj){
+        Queue<Integer> q=new LinkedList<>();
+
+        for(int i=1; i<indegree.length; i++){
+            if(indegree[i]==0) q.offer(i);
+        }
+
+        while(!q.isEmpty()){
+            int node = q.poll();
+            list.add(node);
+            for(int it:adj.get(node)){
+                indegree[it]--;
+                if(indegree[it]==0) q.offer(it);
+            }
+        }
+    }
+
+    public int[][] buildMatrix(int k, int[][] rowConditions, int[][] colConditions) {
+        
+        ArrayList<ArrayList<Integer>> rAdj = new ArrayList<>();
+        for(int i=0; i<=k; i++) rAdj.add(new ArrayList<>());
+
+        int[] rowDegree = new int[k+1];
+        for(int[] row : rowConditions){
+            rAdj.get(row[0]).add(row[1]);
+            rowDegree[row[1]]++;
+        }
+
+        ArrayList<ArrayList<Integer>> cAdj = new ArrayList<>();
+        for(int i=0; i<=k; i++) cAdj.add(new ArrayList<>());
+
+
+        int[] colDegree = new int[k+1];
+        for(int[] col : colConditions){
+            cAdj.get(col[0]).add(col[1]);
+            colDegree[col[1]]++;
+        }
+
+        List<Integer> rTopo = new ArrayList<>();
+        topoSort(rowDegree,rTopo,rAdj);
+        List<Integer> cTopo = new ArrayList<>();
+        topoSort(colDegree,cTopo,cAdj);
+
+        Map<Integer,Integer> lookUpMap = new HashMap<>();
+        for(int i=0; i<rTopo.size(); i++) lookUpMap.put(rTopo.get(i),i);
+
+        if(rTopo.size()!=k || cTopo.size()!=k) return new int[][]{};
+
+        int[][] result = new int[k][k];
+        for(int j=0; j<cTopo.size(); j++){
+            int row = lookUpMap.get(cTopo.get(j));
+            int col = j;
+
+            result[row][col] = cTopo.get(j);
+        }
+        return result;
+    }
+}
