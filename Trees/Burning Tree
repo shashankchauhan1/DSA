@@ -1,0 +1,60 @@
+// java
+
+/*
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}
+*/
+
+class Solution {
+    public void dfs(Node root,Map<Integer,ArrayList<Integer>> map){
+        if(root==null) return;
+        
+        if(!map.containsKey(root.data)) map.put(root.data,new ArrayList<>());
+        if(root.left!=null){
+            map.get(root.data).add(root.left.data);
+            if(!map.containsKey(root.left.data)) map.put(root.left.data,new ArrayList<>());
+            map.get(root.left.data).add(root.data);
+        }
+        
+        if(root.right!=null){
+            map.get(root.data).add(root.right.data);
+            if(!map.containsKey(root.right.data)) map.put(root.right.data,new ArrayList<>());
+            map.get(root.right.data).add(root.data);
+        }
+        
+        dfs(root.left,map);
+        dfs(root.right,map);
+        
+    }
+    
+    public void findMax(int node,Map<Integer,ArrayList<Integer>> map,int[] max,int step,HashSet<Integer> vis){
+        vis.add(node);
+        max[0] = Math.max(max[0],step);
+        for(int it:map.get(node)){
+            if(!vis.contains(it)){
+                findMax(it,map,max,step+1,vis);
+            }
+        }
+    }
+    
+    public int minTime(Node root, int target) {
+        Map<Integer,ArrayList<Integer>> map = new HashMap<>();
+        dfs(root,map);
+        
+        int[] max = new int[1];
+        HashSet<Integer> vis = new HashSet<>();
+        
+        findMax(target,map,max,0,vis);
+        
+        return max[0];
+    }
+}
