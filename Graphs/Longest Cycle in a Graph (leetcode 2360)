@@ -1,0 +1,86 @@
+// TopoSort
+
+class Solution {
+    public int longestCycle(int[] edges) {
+        int n = edges.length;
+        int[] indegree = new int[n];
+
+        for(int v:edges) if(v!=-1) indegree[v]++;
+
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<n; i++){
+            if(indegree[i]==0) q.offer(i);
+        }
+
+        boolean[] removed = new boolean[n];
+        
+        while(!q.isEmpty()){
+            int node = q.poll();
+            removed[node] = true;
+            int it = edges[node];
+            if(it!=-1){
+                indegree[it]--;
+                if(indegree[it]==0) q.offer(it);
+            }
+        }
+
+        boolean[] vis = new boolean[n];
+        int max = -1;
+        for(int i=0; i<n; i++){
+            if(!vis[i] && !removed[i]){
+                int curr = i;
+                int cnt = 0;
+                while(!vis[curr]){
+                    cnt++;
+                    vis[curr] = true;
+                    curr = edges[curr];
+                }
+                max = Math.max(max,cnt);
+            }
+        }
+        return max;
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// dfs
+
+class Solution {
+    public boolean dfs(int node,Set<Integer> vis,Map<Integer,Integer> pathvis,ArrayList<ArrayList<Integer>> adj,int[] cnt,int step){
+        vis.add(node);
+        pathvis.put(node,step);
+        for(int it:adj.get(node)){
+            if(!vis.contains(it)){
+                if(dfs(it,vis,pathvis,adj,cnt,step+=1)) return true;
+            }
+            else if(pathvis.containsKey(it)){
+                cnt[0] = step-pathvis.get(it)+1;
+                return true;
+            }
+        }
+        pathvis.remove(node);
+        return false;
+    }
+
+    public int longestCycle(int[] edges) {
+        int n = edges.length;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
+
+        for(int i=0; i<n; i++) if(edges[i]!=-1) adj.get(i).add(edges[i]);
+
+        Set<Integer> vis = new HashSet<>();
+        int max = -1;
+        for(int i=0; i<n; i++){
+            if(!vis.contains(i)){
+                Map<Integer,Integer> pathvis = new HashMap<>();
+                int[] cnt = new int[1];
+                if(dfs(i,vis,pathvis,adj,cnt,0)){
+                    max = Math.max(max,cnt[0]);
+                }
+            }
+        }
+        return max;
+    }
+}
