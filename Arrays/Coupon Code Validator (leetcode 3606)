@@ -1,0 +1,54 @@
+// java
+
+class Solution {
+    public boolean isValid(String s,String bl,boolean iA){
+        if(s.equals("")) return false;
+        if(iA == false) return false;
+
+        if(!bl.equals("electronics") && !bl.equals("grocery") && !bl.equals("pharmacy") && !bl.equals("restaurant")) return false;
+
+        for(int i=0; i<s.length(); i++){
+            char ch = s.charAt(i);
+            if(!Character.isLetterOrDigit(ch)){
+                if(ch!='_') return false;;
+            }
+        }
+        return true;
+    }
+    
+    public List<String> validateCoupons(String[] code, String[] businessLine, boolean[] isActive) {
+        List<Integer> valid = new ArrayList<>();
+
+        int n = code.length;
+        for(int i=0; i<n; i++){
+            String s = code[i];
+            String bl = businessLine[i];
+            boolean iA = isActive[i];
+
+            if(isValid(s,bl,iA)){
+                valid.add(i);
+            }
+        }
+
+        // sort the list
+        Map<String,Integer> priority = new HashMap<>();
+        priority.put("electronics",1);
+        priority.put("grocery",2);
+        priority.put("pharmacy",3);
+        priority.put("restaurant",4);
+
+        Collections.sort(valid,(a,b) ->{
+            int p1 = priority.get(businessLine[a]);
+            int p2 = priority.get(businessLine[b]);
+
+            if(p1!=p2) return p1-p2;
+            return code[a].compareTo(code[b]);
+        } );
+
+        List<String> list = new ArrayList<>();
+        for(int i=0; i<valid.size(); i++){
+            list.add(code[valid.get(i)]);
+        }
+        return list;
+    }
+}
