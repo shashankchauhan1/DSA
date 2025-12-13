@@ -1,0 +1,50 @@
+// java
+
+class Pair{
+    int first;
+    double second;
+    Pair(int f,double s){
+        this.first = f;
+        this.second = s;
+    }
+}
+
+class Solution {
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start_node, int end_node) {
+        ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+        for(int i=0; i<n; i++){
+            adj.add(new ArrayList<>());
+        }
+
+        for(int i=0; i<edges.length; i++){
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj.get(u).add(new Pair(v,succProb[i]));
+            adj.get(v).add(new Pair(u,succProb[i]));
+        }
+
+        double[] dist = new double[n];
+        boolean[] vis = new boolean[n];
+        dist[start_node] = 1;
+        vis[start_node] = true;
+        PriorityQueue<Pair> q = new PriorityQueue<>((a,b) -> Double.compare(b.second,a.second));
+        q.offer(new Pair(start_node,1.0));
+        while(!q.isEmpty()){
+            Pair p = q.poll();
+            int node = p.first;
+            double d = p.second;
+            vis[node] = true;
+            if(node == end_node) continue;
+
+            for(Pair neighbour:adj.get(node)){
+                int adjNode = neighbour.first;
+                double weight = neighbour.second;
+                if(d*weight>=dist[adjNode] && !vis[adjNode]){
+                    dist[adjNode] =(double)dist[node]*weight;
+                    q.offer(new Pair(adjNode,dist[adjNode]));
+                }
+            }
+        }
+        return dist[end_node];
+    }
+}
