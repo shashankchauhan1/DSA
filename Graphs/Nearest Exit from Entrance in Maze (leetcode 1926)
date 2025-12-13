@@ -1,0 +1,50 @@
+// java
+
+class Tuple{
+    int row;
+    int col;
+    int step;
+    Tuple(int r,int c,int s){
+        this.row = r;
+        this.col = c;
+        this.step = s;
+    }
+}
+
+class Solution {
+    public int nearestExit(char[][] maze, int[] entrance) {
+        int n = maze.length;
+        int m = maze[0].length;
+
+        int[] delrow = {-1,0,1,0};
+        int[] delcol = {0,1,0,-1};
+
+        boolean[][] vis = new boolean[n][m];
+        PriorityQueue<Tuple> pq = new PriorityQueue<>((a,b) -> a.step - b.step);
+        int r = entrance[0];
+        int c = entrance[1];
+        pq.offer(new Tuple(r,c,0));
+        vis[r][c] = true;
+
+        boolean first = true;
+        while(!pq.isEmpty()){
+            Tuple t = pq.poll();
+            int row = t.row;
+            int col = t.col;
+            int step = t.step;
+            
+            if(!first && (row==0 || col==0 || row==n-1 || col==m-1)) return step;
+
+            for(int i=0; i<4; i++){
+                int nrow = row+delrow[i];
+                int ncol = col+delcol[i];
+                if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && !vis[nrow][ncol] && maze[nrow][ncol]=='.'){
+                    vis[nrow][ncol] = true;
+                    pq.offer(new Tuple(nrow,ncol,step+1));
+                    first = false;
+                }
+            }
+        }
+        return -1;
+    }
+}
