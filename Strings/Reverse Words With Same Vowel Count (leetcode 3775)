@@ -1,0 +1,30 @@
+// java
+
+class Solution {
+    public String reverseWords(String s) {
+        int n = s.length();
+        String[] str = s.split(" ");
+        String fw = str[0];
+        int vc = 0;
+        for(int i=0; i<fw.length(); i++){
+            if(fw.charAt(i)=='a' || fw.charAt(i)=='e' || fw.charAt(i)=='i' || 
+                    fw.charAt(i)=='o'|| fw.charAt(i)=='u') vc++;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(fw+" ");
+
+        for(int j=1; j<str.length; j++){
+            StringBuilder ss = new StringBuilder(str[j]);
+            int cnt = 0;
+            for(int i=0; i<ss.length(); i++){
+                if(ss.charAt(i)=='a' || ss.charAt(i)=='e' || ss.charAt(i)=='i' || 
+                    ss.charAt(i)=='o'|| ss.charAt(i)=='u') cnt++;
+            }
+            if(cnt==vc) sb.append(ss.reverse()+" ");
+            else sb.append(ss+" ");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        return sb.toString();
+    }
+}
