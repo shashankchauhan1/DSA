@@ -1,0 +1,28 @@
+// java
+
+class Solution {
+    public int absDifference(int[] nums, int k) {
+        Arrays.sort(nums);
+        int n = nums.length;
+
+        int sum1 = 0;
+        int i=0;
+        int kk = k;
+        while(kk>0){
+            sum1+=nums[i];
+            i++;
+            kk--;
+        }
+
+        int sum2 = 0;
+        i=n-1;
+        kk = k;
+        while(kk>0){
+            sum2+=nums[i];
+            i--;
+            kk--;
+        }
+
+        return Math.abs(sum1-sum2);
+    }
+}
