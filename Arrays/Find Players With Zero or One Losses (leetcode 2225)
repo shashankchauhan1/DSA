@@ -1,0 +1,26 @@
+// java
+
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        List<List<Integer>> result = new ArrayList<>();
+        Map<Integer,Integer> map = new HashMap<>();
+
+        for(int[] match : matches){
+            if(!map.containsKey(match[0])) map.put(match[0],0);
+            map.put(match[1],map.getOrDefault(match[1],0)+1);
+        }
+
+        result.add(new ArrayList<>());
+        result.add(new ArrayList<>());
+
+        for(var it:map.entrySet()){
+            int key = it.getKey();
+            if(it.getValue() == 0) result.get(0).add(key);
+            if(it.getValue() == 1) result.get(1).add(key);
+        }
+        for(int i=0; i<2; i++){
+            Collections.sort(result.get(i));
+        }
+        return result;
+    }
+}
