@@ -1,0 +1,36 @@
+// java
+
+/*
+// Definition for Employee.
+class Employee {
+    public int id;
+    public int importance;
+    public List<Integer> subordinates;
+};
+*/
+
+class Solution {
+    Map<Integer,Employee> adj = new HashMap<>();
+
+    public void dfs(int node,int[] sum){
+        sum[0] += adj.get(node).importance;
+        System.out.println(sum[0]);
+
+        for(int it:adj.get(node).subordinates){
+            dfs(it,sum);
+        }
+
+    }
+
+    public int getImportance(List<Employee> employees, int id) {
+        int[] sum = new int[1];
+        int n = employees.size();
+        
+        for(Employee e:employees){
+            adj.put(e.id,e);
+        }
+
+        dfs(id,sum);
+        return sum[0];
+    }
+}
