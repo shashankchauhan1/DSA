@@ -1,0 +1,34 @@
+class Solution {
+    public long f(int i,int[] prices,int k,int state,Long[][][] dp){
+        if(k<0) return (long)-1e18;;
+
+        if(i==prices.length) return state==0 ? 0 : (long)-1e18;;
+
+        if(dp[i][k][state]!=null) return dp[i][k][state];
+
+        long ans = (long)-1e18;
+        if(state==0){
+            long skip = f(i+1,prices,k,0,dp);  // skip now  
+            long buy = -prices[i] + f(i+1,prices,k,1,dp);  // buy now and sell later
+            long sell = prices[i] + f(i+1,prices,k,2,dp);  // sell now and buy later
+            ans = Math.max(skip,Math.max(buy,sell));
+        }
+        else if(state==1){
+            long sellNow = prices[i] + f(i+1,prices,k-1,0,dp);  // already buyed, sell now
+            long sellLater = f(i+1,prices,k,1,dp);  // already buyed, sell later
+            ans = Math.max(sellNow,sellLater);
+        }
+        else{
+            long buyNow = -prices[i] + f(i+1,prices,k-1,0,dp);  // already selled, buy now
+            long buyLater = f(i+1,prices,k,2,dp);  // already selled, buy later
+            ans = Math.max(buyNow,buyLater);
+        }
+
+        return dp[i][k][state] = ans;  // get the max and return;
+    }
+
+    public long maximumProfit(int[] prices, int k) {
+        Long[][][] dp = new Long[prices.length][k+1][3];
+        return f(0,prices,k,0,dp);
+    }
+}
