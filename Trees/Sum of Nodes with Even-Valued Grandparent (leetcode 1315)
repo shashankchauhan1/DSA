@@ -1,0 +1,35 @@
+// java
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void f(TreeNode root,int p,int gp,int[] cnt){
+        if(root==null) return;
+
+        if(p!=-1 && gp!=-1) if((gp&1)==0) cnt[0]+=root.val;
+
+        f(root.left,root.val,p,cnt);
+        f(root.right,root.val,p,cnt);
+    }
+
+    public int sumEvenGrandparent(TreeNode root) {
+        if(root==null || root.left==null && root.right==null) return 0;
+
+        int cnt[] = new int[1];
+        f(root,-1,-1,cnt);
+        return cnt[0];
+    }
+}
