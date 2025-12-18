@@ -1,0 +1,36 @@
+// java
+
+class Solution {
+    public long dfs(int r,int c,int[][] grid,Long[][] dp,int mod){
+        if(dp[r][c]!=null) return dp[r][c];
+
+        long paths = 1;
+        int[] delrow = {-1,0,1,0};
+        int[] delcol = {0,1,0,-1};
+        for(int i=0; i<4; i++){
+            int nrow = r+delrow[i];
+            int ncol = c+delcol[i];
+            if(nrow>=0 && nrow<grid.length && ncol>=0 && ncol<grid[0].length && grid[nrow][ncol] > grid[r][c]){
+                paths = (paths + dfs(nrow,ncol,grid,dp,mod))%mod;
+            }
+        }
+
+        return dp[r][c] = paths;
+    }
+
+    public int countPaths(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int mod = (int)(1e9+7);
+        Long[][] dp = new Long[n][m];
+
+        long cnt = 0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                cnt = (cnt + dfs(i,j,grid,dp,mod))%mod;
+            }
+        }
+
+        return (int)cnt;
+    }
+}
