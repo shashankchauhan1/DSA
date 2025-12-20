@@ -1,0 +1,21 @@
+// java
+
+class Solution {
+    public int minDeletionSize(String[] strs) {
+        int n = strs.length;
+
+        int[] err = new int[strs[0].length()];
+        for(int i=1; i<n; i++){
+            String prev = strs[i-1];
+            String curr = strs[i];
+            for(int j=0; j<prev.length(); j++){
+                if(prev.charAt(j) > curr.charAt(j)) err[j]++;
+            }
+        }
+
+        int cnt = 0;
+        for(int i=0; i<err.length; i++) if(err[i]>0) cnt++;
+
+        return cnt;
+    }
+}
