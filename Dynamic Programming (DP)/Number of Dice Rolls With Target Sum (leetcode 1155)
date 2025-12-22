@@ -1,0 +1,25 @@
+// java
+
+class Solution {
+    public int f(int n,int k,int target,Integer[][] dp,int mod){
+        if(target<0) return 0;
+        if(n==0) return target==0 ? 1 : 0;
+
+        if(dp[n][target]!=null) return dp[n][target];
+
+        int pick = 0;
+        for(int val=1; val<=k; val++){
+            if(val<=target){
+                pick = (pick + f(n-1,k,target-val,dp,mod))%mod;
+            }
+        }
+
+        return dp[n][target] = pick;
+    }
+
+    public int numRollsToTarget(int n, int k, int target) {
+        Integer[][] dp = new Integer[n+1][target+1];
+        int mod = (int)(1e9+7);
+        return f(n,k,target,dp,mod);
+    }
+}
