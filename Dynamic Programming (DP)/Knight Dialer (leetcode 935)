@@ -1,0 +1,46 @@
+// java
+
+class Solution {
+    public int f(int r,int c,int[][] mat,int n,Integer[][][] dp,int mod){
+        if(n==1){
+            return 1;
+        }
+        
+        if(dp[r][c][n]!=null) return dp[r][c][n];
+
+        int ans = 0;
+        // 8 directions
+        int[] delrow = {-2,-2,-1,1,2,2,1,-1};
+        int[] delcol = {-1,1,2,2,1,-1,-2,-2};
+        for(int i=0; i<8; i++){
+            int nrow = r+delrow[i];
+            int ncol = c+delcol[i];
+            if(nrow>=0 && nrow<mat.length && ncol>=0 && ncol<mat[0].length && mat[nrow][ncol]!=-1){
+                ans = (ans + f(nrow,ncol,mat,n-1,dp,mod))%mod;
+            }
+        }
+        
+        return dp[r][c][n] = ans;
+    }
+
+    public int knightDialer(int n) {
+        int[][] mat = {{1,2,3},{4,5,6},{7,8,9},{-1,0,-1}};
+        
+        int rl = mat.length;
+        int cl = mat[0].length;
+        Integer[][][] dp = new Integer[rl][cl][n+1];
+
+        int ans = 0;
+        int mod = (int)(1e9+7);
+
+        for(int i=0; i<mat.length; i++){
+            for(int j=0; j<mat[0].length; j++){
+                if(mat[i][j]!=-1){
+                    ans = (ans+f(i,j,mat,n,dp,mod))%mod;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
