@@ -1,0 +1,40 @@
+// java
+
+1> Array Approach
+
+class Solution {
+    public String reversePrefix(String s, int k) {
+        int n = s.length();
+        
+        char[] arr = s.toCharArray();
+
+        int left = 0;
+        int right = k-1;
+        
+        while(left<right){
+            char temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+        
+        return new String(arr);
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> StringBuilder Approach
+
+class Solution {
+    public String reversePrefix(String s, int k) {
+        int n = s.length();
+        StringBuilder sb1 = new StringBuilder(s.substring(0,k));
+        StringBuilder sb2 = new StringBuilder(s.substring(k,n));
+
+        sb1.reverse().append(sb2);
+
+        return sb1.toString();
+    }
+}
