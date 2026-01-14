@@ -1,0 +1,36 @@
+// java
+
+class Solution {
+    public double fractionalKnapsack(int[] val, int[] wt, int capacity) {
+        List<double[]> list = new ArrayList<>();
+        int n = val.length;
+        
+        for(int i=0; i<n; i++){
+            double v = val[i];
+            double w = wt[i];
+            double r = (double)val[i]/wt[i];
+            
+            list.add(new double[]{v,w,r});
+        }
+        
+        Collections.sort(list,(a,b) -> Double.compare(b[2],a[2]));
+        
+        double sum = 0.0;
+        for(int i=0; i<n; i++){
+            double value = list.get(i)[0];
+            double weight = list.get(i)[1];
+            double ratio = list.get(i)[2];
+            
+            if(capacity >= weight){
+                sum += value;
+                capacity -= weight;
+            }
+            else{
+                sum += ratio*capacity;
+                break;
+            }
+        }
+        
+        return sum;
+    }
+}
