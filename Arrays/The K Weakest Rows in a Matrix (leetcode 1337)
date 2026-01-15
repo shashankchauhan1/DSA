@@ -1,0 +1,28 @@
+// java
+
+class Solution {
+    public int[] kWeakestRows(int[][] mat, int k) {
+        int n = mat.length;
+        int m = mat[0].length;
+        
+        List<int[]> list = new ArrayList<>();
+
+        for(int i=0; i<n; i++){
+            int count = 0;
+            for(int j=0; j<m; j++){
+                if(mat[i][j]==1) count++;
+            }
+            list.add(new int[]{i,count});
+        }
+
+        Collections.sort(list,(a,b) -> {
+            if(a[1]==b[1]) return a[0]-b[0];
+            else return a[1]-b[1];
+        });
+
+        int[] ans = new int[k];
+        for(int i=0; i<k; i++) ans[i] = list.get(i)[0];
+
+        return ans;
+    }
+}
