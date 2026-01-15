@@ -1,5 +1,41 @@
 // java
 
+// priorityQueue
+
+class Solution {
+    public int[] kWeakestRows(int[][] mat, int k) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> {
+            if(a[1]==b[1]) return b[0]-a[0];
+            else return b[1]-a[1];
+        });
+
+        for(int i=0; i<n; i++){
+
+            int count = 0;
+            for(int j=0; j<m; j++){
+                if(mat[i][j]==1) count++;
+            }
+
+            pq.offer(new int[]{i,count});
+            if(pq.size()>k){
+                pq.poll();
+            }
+        }
+
+        int[] ans = new int[k];
+        for(int i=k-1; i>=0; i--) ans[i] = pq.poll()[0];
+
+        return ans;
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// sorting
+
 class Solution {
     public int[] kWeakestRows(int[][] mat, int k) {
         int n = mat.length;
