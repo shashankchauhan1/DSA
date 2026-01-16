@@ -1,0 +1,25 @@
+// java
+
+class Solution {
+    public void f(int i,int prev,int n,int[] nums,Set<List<Integer>> result,List<Integer> list){
+        if(i>=n){
+            if(list.size()>=2) result.add(new ArrayList<>(list));
+            return;
+        }
+
+        if(prev==-1 || (nums[prev]<=nums[i])){
+            list.add(nums[i]);
+            f(i+1,i,n,nums,result,list);
+            list.remove(list.size()-1);
+        }
+        f(i+1,prev,n,nums,result,list);
+    }
+
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        Set<List<Integer>> result = new HashSet<>();
+        int n = nums.length;
+        
+        f(0,-1,n,nums,result,new ArrayList<>());
+        return new ArrayList<>(result);
+    }
+}
