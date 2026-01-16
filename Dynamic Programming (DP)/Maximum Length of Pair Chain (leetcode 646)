@@ -1,0 +1,57 @@
+// java
+
+// Greedy
+
+class Solution {
+    public int findLongestChain(int[][] pairs) {
+        int n = pairs.length;
+
+        Arrays.sort(pairs,(a,b) -> a[1]-b[1]);
+
+        int count = 1;
+        int prev = 0;
+        for(int i=1; i<n; i++){
+            if(pairs[prev][1] < pairs[i][0]){
+                count++;
+                prev = i;
+            }
+        }
+
+        return count;
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Memoization
+
+class Solution {
+    public int f(int i,int prev,int n,int[][] pairs,Integer[][] dp){
+        if(i==n) return 0;
+
+        if(dp[i][prev+1]!=null) return dp[i][prev+1];
+
+        int pick = 0;
+        if(prev==-1 || pairs[prev][1] < pairs[i][0]){
+            pick = 1 + f(i+1,i,n,pairs,dp);
+        }
+
+        int notpick = f(i+1,prev,n,pairs,dp);
+
+        return dp[i][prev+1] = Math.max(pick,notpick);
+    }
+
+    public int findLongestChain(int[][] pairs) {
+        int n = pairs.length;
+
+        Arrays.sort(pairs,(a,b) -> {
+            if(a[0] == b[0]) return a[1]-b[1];
+            return a[0]-b[0];
+        });
+
+        Integer[][] dp = new Integer[n][n+1];
+        int count = f(0,-1,n,pairs,dp);
+
+        return count;
+    }
+}
