@@ -1,0 +1,23 @@
+// java
+
+class Solution {
+    public long pickGifts(int[] gifts, int k) {
+        int n = gifts.length;
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b-a);
+        for(int num : gifts) pq.offer(num);
+
+        while(k>0){
+            int num = pq.poll();
+            num =(int)Math.sqrt(num);
+            pq.offer(num);
+            k--;
+        }
+
+        long sum = 0;
+        while(!pq.isEmpty()){
+            sum += pq.poll();
+        }
+        return sum;
+    }
+}
