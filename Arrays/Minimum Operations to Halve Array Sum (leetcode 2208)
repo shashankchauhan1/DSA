@@ -1,0 +1,24 @@
+// java
+
+class Solution {
+    public int halveArray(int[] nums) {
+        double sum = 0.0;
+        for(int num : nums) sum += num;
+        double target = sum/2.0;
+
+        PriorityQueue<Double> pq = new PriorityQueue<>((a,b) -> Double.compare(b,a));
+        for(int num : nums) pq.offer((double)num);
+
+        int count = 0;
+        while(true){
+            double num = pq.poll();
+            num = num/2.0;
+            sum -= num;
+            count++;
+            if(sum<=target) break;
+            pq.offer(num);
+        }
+
+        return count;
+    }
+}
