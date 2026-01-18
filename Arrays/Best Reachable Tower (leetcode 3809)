@@ -1,0 +1,40 @@
+// java
+
+class Solution {
+    public int[] bestTower(int[][] towers, int[] center, int radius) {
+        int max = -1;
+        int[] ans = new int[2];
+
+        int x1 = center[0];
+        int y1 = center[1];
+        int countReachable = 0;
+
+        for(int[] tower : towers){
+            int x2 = tower[0];
+            int y2 = tower[1];
+            int qf = tower[2];
+
+            if(Math.abs(x1-x2) + Math.abs(y1-y2) <= radius){
+                // it is reachable
+                countReachable++;
+
+                if(qf > max){
+                    max = qf;
+                    ans[0] = x2;
+                    ans[1] = y2;
+                }
+                else if(qf==max){
+                    if(ans[0] > x2){
+                        ans[0] = x2;
+                        ans[1] = y2;
+                    }
+                    else if(ans[0] == x2 && ans[1] > y2){
+                        ans[1] = y2;
+                    }
+                }
+            }
+        }
+
+        return countReachable==0 ? new int[]{-1,-1} : ans;
+    }
+}
