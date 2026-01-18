@@ -1,0 +1,22 @@
+// java
+
+class Solution {
+    public int minStoneSum(int[] piles, int k) {
+        int n = piles.length;
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> b-a);
+
+        for(int num : piles) pq.offer(num);
+
+        while(k>0){
+            int num = pq.poll();
+            int remove = (int)Math.floor(num/2);
+            num -= remove;
+            pq.offer(num);
+            k--;
+        }
+
+        int sum = 0;
+        while(!pq.isEmpty()) sum += pq.poll();
+        return sum;
+    }
+}
