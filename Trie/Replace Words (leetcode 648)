@@ -1,0 +1,87 @@
+// java
+
+class Node{
+    Node[] links;
+    boolean flag;
+
+    Node(){
+        links = new Node[26];
+        flag = false;
+    }
+
+    boolean containsKey(char ch){
+        return links[ch-'a']!=null;
+    }
+
+    void put(char ch,Node node){
+        links[ch-'a'] = node;
+    }
+
+    Node get(char ch){
+        return links[ch-'a'];
+    }
+
+    void setEnd(){
+        flag = true;
+    }
+
+    boolean isEnd(){
+        return flag;
+    }
+}
+
+class Trie{
+    Node root;
+
+    Trie(){
+        root = new Node();
+    }
+
+    void insert(String word){
+        Node node = root;
+        for(int i=0; i<word.length(); i++){
+            char ch = word.charAt(i);
+            if(!node.containsKey(ch)) node.put(ch,new Node());
+            node = node.get(ch);
+        }
+        node.setEnd();
+    }
+
+    boolean search(String word,StringBuilder temp){
+        Node node = root;
+        for(int i=0; i<word.length(); i++){
+            if(node.isEnd()) return true;
+            char ch = word.charAt(i);
+            if(!node.containsKey(ch)) return false;
+            temp.append(ch);
+            node = node.get(ch);
+        }
+        return node.isEnd();
+    }
+
+}
+
+class Solution {
+    public String replaceWords(List<String> dictionary, String sentence) {
+        Trie trie = new Trie();
+        for(int i=0; i<dictionary.size(); i++) trie.insert(dictionary.get(i));
+
+        String[] str = sentence.split(" ");
+        
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<str.length; i++){
+            String s = str[i];
+            StringBuilder temp = new StringBuilder();
+            if(trie.search(s,temp)){
+                sb.append(temp);
+            }
+            else{
+                sb.append(s);
+            }
+
+            if(i<str.length-1) sb.append(" ");
+        }
+
+        return sb.toString();
+    }
+}
