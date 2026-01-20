@@ -1,0 +1,78 @@
+// java
+
+class Node{
+    Node[] links;
+    boolean flag;
+
+    Node(){
+        links = new Node[10];
+        flag = false;
+    }
+
+    boolean containsKey(char ch){
+        return links[ch-'0']!=null;
+    }
+
+    void put(char ch,Node node){
+        links[ch-'0'] = node;
+    }
+
+    Node get(char ch){
+        return links[ch-'0'];
+    }
+
+    void setEnd(){
+        flag = true;
+    }
+
+    boolean isEnd(){
+        return flag;
+    }
+}
+
+class Trie{
+    Node root;
+
+    Trie(){
+        root = new Node();
+    }
+
+    void insert(String str){
+        Node node = root;
+        for(int i=0; i<str.length(); i++){
+            char ch = str.charAt(i);
+            if(!node.containsKey(ch)) node.put(ch,new Node());
+            node = node.get(ch);
+        }
+    }
+
+    int search(String str){
+        int len = 0;
+
+        Node node = root;
+        for(int i=0; i<str.length(); i++){
+            if(node.isEnd()) return len;
+            char ch = str.charAt(i);
+            if(!node.containsKey(ch)) break;
+            len++;
+            node = node.get(ch);
+        }
+        return len;
+    }
+}
+
+class Solution {
+    public int longestCommonPrefix(int[] arr1, int[] arr2) {
+        Trie trie = new Trie();
+
+        for(int num : arr1){
+            trie.insert(Integer.toString(num));
+        }
+
+        int max = 0;
+        for(int num : arr2){
+            max = Math.max(max,trie.search(Integer.toString(num)));
+        }
+        return max;
+    }
+}
