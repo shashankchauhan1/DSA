@@ -1,0 +1,28 @@
+// java
+
+class Solution {
+    public int f(int n,int curr,int copy,Integer[][] dp){
+        if(curr>n) return (int)(1e8);
+        if(curr == n) return 0;
+
+        if(dp[curr][copy]!=null) return dp[curr][copy];
+
+        int ans = (int)(1e8);
+        if(curr!=copy){
+            // copy all
+            ans = Math.min(ans,1+f(n,curr,curr,dp));
+        }
+
+        if(copy>0){
+            // paste what copied
+            ans = Math.min(ans,1+f(n,curr+copy,copy,dp));
+        }
+
+        return dp[curr][copy] = ans;
+    }
+
+    public int minSteps(int n) {
+        Integer[][] dp = new Integer[n+1][n+1];
+        return f(n,1,0,dp);
+    }
+}
