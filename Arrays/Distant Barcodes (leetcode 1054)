@@ -1,0 +1,42 @@
+// java
+
+class Solution {
+    public int[] rearrangeBarcodes(int[] barcodes) {
+        int n = barcodes.length;
+        int max = 0;
+        for(int num : barcodes) max = Math.max(max,num);
+        int[] freq = new int[max+1];
+        for(int num : barcodes) freq[num]++;
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b) -> freq[b] - freq[a]);
+        Set<Integer> set = new HashSet<>();
+
+        for(int num : barcodes){
+            if(!set.contains(num)){
+                set.add(num);
+                pq.offer(num);
+            }
+        }
+
+        int[] res = new int[n];
+        int idx = 0;
+        
+        while(pq.size()>=2){
+            int num1 = pq.poll();
+            int num2 = pq.poll();
+
+            res[idx++] = num1;
+            freq[num1]--;
+            if(freq[num1] != 0) pq.offer(num1);
+
+            res[idx++] = num2;
+            freq[num2]--;
+            if(freq[num2] != 0) pq.offer(num2);
+        }
+        
+        // If there is any element left in the PriorityQueue then poll it and add in the result.
+        if(!pq.isEmpty()) res[idx++] = pq.poll();
+
+        return res;
+    }
+}
