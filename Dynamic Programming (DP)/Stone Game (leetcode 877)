@@ -1,0 +1,29 @@
+// java
+
+class Solution {
+    public int f(int s,int e,int turn,int[] piles,Integer[][][] dp){
+        if(s>e) return 0;
+
+        if(dp[s][e][turn]!=null) return dp[s][e][turn];
+
+        int ans = 0;
+        if(turn == 1){
+            int beg = piles[s] + f(s+1,e,0,piles,dp);
+            int end = piles[e] + f(s,e-1,0,piles,dp);
+            ans = Math.max(beg,end);
+        }
+        else{
+            int beg = -piles[s] + f(s+1,e,1,piles,dp);
+            int end = -piles[e] + f(s,e-1,1,piles,dp);
+            ans = Math.max(beg,end);
+        }
+
+        return dp[s][e][turn] = ans;
+    }
+
+    public boolean stoneGame(int[] piles) {
+        int n = piles.length;
+        Integer[][][] dp = new Integer[n][n][2];
+        return f(0,n-1,1,piles,dp) >= 0;
+    }
+}
