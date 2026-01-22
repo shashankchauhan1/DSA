@@ -1,5 +1,41 @@
 // java
 
+// Most Optimal
+
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        return true;
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// 2D dp
+
+class Solution {
+    public int f(int s,int e,int[] piles,Integer[][] dp){
+        if(s>e) return 0;
+
+        if(dp[s][e]!=null) return dp[s][e];
+
+        int ans = 0;
+        int beg = piles[s] - f(s+1,e,piles,dp);
+        int end = piles[e] - f(s,e-1,piles,dp);
+
+        return dp[s][e] = ans;
+    }
+
+    public boolean stoneGame(int[] piles) {
+        int n = piles.length;
+        Integer[][] dp = new Integer[n][n];
+        return f(0,n-1,piles,dp) >= 0;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// 3D dp
+
 class Solution {
     public int f(int s,int e,int turn,int[] piles,Integer[][][] dp){
         if(s>e) return 0;
