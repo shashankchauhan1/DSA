@@ -1,0 +1,23 @@
+// java
+
+class Solution {
+    public int minPairSum(int[] nums) {
+        int n = nums.length;
+        
+        Arrays.sort(nums);
+        // sort and pair the smallest to largest, then 2nd largest to 2nd smallest and so on....
+        // found the max among all
+
+        int s = 0;
+        int e = n-1;
+        int max = 0;
+
+        while(s<e){
+            max = Math.max(max,nums[s] + nums[e]);
+            s++;
+            e--;
+        }
+
+        return max;
+    }
+}
