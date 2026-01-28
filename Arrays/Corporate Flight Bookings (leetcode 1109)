@@ -1,0 +1,23 @@
+// java
+
+class Solution {
+    public int[] corpFlightBookings(int[][] bookings, int n) {
+        int[] diff = new int[n+1];
+        for(int[] book : bookings){
+            int u = book[0];
+            int v = book[1];
+            int w = book[2];
+            diff[u-1] += w;
+            diff[v] -= w;
+        }
+
+        int[] ans = new int[n];
+        ans[0] = diff[0];
+        for(int i=1; i<diff.length-1; i++){
+            diff[i] = diff[i] + diff[i-1];
+            ans[i] = diff[i];
+        }
+
+        return ans;
+    }
+}
