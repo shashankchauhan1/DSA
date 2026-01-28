@@ -1,25 +1,16 @@
 // java
 
 class Graph {
-    class Pair{
-        int first;
-        int second;
-        Pair(int f,int s){
-            this.first = f;
-            this.second = s;
-        }
-    }
-
-    ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+    ArrayList<ArrayList<int[]>> adj = new ArrayList<>();
 
     public Graph(int n, int[][] edges) {
-        for(int i=0; i<n; i++) adj.add(new ArrayList<Pair>());
+        for(int i=0; i<n; i++) adj.add(new ArrayList<>());
 
         for(int[] edge:edges){
             int u = edge[0];
             int v = edge[1];
             int w = edge[2];
-            adj.get(u).add(new Pair(v,w));
+            adj.get(u).add(new int[]{v,w});
         }
     }
     
@@ -27,7 +18,7 @@ class Graph {
         int u = edge[0];
         int v = edge[1];
         int w = edge[2];
-        adj.get(u).add(new Pair(v,w));
+        adj.get(u).add(new int[]{v,w});
     }
     
     public int shortestPath(int node1, int node2) {
@@ -36,26 +27,28 @@ class Graph {
         Arrays.fill(dist,Integer.MAX_VALUE);
 
         dist[node1] = 0;
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.second-b.second);
-        pq.offer(new Pair(node1,0));
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1]-b[1]);
+        pq.offer(new int[]{node1,0});
 
         while(!pq.isEmpty()){
-            Pair p = pq.poll();
-            int node = p.first;
-            int dofu = p.second;
+            int[] p = pq.poll();
+            int node = p[0];
+            int dofu = p[1];
 
-            for(Pair neighbour : adj.get(node)){
-                int adjNode = neighbour.first;
-                int dofv = neighbour.second;
+            if(node==node2) return dofu;
+
+            for(int[] neighbour : adj.get(node)){
+                int adjNode = neighbour[0];
+                int dofv = neighbour[1];
 
                 if(dofu + dofv < dist[adjNode]){
                     dist[adjNode] = dofu + dofv;
-                    pq.offer(new Pair(adjNode,dist[adjNode]));
+                    pq.offer(new int[]{adjNode,dist[adjNode]});
                 }
             }
         }
 
-        return dist[node2]==Integer.MAX_VALUE ? -1 : dist[node2];
+        return -1;
     }
 }
 
