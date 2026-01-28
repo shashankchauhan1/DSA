@@ -36,7 +36,7 @@ class Graph {
         Arrays.fill(dist,Integer.MAX_VALUE);
 
         dist[node1] = 0;
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.second, b.second);
+        PriorityQueue<Pair> pq = new PriorityQueue<>((a,b) -> a.second-b.second);
         pq.offer(new Pair(node1,0));
 
         while(!pq.isEmpty()){
