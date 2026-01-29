@@ -1,0 +1,30 @@
+// java
+
+
+class Solution {
+    public void dfs(int node,boolean[] vis,int[] nums,int[] cnt){
+        if(vis[node]) return;
+
+        vis[node] = true;
+        cnt[0]++;
+        if(nums[node] >=0 && nums[node]<nums.length){
+            dfs(nums[node],vis,nums,cnt);
+        }
+    }
+
+    public int arrayNesting(int[] nums) {
+        int n = nums.length;
+        int max = 0;
+        boolean[] vis = new boolean[n];
+
+        for(int i=0; i<n; i++){
+            if(!vis[i]){
+                int[] cnt = new int[1];
+                dfs(i,vis,nums,cnt);
+                max = Math.max(max,cnt[0]);
+            }
+        }
+
+        return max;
+    }
+}
