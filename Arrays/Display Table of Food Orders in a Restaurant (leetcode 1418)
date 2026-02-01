@@ -1,0 +1,53 @@
+// java
+
+class Solution {
+    public List<List<String>> displayTable(List<List<String>> orders) {
+        List<List<String>> result = new ArrayList<>();
+
+        Set<String> items = new HashSet<>();
+        TreeSet<Integer> table = new TreeSet<>();
+        Map<String,Map<String,Integer>> map = new HashMap<>();
+
+        for(List<String> list : orders){
+            String cName = list.get(0);
+            String tNo = list.get(1);
+            String item = list.get(2);
+
+            items.add(item);
+            table.add(Integer.parseInt(tNo));
+            if(!map.containsKey(tNo)) map.put(tNo,new HashMap<>());
+            map.get(tNo).put(item,map.get(tNo).getOrDefault(item,0)+1);
+        }
+
+        result.add(new ArrayList<>());
+
+        
+        for(String s:items){
+            result.get(0).add(s);
+        }
+        Collections.sort(result.get(0));
+
+        result.get(0).add(0,"Table");
+
+        while(!table.isEmpty()){
+            int num = table.pollFirst();
+
+            List<String> list= new ArrayList<>();
+            String tab = Integer.toString(num);
+            list.add(tab);
+
+            for(int j=1; j<result.get(0).size(); j++){
+                String search = result.get(0).get(j);
+                if(map.get(tab).containsKey(search)){
+                    int freq = map.get(tab).get(search);
+                    list.add(Integer.toString(freq));
+                }
+                else list.add("0");
+            }
+
+            result.add(list);
+        }
+
+        return result;
+    }
+}
