@@ -1,0 +1,26 @@
+// java
+
+class Solution {
+    public int minimumCost(int[] nums) {
+        int n = nums.length;
+        int sum = 0;
+        sum+=nums[0];
+
+        int firstMin = Integer.MAX_VALUE;
+        int secondMin = firstMin;
+        for(int i=1; i<n; i++){
+            if(nums[i] <= firstMin){
+                secondMin = firstMin;
+                firstMin = nums[i];
+            }
+            if(nums[i]!=firstMin && nums[i]<secondMin){
+                secondMin = nums[i];
+            }
+        }
+
+        sum += firstMin;
+        sum += secondMin;
+
+        return sum;
+    }
+}
