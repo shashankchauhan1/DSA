@@ -1,0 +1,88 @@
+// java
+
+// Recursion (TLE)
+
+class Solution {
+    public int f(int i,List<Integer> nums,int target){
+        if(target==0) return 0;
+        if(i<0) return -(int)(1e8);
+    
+        int pick = -(int)(1e8);
+        if(nums.get(i)<=target){
+            int prev = f(i-1,nums,target-nums.get(i));
+            if(prev!=-(int)(1e8)) pick = 1 + prev;
+        }
+        int notpick = f(i-1,nums,target);
+
+        return Math.max(pick,notpick);
+    }
+
+    public int lengthOfLongestSubsequence(List<Integer> nums, int target) {
+        int n = nums.size();
+        
+        int ans = f(n-1,nums,target);
+        return ans == -(int)(1e8) ? -1 : ans;
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Memoization
+
+class Solution {
+    public int f(int i,List<Integer> nums,int target,Integer[][] dp){
+        if(target==0) return 0;
+        if(i<0) return -(int)(1e8);
+
+        if(dp[i][target]!=null) return dp[i][target];
+
+        int pick = -(int)(1e8);
+
+        if(target >= nums.get(i)){
+            int prev = f(i-1,nums,target-nums.get(i),dp);
+            if(prev != -(int)(1e8)){
+                pick = 1+prev;
+            }
+        }
+
+        int notpick = f(i-1,nums,target,dp);
+
+        return dp[i][target] = Math.max(pick,notpick);
+    }
+
+    public int lengthOfLongestSubsequence(List<Integer> nums, int target) {
+        int n = nums.size();
+        Integer[][] dp = new Integer[n][target+1];
+        int ans = f(n-1,nums,target,dp);
+        return ans==-(int)(1e8) ? -1 : ans;
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Tabulation
+
+class Solution {
+    public int lengthOfLongestSubsequence(List<Integer> nums, int target) {
+        int n = nums.size();
+        int[][] dp = new int[n+1][target+1];
+
+        int NEG_INT = -(int)(1e8);
+        for(int i=1; i<=target; i++) dp[0][i] = NEG_INT;
+
+        for(int i=1; i<=n; i++){
+            for(int tar=target; tar>0; tar--){
+                int pick = NEG_INT;
+                if(nums.get(i-1) <= tar){
+                    int prev = dp[i-1][tar-nums.get(i-1)];
+                    if(prev!=NEG_INT) pick = 1 + prev;
+                }
+                int notpick = dp[i-1][tar];
+
+                dp[i][tar] = Math.max(pick,notpick);
+            }
+        }
+        
+        return dp[n][target]==-(int)(1e8) ? -1 : dp[n][target];
+    }
+}
