@@ -1,0 +1,45 @@
+// java
+
+class Solution {
+    public int f(int curr,int prev,int n,int[] days,int[] costs,Map<String,Integer> map){
+        if(curr==n){
+            return 0;
+        }
+
+        String key = curr+" "+prev;
+
+        if(map.containsKey(key)) return map.get(key);
+
+        int MAX_INT = (int)(1e8);
+        int buy = MAX_INT;
+        int notBuy = MAX_INT;
+
+        // no need to buy a pass
+        if(days[curr]<prev){
+            notBuy = f(curr+1,prev,n,days,costs,map);
+        }
+        else{
+            // need to buy a pass
+
+            // 1 day pass
+            int buy1 = costs[0] + f(curr+1,days[curr]+1,n,days,costs,map);
+            
+            // 7 day pass
+            int buy2 = costs[1] + f(curr+1,days[curr]+7,n,days,costs,map);
+            
+            // 30 day pass
+            int buy3 = costs[2] + f(curr+1,days[curr]+30,n,days,costs,map);
+
+            buy = Math.min(buy1,Math.min(buy2,buy3));
+        }
+
+        map.put(key,Math.min(buy,notBuy));
+        return map.get(key);
+    }
+
+    public int mincostTickets(int[] days, int[] costs) {
+        int n = days.length;
+        Map<String,Integer> map = new HashMap<>();
+        return f(0,-1,n,days,costs,map);
+    }
+}
