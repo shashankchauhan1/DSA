@@ -1,0 +1,19 @@
+// java
+
+class Solution {
+    public double averageWaitingTime(int[][] customers) {
+        int n = customers.length;
+        double sum = 0;
+        int curr = 0;
+        for(int[] cust : customers){
+            if(cust[0] > curr){
+                curr = cust[0];
+            }
+
+            curr+=cust[1];
+            sum += curr - cust[0];
+        }
+
+        return sum/n;
+    }
+}
