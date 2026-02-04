@@ -1,0 +1,22 @@
+// java
+
+class Solution {
+    public int minProcessingTime(List<Integer> processorTime, List<Integer> tasks) {
+        int n = processorTime.size();
+        Collections.sort(processorTime);
+        Collections.sort(tasks,(a,b) -> b-a);
+        int max = 0;
+
+        int i=0,j=0;
+        while(i<n){
+            int temp = 4;
+            while(temp>0){
+                max = Math.max(max,processorTime.get(i)+tasks.get(j));
+                j++;
+                temp--;
+            }
+            i++;
+        }
+        return max;
+    }
+}
