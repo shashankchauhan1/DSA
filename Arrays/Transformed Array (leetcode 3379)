@@ -1,0 +1,29 @@
+// java (o(N)) approach
+
+class Solution {
+    public int[] constructTransformedArray(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]==0){
+                res[i] = 0;
+                continue;
+            }
+            if(nums[i]>0){
+                // if the index is already greater so just fetch the index followed with a %
+                int newIndex = (i+nums[i])%n;
+                res[i] = nums[newIndex];
+            }
+            else{
+                // if new index is positive then great we just insert into that index
+                int newIndex = (i-Math.abs(nums[i]))%n;
+                // if the new index is negative then subtract that from length and do a % n
+                if(newIndex<0) newIndex = (n+newIndex)%n;
+
+                res[i] = nums[newIndex];
+            }
+        }
+        return res;
+    }
+}
