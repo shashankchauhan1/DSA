@@ -1,0 +1,55 @@
+// java
+
+class Solution {
+    public boolean f(int curX, int curY, int fillX, int fillY, int target,Set<String> set){
+        if(curX==target || curY==target || curX+curY==target) return true;
+
+        String key = curX + " " + curY;
+        if(set.contains(key)) return false;
+        set.add(key);
+
+        // now there are 6 combinations we can do
+
+        // boolean fillcurX = 
+        if(f(fillX, curY, fillX, fillY, target,set)) return true;
+        // boolean fillcurY = 
+        if(f(curX, fillY, fillX, fillY, target,set)) return true;
+        
+        // boolean pourcurX = 
+        if(f(0, curY, fillX, fillY, target,set)) return true;
+
+        // boolean pourcurY = 
+        if(f(curX, 0, fillX, fillY, target,set)) return true;
+
+        int needInY = fillY - curY;
+        if(curX >= needInY){
+            curY += needInY;
+            curX -= needInY;
+        }
+        else{
+            curY += curX;
+            curX = 0;
+        }
+        // boolean transferXtoY = 
+        if(f(curX, curY, fillX, fillY, target,set)) return true;
+
+        int needInX = fillX - curX;
+        if(curY >= needInX){
+            curY -= needInX;
+            curX += needInX;
+        }
+        else{
+            curX += curY;
+            curY = 0;
+        }
+        // boolean transferYtoX = 
+        if(f(curX, curY, fillX, fillY, target,set)) return true;
+
+        return false;
+    }
+
+    public boolean canMeasureWater(int x, int y, int target) {
+        Set<String> set = new HashSet<>();
+        return f(0,0,x,y,target,set);
+    }
+}
