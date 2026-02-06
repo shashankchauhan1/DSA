@@ -1,0 +1,36 @@
+// java
+
+class Solution {
+    public int dfs(int node,Map<Integer,Integer> map){
+        if(node==1) return 0;
+
+        if(map.containsKey(node)) return map.get(node);
+
+        int power = 0;
+        if((node&1)==0) power = 1+dfs(node/2,map);
+        else power = 1+dfs(3*node+1,map);
+
+        map.put(node,power);
+        return map.get(node);
+    }
+
+    public int getKth(int lo, int hi, int k) {
+        Map<Integer,Integer> map = new HashMap<>();
+        
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> {
+            if(a[1] == b[1]) return b[0]-a[0];
+            return b[1] - a[1];
+        });
+
+        for(int i=lo; i<=hi; i++){
+            int power = dfs(i,map);
+            map.put(i,power);
+            pq.offer(new int[]{i,power});
+            if(pq.size() > k){
+                pq.poll();
+            }
+        }
+
+        return pq.peek()[0];
+    }
+}
