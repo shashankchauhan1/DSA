@@ -1,0 +1,85 @@
+// java
+
+1> Stack Based Approach
+
+class Solution {
+    public int minimumDeletions(String s) {
+        Stack<Character> st = new Stack<>();
+        int n = s.length();
+        int count = 0;
+
+        for(int i=0; i<n; i++){
+            char ch = s.charAt(i);
+            if(!st.isEmpty() && ch=='a' && st.peek()=='b'){
+                st.pop();
+                count++;
+            }
+            else st.push(ch);
+        }
+
+        return count;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2> Counter approach (space optimized) : instead of using stack maintain two variables
+
+class Solution {
+    public int minimumDeletions(String s) {
+        int n = s.length();
+        int count = 0;
+        int res = 0;
+
+        for(int i=0; i<n; i++){
+            char ch = s.charAt(i);
+            if(ch=='b') count++;
+            else if(count>0){
+                res += 1;
+                count -= 1;
+            }
+        }
+
+        return res;
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3> Prefix/Suffix approach
+
+class Solution {
+    public int minimumDeletions(String s) {
+        int n = s.length();
+        int[] aCount = new int[n];
+
+        for(int i=n-1; i>=0; i--){
+            if(s.charAt(i)=='a'){
+                int sum = 0;
+                if(i<n-1) sum += aCount[i+1]; 
+                aCount[i] = 1+sum;
+            }
+            else{
+                if(i<n-1) aCount[i] = aCount[i+1];
+            }
+        }
+
+        int[] bCount = new int[n];
+
+        for(int i=0; i<n; i++){
+            if(s.charAt(i)=='b'){
+                int sum = 0;
+                if(i>0) sum += bCount[i-1]; 
+                bCount[i] = 1+sum;
+            }
+            else{
+                if(i>0) bCount[i] = bCount[i-1];
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+        for(int i=0; i<n; i++) min = Math.min(min,aCount[i]+bCount[i]);
+        
+        return min==Integer.MAX_VALUE ? 0 : min-1;
+    }
+}
