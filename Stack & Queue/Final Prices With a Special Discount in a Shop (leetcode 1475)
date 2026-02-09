@@ -1,0 +1,21 @@
+// java
+
+class Solution {
+    public int[] finalPrices(int[] prices) {
+        int n = prices.length;
+        int[] res = new int[n];
+        
+        Stack<Integer> st = new Stack<>();
+        for(int i=n-1; i>=0; i--){
+            while(!st.isEmpty() && prices[st.peek()]>prices[i]){
+                st.pop();
+            }
+            if(st.isEmpty()) res[i] = 0;
+            else res[i] = prices[st.peek()];
+            st.push(i);
+        }
+
+        for(int i=0; i<n; i++) prices[i] -= res[i];
+        return prices;
+    }
+}
