@@ -1,5 +1,44 @@
 // java
 
+// Integer approach
+
+class Solution {
+    public boolean isValid(String s){
+        if(s.charAt(0)=='0') return false;
+        
+        int num = Integer.parseInt(s,2);
+        while(num%5==0) num /= 5;
+        
+        return num==1;
+    }
+
+    public int f(int i,int n,String s){
+        if(i==n) return 0;
+        if(i>n) return (int)(1e8);
+
+        int ans = (int)(1e8);
+        for(int idx = i; idx<n; idx++){
+            if(s.charAt(idx)=='0') continue;
+            if(isValid(s.substring(i,idx+1))){
+                int cut = 1+f(idx+1,n,s);
+                ans = Math.min(ans,cut);
+            }
+        }
+        return ans;
+    }
+
+    public int minimumBeautifulSubstrings(String s) {
+        int n = s.length();
+
+        int ans = f(0,n,s);
+        return ans==(int)(1e8) ? -1 : ans;
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Void approach
+
 class Solution {
     public boolean isValid(String s){
         if(s.charAt(0)=='0') return false;
