@@ -1,5 +1,31 @@
 // java
 
+class Solution {
+    public boolean f(int i,long prev,int n,int cuts,String s){
+        if(i==n) return cuts>=2;
+
+        long num = 0;
+        for(int idx = i; idx<n; idx++){
+            num = num*10 + s.charAt(idx)-'0';
+            if(prev==-1 || num == prev-1){
+                if(f(idx+1,num,n,cuts+1,s)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean splitString(String s) {
+        int n = s.length();
+
+        return f(0,-1,n,0,s);
+    }
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// using BigInteger
+
 import java.math.BigInteger;
 
 class Solution {
