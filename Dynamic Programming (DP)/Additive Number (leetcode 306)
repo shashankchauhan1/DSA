@@ -1,5 +1,38 @@
 // java
 
+class Solution {
+    public boolean f(int i,int n,String num,ArrayList<Long> list){
+        if(i==n) return list.size()>2;
+
+        long val = 0;
+        for(int idx=i; idx<n; idx++){
+            if(i<idx && num.charAt(i)=='0') break;
+            
+            val = val*10+num.charAt(idx)-'0';
+
+            if(list.size()>=2){
+                long sum = list.get(list.size()-1) + list.get(list.size()-2);
+                if(sum < val) break;
+                if(val < sum) continue;
+            }
+            list.add(val);
+            if(f(idx+1,n,num,list)) return true;
+            list.remove(list.size()-1);
+        }
+        return false;
+    }
+
+    public boolean isAdditiveNumber(String num) {
+        int n = num.length();
+
+        return f(0,n,num,new ArrayList<>());
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// using BigInteger
+
 import java.math.BigInteger;
 
 class Solution {
