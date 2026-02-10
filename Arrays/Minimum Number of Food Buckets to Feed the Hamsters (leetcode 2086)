@@ -1,0 +1,33 @@
+// java
+
+class Solution {
+    public int minimumBuckets(String hamsters) {
+        int n = hamsters.length();
+        char[] arr = hamsters.toCharArray();
+        int count = 0;
+
+        for(int i=0; i<n; i++){
+            if(arr[i] == 'H'){
+                // if there is alredy food in the back no need to put more food
+                if(i>0 && arr[i-1]=='B') continue;
+
+                // if there is a space in front so we try to put there, maybe in future there's some another hamster who is gonna share the food
+                if(i<n-1 && arr[i+1]=='.'){
+                    arr[i+1] = 'B';
+                    count++;
+                }
+                // if there is no space so check in behind
+                else if(i>0 && arr[i-1]=='.'){
+                    arr[i-1] = 'B';
+                    count++;
+                }
+                // if there is no space in front or in back then means this hamster is not able to get the food
+                else{
+                    return -1;
+                }
+            }
+        }
+
+        return count;
+    }
+}
