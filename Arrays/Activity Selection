@@ -1,0 +1,26 @@
+// java -> GFG
+
+class Solution {
+    public int activitySelection(int[] start, int[] finish) {
+        int n = start.length;
+        
+        ArrayList<int[]> list = new ArrayList<>();
+        for(int i=0; i<n; i++){
+            list.add(new int[]{start[i],finish[i]});
+        }
+        
+        Collections.sort(list,(a,b) -> a[1]-b[1]);
+        int count = 1;
+        int lasten = list.get(0)[1];
+        
+        for(int i=1; i<n; i++){
+            if(list.get(i)[0]>lasten){
+                lasten = list.get(i)[1];
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
+
