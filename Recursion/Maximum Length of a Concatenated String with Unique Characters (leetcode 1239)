@@ -1,0 +1,41 @@
+// java
+
+class Solution {
+    public boolean isValid(String s,Set<Character> set){
+        Set<Character> temp = new HashSet<>(set);
+        for(int i=0; i<s.length(); i++){
+            char ch = s.charAt(i);
+            if(temp.contains(ch)) return false;
+            temp.add(ch);
+        }
+        return true;
+    }
+
+    public int f(int i,int n,List<String> arr,Set<Character> set){
+        if(i==n) return 0;
+
+        int pick = 0;
+        if(isValid(arr.get(i),set)){
+            for(int j=0; j<arr.get(i).length(); j++){
+                set.add(arr.get(i).charAt(j));
+            }
+            
+            pick = arr.get(i).length() + f(i+1,n,arr,set);
+
+            for(int j=0; j<arr.get(i).length(); j++){
+                set.remove(arr.get(i).charAt(j));
+            }
+        }
+        
+        int notPick = f(i+1,n,arr,set);
+
+        return Math.max(pick,notPick);
+    }
+
+    public int maxLength(List<String> arr) {
+        int n = arr.size();
+        Set<Character> set = new HashSet<>();
+        
+        return f(0,n,arr,set);
+    }
+}
