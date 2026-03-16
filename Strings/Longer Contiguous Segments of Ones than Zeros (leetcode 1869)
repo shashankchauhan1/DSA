@@ -1,0 +1,35 @@
+// java
+
+class Solution {
+    public boolean checkZeroOnes(String s) {
+        int maxOne = 0;
+        int cntOne = 0;
+
+        int maxZero = 0;
+        int cntZero = 0;
+        
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i)=='1'){
+                cntOne++;
+            }
+            else{
+                maxOne = Math.max(maxOne,cntOne);
+                cntOne=0;
+            }
+        }
+        maxOne = Math.max(maxOne,cntOne);
+
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i)=='0'){
+                cntZero++;
+            }
+            else{
+                maxZero = Math.max(maxZero,cntZero);
+                cntZero=0;
+            }
+        }
+        maxZero = Math.max(maxZero,cntZero);
+
+        return maxOne > maxZero;
+    }
+}
