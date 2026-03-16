@@ -1,0 +1,30 @@
+// java
+
+class Solution {
+    public boolean traverse(int[][] mat,int r,int c){
+        int cntOne = 0;
+        // traverse row
+        for(int i=0; i<mat.length; i++) if(mat[i][c]==1) cntOne++;
+
+        // traverse col
+        for(int i=0; i<mat[0].length; i++) if(mat[r][i]==1) cntOne++;
+
+        return cntOne==2;
+    }
+
+    public int numSpecial(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int cnt = 0;
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(mat[i][j]==1){
+                    if(traverse(mat,i,j)) cnt++;
+                }
+            }
+        }
+
+        return cnt;
+    }
+}
