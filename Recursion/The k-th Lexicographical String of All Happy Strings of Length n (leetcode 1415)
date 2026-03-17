@@ -1,0 +1,31 @@
+// java
+
+class Solution {
+    public void f(int i,char[] arr,int n,StringBuilder sb,List<String> list,int k){
+        if(list.size()==k) return;
+
+        if(sb.length()==n){
+            list.add(new String(sb));
+            return;
+        }
+
+        for(char ch : arr){
+            // skip if prev is same
+            if(sb.length()!=0 && sb.charAt(sb.length()-1)==ch) continue;
+            // pick
+            sb.append(ch);
+            f(i+1,arr,n,sb,list,k);
+            sb.deleteCharAt(sb.length()-1);
+        }
+
+    }
+
+    public String getHappyString(int n, int k) {
+        char arr[] = {'a','b','c'};
+        List<String> list = new ArrayList<>();
+        
+        f(0,arr,n,new StringBuilder(),list,k);
+        // Collections.sort(list);
+        return k<=list.size() ? list.get(k-1) : "";
+    }
+}
