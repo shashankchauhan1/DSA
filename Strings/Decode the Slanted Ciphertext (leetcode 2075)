@@ -1,0 +1,31 @@
+// java
+
+class Solution {
+    public String decodeCiphertext(String encodedText, int rows) {
+        int len = encodedText.length();
+        int m = len/rows;
+        int countChar = 0;
+        for(int i=0; i<encodedText.length(); i++){
+            if(Character.isLetter(encodedText.charAt(i))) countChar++;
+        }
+
+        char[][] mat = new char[rows][m];
+        int idx = 0;
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<m; j++){
+                mat[i][j] = encodedText.charAt(idx++);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<m; i++){
+            for(int j=0,k=i; j<rows && k<m; j++,k++){
+                if(countChar==0) break;
+                if(Character.isLetter(mat[j][k])) countChar--;
+                sb.append(mat[j][k]);
+            }
+        }
+
+        return sb.toString();
+    }
+}
