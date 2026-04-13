@@ -1,0 +1,29 @@
+// java
+
+class Solution {
+    public int getMinDistance(int[] nums, int target, int start) {
+        int ans = Integer.MAX_VALUE;
+        int n = nums.length;
+
+        int idx = start;
+        
+        while(idx < n){
+            if(nums[idx] == target){
+                ans = Math.min(ans,idx-start);
+                break;
+            }
+            idx++;
+        }
+
+        idx = start;
+        while(idx >= 0){
+            if(nums[idx] == target){
+                ans = Math.min(ans,start-idx);
+                break;
+            }
+            idx--;
+        }
+
+        return ans;
+    }
+}
